@@ -13,4 +13,4 @@ $(TARGET).dvi: $(TARGET).tex
 	latex $(TARGET).tex
 
 clean:
-	 rm $(TARGET).aux $(TARGET).bbl $(TARGET).blg $(TARGET).dvi $(TARGET).log $(TARGET).toc $(TARGET).ps page-garde.aux
+	 rm -f $(TARGET).aux $(TARGET).bbl $(TARGET).blg $(TARGET).dvi $(TARGET).log $(TARGET).toc $(TARGET).ps page-garde.aux
