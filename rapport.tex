@@ -127,6 +127,60 @@ Par exemple, si je souhaite citer la page du Master 2 RISE~\cite{url-rise}, il m
 
 La bibliographie est formatée automatiquement avec le style $plain$ et contiendra les entrées référencées dans le rapport par la commande $cite$.
 
+
+
+\section{Concepts et utilisation}
+
+% Luigi Coniglio 
+\subsection{En-tete IPv4}
+Un packet IPv4 est precede` par un en-tete ayant une longeur minimale de 20 octets 
+(dans les cas aucune option supplementaire a ete specifie`).
+La figure suivante montre le contenu de l'en-tete d'un packet IPv4.
+
+
+% TODO FIGURE sans field options 
+TODO FIGURE
+
+
+Comme on peut voir dans la figure ci dessus, un en-tete IPv4 est compose` par
+13 champs. En realite nous verrons plus loin que cet en-tete peut, quand il est
+necessaire, contenir un champ additionel qui servira a specifier quelque
+option qui n'est pas presente dans le 13 champs ci dessus.
+
+
+Commencons par voir plus en detail les 13 champs d'un en-tete IPv4 standard:
+
+\begin{description}
+\item [Version] 
+Cette champ occupe les premiers 4 bits de l'en-tete IPv4. Il est
+utilise pour determiner le type de protocole utilise` par la couche
+reseau (chouche 3). Dans le cas de IPv4 cet champs contiendra toujours
+la valeur 4, qui justement identifie le protocole IPv4.
+
+Cet champ n'est pas tres utilise, en tenant compte que le protocole 
+a utiliser pour la couche 3 est presque toujour specifie dans l'en-tete
+de la couche liason.
+
+
+\item [IHL]
+Le champ IHL specifie la taille de l'en-tete IPv4, en fait IHL est 
+l'acronime de Interet Header Length. Bien entendu, en disant cela on souligne
+un concept important a propos du protocole IPv4: la taille de l'en-tete n'est pas fixe.
+
+La taille de l'en-tete est exprime`e en bloques de 32 bits. Etant donne une taille de
+4 bits pour le champ IHL, la longueur maximale d'un en-tete IPv4 est de 15 bloques de
+32 bits, qui correspond a 60 octets. Comme l'en-tete IPv4 a une taille minimale
+de 20 octets (160 bits), le champ IHL ne peut pas contenir un valeur inferieure a 5.
+
+\item [Type of Service]
+
+\item [Total length]
+
+\end{description}
+
+
+
+
 \section{Lorem ipsum}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elementum nulla laoreet risus commodo, quis eleifend est ornare. Phasellus lobortis ex a lectus congue, ut posuere risus pellentesque. Mauris vitae nunc molestie, porta turpis a, ullamcorper ante. Etiam dictum risus justo, at sodales sem ultrices vel. Pellentesque a nisl vel justo molestie egestas a luctus lorem. Maecenas quam ante, volutpat non tempor non, tincidunt quis sem. Vivamus a lacus porttitor sem posuere finibus. Phasellus sed sapien quis quam ultricies condimentum.
