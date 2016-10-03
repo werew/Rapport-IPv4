@@ -174,7 +174,7 @@ de 20 octets (160 bits), le champ IHL ne peut pas contenir un valeur inferieure 
 \item [Type of Service]
 Le champ Type of Service, mieux connu avec l'acronime ToS, est utilise pour 
 specifier la qualite de service souhaite pour l'envoi d'un packet IPv4.
-Cet champ occupe 8 bits de l'en-tete et il se compose en trois parties.
+Cet champ occupe un octet de l'en-tete et il se compose en trois parties.
 Une premiere partie de 3 bits permet d'indiquer la precedence avec la quelle
 le packet doit etre traite, les 3 bits apres sont utilise pour specifier 
 certaines caracteristiques du service, notament: le temp, le debit et la fiabilite.
@@ -182,10 +182,46 @@ Enfin l'emploi des 2 derniers bits n'a pas ete specifie et leur usage a ete
 laisse libre pour des implementationes futures.
 
 
-En realite l'histoire de cet champs est bien plus longue et complexe que ca.
-%Il a ete defini par 5 different RFC
+En realite l'histoire de cet champs est bien plus longue et complexe que ca,
+car en pratique la facon d'utiliser cet champs a ete modifie plusieurs fois au 
+cours des annees.
+\footnote{L'utilisation des 8 bits du champ ToS a ete redefinie
+par cinq standard differents (plus divers standars experimentals).
+Les documents presentent ces standard sont mentionne dans le chapitre 
+"Historical Definitions for the IPv4 TOS Octet" du RFC 3168}
+Cette manque de stabilite a par fois cause une certaine confusion dans les implementations.
+\footnote{Comme le souligne le RFC 3260 {\it "At least one implementor has expressed confusion about the
+relationship of the DSField, as defined in RFC 2474, to the use of
+the TOS bits, as described in RFC 1349"}}
+
+Aujourd'hui les 8 bits du champ ToS sont utilise par le mecanisme DiffServ
+(Differentiated Services). Cet systeme utilise les premieres 6 bits du champ
+ToS (DSCP - Differentiated Services Code Point) pour marquer chaque paquet
+comme appartenant a un niveau de priorite et une classe de service.  Chaque
+classe determine le type de traitement que on souhaite demander pour le paquet
+aux routers au long du chemin (PHB - Per-Hop behaviour), toutefois le service offert
+par chaque router est fortement lie a sa configuration.
+\footnote {
+{\it "The DiffServ standard does not specify a precise definition of "low," "medium,"
+and "high" drop probability. Not all devices recognize the DiffServ (DS2 and
+DS1) settings; and even when these settings are recognized, they do not
+necessarily trigger the same PHB forwarding action at each network node. Each
+node implements its own response based on how it is configured."} - 
+Implementing Quality of Service Policies with DSCP
+http://www.cisco.com/c/en/us/support/docs/quality-of-service-qos/qos-packet-marking/10103-dscpvalues.html
+}}
+
+
+
+
+
+
 
 \item [Total length]
+
+\item [Fragment Offset]
+
+%Here will be fun to talk about the evil bit
 
 \end{description}
 
