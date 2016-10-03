@@ -161,7 +161,6 @@ Cet champ n'est pas tres utilise, en tenant compte que le protocole
 a utiliser pour la couche 3 est presque toujour specifie dans l'en-tete
 de la couche liason.
 
-
 \item [IHL]
 Le champ IHL specifie la taille de l'en-tete IPv4, en fait IHL est 
 l'acronime de Interet Header Length. Bien entendu, en disant cela on souligne
@@ -173,6 +172,18 @@ La taille de l'en-tete est exprime`e en bloques de 32 bits. Etant donne une tail
 de 20 octets (160 bits), le champ IHL ne peut pas contenir un valeur inferieure a 5.
 
 \item [Type of Service]
+Le champ Type of Service, mieux connu avec l'acronime ToS, est utilise pour 
+specifier la qualite de service souhaite pour l'envoi d'un packet IPv4.
+Cet champ occupe 8 bits de l'en-tete et il se compose en trois parties.
+Une premiere partie de 3 bits permet d'indiquer la precedence avec la quelle
+le packet doit etre traite, les 3 bits apres sont utilise pour specifier 
+certaines caracteristiques du service, notament: le temp, le debit et la fiabilite.
+Enfin l'emploi des 2 derniers bits n'a pas ete specifie et leur usage a ete 
+laisse libre pour des implementationes futures.
+
+
+En realite l'histoire de cet champs est bien plus longue et complexe que ca.
+%Il a ete defini par 5 different RFC
 
 \item [Total length]
 
