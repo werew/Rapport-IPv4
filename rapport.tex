@@ -210,21 +210,49 @@ node implements its own response based on how it is configured."} -
 Implementing Quality of Service Policies with DSCP
 http://www.cisco.com/c/en/us/support/docs/quality-of-service-qos/qos-packet-marking/10103-dscpvalues.html
 }}
+\item [Total length]
+
+\item [Fragment Offset]
+%Here will be fun to talk about the evil bit
+
+\end{description}
+
+
 
 
 \section{Suite de protocole}
 
+\subsection{ARP}
+ARP (Address resolution protocol) est un protocole à cheval sur la couche 2 et
+la couche 3. La fonction principale d'ARP est de faire la conversion entre les
+adresses de niveau 2 et de niveau 3. Cela est très utilisé étant donné que les
+hôte connaissent souvent les adresses IP de leur destinataire, mais rarement
+l'adresse de niveau 2 de ce destinataire ou de la passerelle à contacter pour joindre
+le destinataire.
+
+\subsubsection{Exemple}
+Dans la partie qui suit nous allons nous placer dans l'exemple suivant.
+TODO LAN exemple
+\subsubsection{Entête}
+
+\subsubsection{Fonctionnement}
+Prenons l'exemple où A veux envoyer un message à B. A connait l'adresse IP de
+B. Donc A va préparer son paquet qu'il va envoyer à B, avec son adresse IP en
+source et l'adresse IP de B en destination. La paquet passe dans la couche
+liaison, il va être enpaqueté dans une trame de niveau 2. Cette trame aura
+comme adresse source l'adresse de niveau 2 de A, mais à ce moment il ne peux
+pas completé l'adresse destination de la trame: en effet, il ne connait
+l'adresse de niveau 2 du destinataire. La paquet reste bloqué en couche 2 et ne
+peux pas être envoyé au destinataire. Comment obtenir l'adresse de niveau 2 du destinaire?
+Le protocole ARP est capable de faire cette translation.
+
+\subsubsection{ACD}
+Adresse conflict detection
+\subsection{ICMP}
+\subsection{DHCP}
 
 
 
-
-\item [Total length]
-
-\item [Fragment Offset]
-
-%Here will be fun to talk about the evil bit
-
-\end{description}
 
 
 
