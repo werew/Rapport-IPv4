@@ -24,3 +24,5 @@
 *.out
 *.synctex.gz
 *.swp
+*.pdf
+*.ps
