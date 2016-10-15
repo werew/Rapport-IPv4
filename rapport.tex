@@ -260,10 +260,18 @@ Après le header du paquet IPv4, commence la partie data qui contient le message
 \includegraphics[width=15cm]{./pics/header1.eps}
 
 \\Les messages qui utilisent cette organisation sont les messages de type 3, 4 et 11.
+
 \subsubsection{Message de type 3: Unreachable Destination}
 Les messages de type 3 sont émis lorsqu'un paquet n'a pas réussi à joindre la destination (Unreachable destination). Cette erreur peux être dut à plusieurs facteurs, et les codes permettent de préciser pourquoi le paquet n'a pas pu rejoindre sa destination.
 \paragraph{Code 0}
 
+\subsubsection{Message de type 4:}
+\subsubsection{Message de type 11: Time Exceeded}
+Ces messages sont envoyés lorsque le TTL d'un paquet à atteind 0. Une autre utilisation des ces messages est lorsque que le temps de ré-assemblage des fragments d'un paquet est dépassé. Ces deux cas sont distingé par le code. Ces messages ont pour destinataire l'hôte qui à envoyé le paquet qui à provoqué l'erreur.//TODO(vérifier)
+\paragraph(Code 0)
+Le code 0 est utilisé pour indiquer que le TTL du paquet posant problème est arrivé à 0. Lorsque le TTL d'un paquet arrive à 0, celui-ci est supprimer et un message ICMP de type 11 et de code 0 est envoyer par le routeur qui à détécté le problème. Cela permet principalement d'éviter qu'un paquet sans dans une boucle et qu'il soit rélayé à l'infini.
+\paragraph(Code 1)
+Le code 1 est quant à lui utilisé pour indiquer //TODO
 \subsection{IGMP}
 \subsection{DHCP}
 
