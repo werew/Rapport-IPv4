@@ -29,104 +29,14 @@
 % La page de garde
 \include{page-garde}
 
-% Page blanche au dos de la page de garde
-\cleardoublepage
 
 % La table des matières
 \parskip=0pt
 \tableofcontents
 
-% Page blanche entre la table des matières et le texte
-\cleardoublepage
 
 \section{Introduction}
 \label{sec:intro}
-Ce document est un modèle possible pour un rapport d'étude.
-Il contient certains des éléments de base permettant de formater un document de façon claire.
-Pour plus d'informations, $google$ est votre ami ;-)
-
-\section{Page de garde}
-
-La page de garde ({\it page-garde.tex}) doit être modifiée avec les informations correctes~:
-\begin{itemize}
-\item Nom et prénom de l'étudiant
-\item Contact mail de l'étudiant
-\item Titre du rapport
-\end{itemize}
-
-Elle est inclue automatiquement grâce à la commande~:
-\begin{verbatim}
-\include{page-garde}
-\end{verbatim}
-
-
-\section{La table des matières}
-
-La table des matières est formatée automatiquement grâce à la commande~:
-\begin{verbatim}
-\tableofcontents
-\end{verbatim}
-
-
-\section{Le corps du rapport}
-
-Les sections, sous-sections, voire sous-sous-sections vous permettent de bien organiser votre rapport.
-Chaque point est ensuite automatiquement repris dans la table des matières.
-Le code suivant présente la définition d'une hiérarchie à trois niveaux~:
-\begin{verbatim}
-\section{Une section}
-\subsection{Une sous-section}
-\subsubsection{Une sous-sous-section}
-\end{verbatim}
-
-\section{\'Eléments utiles}
-\label{sec:elts}
-
-Cette section recense quelques éléments utiles lors de la rédaction d'un rapport\footnote{Par exemple, la note de bas de page pour commencer...}.
-
-\section{Tableaux}
-
-Le tableau~\ref{tab} présente un exemple simple de tableau.
-
-
-\begin{table}[h]
-  \centering
-% On paramètre ici le placement du texte dans les cases, en mode paragraphe de 5cm de large dans la case de gauche ("p{5cm}") et automatique avec un alignement à droite dans la case de droite ('r')
-  \begin{tabular}{| p{5cm} | r |}
-    \hline
-    Ligne 1, case gauche & Ligne 1, case droite\\
-    \hline
-    Ligne 2, case gauche & Ligne 2, case droite\\
-    \hline
-  \end{tabular}
-  \caption{Exemple de tableau}
-  \label{tab}
-\end{table}
-
-\section{Figures}
-
-Voici un exemple de figure avec cette figure numéro~\ref{fig:uds}~:
-
-\begin{figure}[ht]
-\centering
-% L'attribut width permet de définir la taille de la figure
-% L'attribut angle permet d'appliquer une rotation à la figure (exprimé en °)
-  \includegraphics[width=3cm,angle=45]{pics/uds.eps}
-  \caption{Exemple de figure.}
-  \label{fig:uds}
-\end{figure}
-
-\section{Bibliographie}
-
-Vous aurez certainement à citer des projets, sites webs, articles, livres, etc.
-Par exemple, si je souhaite citer la page du Master 2 RISE~\cite{url-rise}, il me suffit d'avoir l'entrée {\it url-rise} présente dans mon fichier $.bib$, inclus en fin de fichier  grâce aux commandes~:
-\begin{verbatim}
-\bibliographystyle{plain}
-\bibliography{rapport-stage}
-\end{verbatim} 
-
-La bibliographie est formatée automatiquement avec le style $plain$ et contiendra les entrées référencées dans le rapport par la commande $cite$.
-
 
 
 \section{Concepts et utilisation}
@@ -268,9 +178,9 @@ Les messages de type 3 sont émis lorsqu'un paquet n'a pas réussi à joindre la
 \subsubsection{Message de type 4:}
 \subsubsection{Message de type 11: Time Exceeded}
 Ces messages sont envoyés lorsque le TTL d'un paquet à atteind 0. Une autre utilisation des ces messages est lorsque que le temps de ré-assemblage des fragments d'un paquet est dépassé. Ces deux cas sont distingé par le code. Ces messages ont pour destinataire l'hôte qui à envoyé le paquet qui à provoqué l'erreur.//TODO(vérifier)
-\paragraph(Code 0)
+\paragraph{Code 0}
 Le code 0 est utilisé pour indiquer que le TTL du paquet posant problème est arrivé à 0. Lorsque le TTL d'un paquet arrive à 0, celui-ci est supprimer et un message ICMP de type 11 et de code 0 est envoyer par le routeur qui à détécté le problème. Cela permet principalement d'éviter qu'un paquet sans dans une boucle et qu'il soit rélayé à l'infini.
-\paragraph(Code 1)
+\paragraph{Code 1}
 Le code 1 est quant à lui utilisé pour indiquer //TODO
 \subsection{IGMP}
 \subsection{DHCP}
@@ -281,55 +191,8 @@ Le code 1 est quant à lui utilisé pour indiquer //TODO
 
 
 
-\section{Lorem ipsum}
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elementum nulla laoreet risus commodo, quis eleifend est ornare. Phasellus lobortis ex a lectus congue, ut posuere risus pellentesque. Mauris vitae nunc molestie, porta turpis a, ullamcorper ante. Etiam dictum risus justo, at sodales sem ultrices vel. Pellentesque a nisl vel justo molestie egestas a luctus lorem. Maecenas quam ante, volutpat non tempor non, tincidunt quis sem. Vivamus a lacus porttitor sem posuere finibus. Phasellus sed sapien quis quam ultricies condimentum.
-
-Integer hendrerit nunc vitae luctus rutrum. Duis rhoncus, magna et aliquam lacinia, ante ex commodo nulla, in consequat odio augue vel odio. Vestibulum non odio varius ante sollicitudin condimentum sit amet et est. Proin ac dolor vitae ligula faucibus lobortis. Quisque dolor massa, lacinia ac tellus eget, ornare placerat diam. Fusce metus leo, molestie nec fringilla quis, sagittis ac libero. Nunc non turpis hendrerit, pellentesque orci sed, pretium sem. Vestibulum posuere, nunc eget sagittis molestie, enim arcu sagittis tellus, eu pharetra enim eros sit amet tellus. Aliquam scelerisque eleifend turpis, eu imperdiet quam posuere at. Aenean nec vulputate velit.
-
-Nulla commodo, arcu id scelerisque finibus, massa ex dictum ex, id maximus eros nulla vel tortor. Aenean vulputate ante sed tellus consectetur, id hendrerit ligula bibendum. Fusce vestibulum ac nisl nec volutpat. Nam non lacus posuere, suscipit nisl non, feugiat tortor. Nunc commodo vulputate tristique. In interdum blandit nisl porta elementum. Nunc id nunc massa. Aenean cursus fermentum condimentum. Etiam eros nibh, finibus a dignissim nec, bibendum sit amet nunc. Vivamus accumsan blandit elit ut tristique. Suspendisse potenti. Aliquam id lectus sed purus eleifend fringilla. Integer eu libero vitae nulla imperdiet cursus sed et tellus. Proin porttitor interdum massa.
-
-\subsection{Proin ullamcorper}
-
-Proin ullamcorper id erat id ornare. Pellentesque ligula augue, aliquam vel consequat non, fringilla eget felis. Etiam nec luctus massa, a ullamcorper arcu. Sed ac ipsum ut velit maximus varius at tincidunt massa. Maecenas posuere bibendum molestie. Maecenas in turpis dui. Fusce nec accumsan lacus, tristique euismod magna. Morbi tristique nec magna a lacinia.
-
-Suspendisse suscipit scelerisque nisi non iaculis. Mauris viverra rutrum nunc, nec lobortis arcu cursus non. Donec felis lectus, venenatis et lectus nec, faucibus dictum tortor. Pellentesque ac ipsum mi. Suspendisse sapien purus, imperdiet vel neque eu, sagittis suscipit justo. Suspendisse eu ornare lacus. Sed lobortis consequat mi id suscipit. Vestibulum a rutrum dolor, non hendrerit nulla. Phasellus felis nisi, maximus non augue eget, posuere iaculis sem. Ut ut tortor justo. Quisque turpis felis, finibus ut sem eget, commodo ullamcorper nisl. Cras a nulla euismod, placerat mauris nec, accumsan nunc. Vestibulum feugiat euismod justo vel pellentesque. Aliquam auctor est at libero elementum, quis sodales justo convallis. Proin lacus lacus, dignissim id est ac, cursus lacinia turpis.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elementum nulla laoreet risus commodo, quis eleifend est ornare. Phasellus lobortis ex a lectus congue, ut posuere risus pellentesque. Mauris vitae nunc molestie, porta turpis a, ullamcorper ante. Etiam dictum risus justo, at sodales sem ultrices vel. Pellentesque a nisl vel justo molestie egestas a luctus lorem. Maecenas quam ante, volutpat non tempor non, tincidunt quis sem. Vivamus a lacus porttitor sem posuere finibus. Phasellus sed sapien quis quam ultricies condimentum.
-
-Integer hendrerit nunc vitae luctus rutrum. Duis rhoncus, magna et aliquam lacinia, ante ex commodo nulla, in consequat odio augue vel odio. Vestibulum non odio varius ante sollicitudin condimentum sit amet et est. Proin ac dolor vitae ligula faucibus lobortis. Quisque dolor massa, lacinia ac tellus eget, ornare placerat diam. Fusce metus leo, molestie nec fringilla quis, sagittis ac libero. Nunc non turpis hendrerit, pellentesque orci sed, pretium sem. Vestibulum posuere, nunc eget sagittis molestie, enim arcu sagittis tellus, eu pharetra enim eros sit amet tellus. Aliquam scelerisque eleifend turpis, eu imperdiet quam posuere at. Aenean nec vulputate velit.
-
-Nulla commodo, arcu id scelerisque finibus, massa ex dictum ex, id maximus eros nulla vel tortor. Aenean vulputate ante sed tellus consectetur, id hendrerit ligula bibendum. Fusce vestibulum ac nisl nec volutpat. Nam non lacus posuere, suscipit nisl non, feugiat tortor. Nunc commodo vulputate tristique. In interdum blandit nisl porta elementum. Nunc id nunc massa. Aenean cursus fermentum condimentum. Etiam eros nibh, finibus a dignissim nec, bibendum sit amet nunc. Vivamus accumsan blandit elit ut tristique. Suspendisse potenti. Aliquam id lectus sed purus eleifend fringilla. Integer eu libero vitae nulla imperdiet cursus sed et tellus. Proin porttitor interdum massa.
-
-Proin ullamcorper id erat id ornare. Pellentesque ligula augue, aliquam vel consequat non, fringilla eget felis. Etiam nec luctus massa, a ullamcorper arcu. Sed ac ipsum ut velit maximus varius at tincidunt massa. Maecenas posuere bibendum molestie. Maecenas in turpis dui. Fusce nec accumsan lacus, tristique euismod magna. Morbi tristique nec magna a lacinia.
-
-\subsection{Suspendisse}
-
-Suspendisse suscipit scelerisque nisi non iaculis. Mauris viverra rutrum nunc, nec lobortis arcu cursus non. Donec felis lectus, venenatis et lectus nec, faucibus dictum tortor. Pellentesque ac ipsum mi. Suspendisse sapien purus, imperdiet vel neque eu, sagittis suscipit justo. Suspendisse eu ornare lacus. Sed lobortis consequat mi id suscipit. Vestibulum a rutrum dolor, non hendrerit nulla. Phasellus felis nisi, maximus non augue eget, posuere iaculis sem. Ut ut tortor justo. Quisque turpis felis, finibus ut sem eget, commodo ullamcorper nisl. Cras a nulla euismod, placerat mauris nec, accumsan nunc. Vestibulum feugiat euismod justo vel pellentesque. Aliquam auctor est at libero elementum, quis sodales justo convallis. Proin lacus lacus, dignissim id est ac, cursus lacinia turpis.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elementum nulla laoreet risus commodo, quis eleifend est ornare. Phasellus lobortis ex a lectus congue, ut posuere risus pellentesque. Mauris vitae nunc molestie, porta turpis a, ullamcorper ante. Etiam dictum risus justo, at sodales sem ultrices vel. Pellentesque a nisl vel justo molestie egestas a luctus lorem. Maecenas quam ante, volutpat non tempor non, tincidunt quis sem. Vivamus a lacus porttitor sem posuere finibus. Phasellus sed sapien quis quam ultricies condimentum.
-
-Integer hendrerit nunc vitae luctus rutrum. Duis rhoncus, magna et aliquam lacinia, ante ex commodo nulla, in consequat odio augue vel odio. Vestibulum non odio varius ante sollicitudin condimentum sit amet et est. Proin ac dolor vitae ligula faucibus lobortis. Quisque dolor massa, lacinia ac tellus eget, ornare placerat diam. Fusce metus leo, molestie nec fringilla quis, sagittis ac libero. Nunc non turpis hendrerit, pellentesque orci sed, pretium sem. Vestibulum posuere, nunc eget sagittis molestie, enim arcu sagittis tellus, eu pharetra enim eros sit amet tellus. Aliquam scelerisque eleifend turpis, eu imperdiet quam posuere at. Aenean nec vulputate velit.
-
-Nulla commodo, arcu id scelerisque finibus, massa ex dictum ex, id maximus eros nulla vel tortor. Aenean vulputate ante sed tellus consectetur, id hendrerit ligula bibendum. Fusce vestibulum ac nisl nec volutpat. Nam non lacus posuere, suscipit nisl non, feugiat tortor. Nunc commodo vulputate tristique. In interdum blandit nisl porta elementum. Nunc id nunc massa. Aenean cursus fermentum condimentum. Etiam eros nibh, finibus a dignissim nec, bibendum sit amet nunc. Vivamus accumsan blandit elit ut tristique. Suspendisse potenti. Aliquam id lectus sed purus eleifend fringilla. Integer eu libero vitae nulla imperdiet cursus sed et tellus. Proin porttitor interdum massa.
-
-Proin ullamcorper id erat id ornare. Pellentesque ligula augue, aliquam vel consequat non, fringilla eget felis. Etiam nec luctus massa, a ullamcorper arcu. Sed ac ipsum ut velit maximus varius at tincidunt massa. Maecenas posuere bibendum molestie. Maecenas in turpis dui. Fusce nec accumsan lacus, tristique euismod magna. Morbi tristique nec magna a lacinia.
-
-Suspendisse suscipit scelerisque nisi non iaculis. Mauris viverra rutrum nunc, nec lobortis arcu cursus non. Donec felis lectus, venenatis et lectus nec, faucibus dictum tortor. Pellentesque ac ipsum mi. Suspendisse sapien purus, imperdiet vel neque eu, sagittis suscipit justo. Suspendisse eu ornare lacus. Sed lobortis consequat mi id suscipit. Vestibulum a rutrum dolor, non hendrerit nulla. Phasellus felis nisi, maximus non augue eget, posuere iaculis sem. Ut ut tortor justo. Quisque turpis felis, finibus ut sem eget, commodo ullamcorper nisl. Cras a nulla euismod, placerat mauris nec, accumsan nunc. Vestibulum feugiat euismod justo vel pellentesque. Aliquam auctor est at libero elementum, quis sodales justo convallis. Proin lacus lacus, dignissim id est ac, cursus lacinia turpis.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elementum nulla laoreet risus commodo, quis eleifend est ornare. Phasellus lobortis ex a lectus congue, ut posuere risus pellentesque. Mauris vitae nunc molestie, porta turpis a, ullamcorper ante. Etiam dictum risus justo, at sodales sem ultrices vel. Pellentesque a nisl vel justo molestie egestas a luctus lorem. Maecenas quam ante, volutpat non tempor non, tincidunt quis sem. Vivamus a lacus porttitor sem posuere finibus. Phasellus sed sapien quis quam ultricies condimentum.
-
-Integer hendrerit nunc vitae luctus rutrum. Duis rhoncus, magna et aliquam lacinia, ante ex commodo nulla, in consequat odio augue vel odio. Vestibulum non odio varius ante sollicitudin condimentum sit amet et est. Proin ac dolor vitae ligula faucibus lobortis. Quisque dolor massa, lacinia ac tellus eget, ornare placerat diam. Fusce metus leo, molestie nec fringilla quis, sagittis ac libero. Nunc non turpis hendrerit, pellentesque orci sed, pretium sem. Vestibulum posuere, nunc eget sagittis molestie, enim arcu sagittis tellus, eu pharetra enim eros sit amet tellus. Aliquam scelerisque eleifend turpis, eu imperdiet quam posuere at. Aenean nec vulputate velit.
-
-Nulla commodo, arcu id scelerisque finibus, massa ex dictum ex, id maximus eros nulla vel tortor. Aenean vulputate ante sed tellus consectetur, id hendrerit ligula bibendum. Fusce vestibulum ac nisl nec volutpat. Nam non lacus posuere, suscipit nisl non, feugiat tortor. Nunc commodo vulputate tristique. In interdum blandit nisl porta elementum. Nunc id nunc massa. Aenean cursus fermentum condimentum. Etiam eros nibh, finibus a dignissim nec, bibendum sit amet nunc. Vivamus accumsan blandit elit ut tristique. Suspendisse potenti. Aliquam id lectus sed purus eleifend fringilla. Integer eu libero vitae nulla imperdiet cursus sed et tellus. Proin porttitor interdum massa.
-
-Proin ullamcorper id erat id ornare. Pellentesque ligula augue, aliquam vel consequat non, fringilla eget felis. Etiam nec luctus massa, a ullamcorper arcu. Sed ac ipsum ut velit maximus varius at tincidunt massa. Maecenas posuere bibendum molestie. Maecenas in turpis dui. Fusce nec accumsan lacus, tristique euismod magna. Morbi tristique nec magna a lacinia.
-
-Suspendisse suscipit scelerisque nisi non iaculis. Mauris viverra rutrum nunc, nec lobortis arcu cursus non. Donec felis lectus, venenatis et lectus nec, faucibus dictum tortor. Pellentesque ac ipsum mi. Suspendisse sapien purus, imperdiet vel neque eu, sagittis suscipit justo. Suspendisse eu ornare lacus. Sed lobortis consequat mi id suscipit. Vestibulum a rutrum dolor, non hendrerit nulla. Phasellus felis nisi, maximus non augue eget, posuere iaculis sem. Ut ut tortor justo. Quisque turpis felis, finibus ut sem eget, commodo ullamcorper nisl. Cras a nulla euismod, placerat mauris nec, accumsan nunc. Vestibulum feugiat euismod justo vel pellentesque. Aliquam auctor est at libero elementum, quis sodales justo convallis. Proin lacus lacus, dignissim id est ac, cursus lacinia turpis.
-
 \section{Conclusion}
 \label{sec:ccl}
-Comme indiqué dans la section~\ref{sec:intro}, ce document peut servir de modèle pour un rapport d'étude.
 
 \cleardoublepage
 \addcontentsline{toc}{section}{Références}
