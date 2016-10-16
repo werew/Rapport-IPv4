@@ -200,6 +200,15 @@ d'un packet IP.
 Chaque paquet IPv4 specifie le protocole utilise par les donnes trasmises:
 cela est l'objectif de ce champs de 8 bits 
 
+\item [Header Checksum]
+Cet champ contient une somme de controle et est utilise pour detecter des 
+erreurs dans l'en-tete IPv4. Le valeur de cet champs est recalcule at
+chaque retrasmission\footnote {Cela est necessaire car le TTL est decrementee
+at chaque retrasmission et un changement de l'en-tete comporte un valeur different
+dans la somme de controlle}: si il ne correspond pas avec celui 
+presente dans l'en-tete le paquet est detruit.
+
+
 
 
 
