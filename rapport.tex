@@ -173,6 +173,34 @@ plus grand, l'unique difference entre ce deux types de paquets est le valeur
 de le champ Fragement Offset que, dans le cas d'un paquet pas fragmentee, est
 toujours zero.
 
+\item [Time to Live]
+Cet champ determine le nombre maximal de fois qu'un paquet peut etre retrasmis, 
+il est utilise pour empecher que un paquet puisse etre retrasmis a l'infini.
+Chaque router au long du chemin d'un paquet est tenu a detruir un paquet si le
+valeur du TTL ({\it Time to Live}) est zero ou decrementer cet champs par le
+nombre de secondes que le paquet passe en attente d'etre trasmis.
+
+En theorie le TTL indique le nombre de secondes pendant le quels un paquet
+peut continuer a etre retrasmis dans une reseau ,mais , etant chaque router
+toujour tenu a decrementer cet champ de au moins 1 (meme si le paquet a ete
+retrasmis en moin qu'un seconde) et considerant les performances des routers
+d'aujourd'hui, en pratique le TTL indique le nombre maximum de router que
+un paquet peut incontrer au long de son chemim.
+
+Le space reservee au TTL dans l'en-tete IPv4 est de un octet ce que comporte un 
+TTL maximum de 255.\footnote {Le RFC 1700 recommende un valeur par defaut de 64.}
+
+Quand un paquet a ete detruit ensuite a l'expiration du TTL, le router qui a
+detruit le paquet peut decider de envoier un message d'erreur a l'emetteur du
+paquet detruit. Cet type de message (ICMP Time exceeded) est utilise par
+utils comme {\it traceroute} pour decouvrir, approximativement, le chemin 
+d'un packet IP.
+
+
+
+
+
+
 \end{description}
 
 
