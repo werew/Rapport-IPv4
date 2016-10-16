@@ -224,12 +224,32 @@ Les messages de type 3 sont émis lorsqu'un paquet n'a pas réussi à joindre la
 \paragraph{Code 0}
 
 \subsubsection{Message de type 4:}
+
 \subsubsection{Message de type 11: Time Exceeded}
 Ces messages sont envoyés lorsque le TTL d'un paquet à atteind 0. Une autre utilisation des ces messages est lorsque que le temps de ré-assemblage des fragments d'un paquet est dépassé. Ces deux cas sont distingé par le code. Ces messages ont pour destinataire l'hôte qui à envoyé le paquet qui à provoqué l'erreur.//TODO(vérifier)
-\paragraph{Code 0}
+Le champ Internet header contient l'entête du paquet qui a été supprimé plus les 64 bits suivant celui-ci. Cela permet à l'émetteur de retrouver quel paquet à été supprimé.
+\paragraph{Code 0:}
 Le code 0 est utilisé pour indiquer que le TTL du paquet posant problème est arrivé à 0. Lorsque le TTL d'un paquet arrive à 0, celui-ci est supprimer et un message ICMP de type 11 et de code 0 est envoyer par le routeur qui à détécté le problème. Cela permet principalement d'éviter qu'un paquet sans dans une boucle et qu'il soit rélayé à l'infini.
-\paragraph{Code 1}
+\paragraph{Code 1:}
 Le code 1 est quant à lui utilisé pour indiquer //TODO
+
+
+\subsubsection{Message de type 5:}
+Les message de type 5 utilisent les entêtes ci-dessous et servent à faire de la redirection. En effet, lorsqu'un routeur détecte que le prochain routeur dans lequel va transiter le paquet se trouve dans le même réseau que l'émetteur de ce paquet, il va envoyer un message ICMP pour avertir cet hôte (et/ou le réseau) qu'il existe un chemin plus court en envoyant directement les paquets vers le prochain routeur. Ce message ICMP va avoir pour effet de modifier la table de routage interne à l'émetteur (et/ou des hôtes connecté au réseau). Concernant le paquet que le premier routeur à reçu, il va le transmettre vers sa destination.
+
+\includegraphics[width=15cm]{./pics/header2.eps}
+
+\\
+Le champ Gateway Internet Address contient la l'adresse du routeur auquel il faut faire transiter le traffique directement pour avoir un chemin de routage plus court.
+Le champ Internet Header contient toujours l'entête du message ayant porvoqué l'envoie du message ICMP plus les 64 bits suivant l'entête. Cela permet à (aux) hôte(s) de pouvoir modifier leur table de routage en fonction la destination que cherchait à atteindre le paquet.
+\paragraph{Code 0}
+Ce code indique que la redirection est adresser à tout le réseau de l'émetteur du paquet.
+\paragraph{Code 1}
+Ce code indique que la redirection est adresser à l'émetteur du paquet.
+\paragraph{Code 2}
+Ce code indique que la redirection est adresser à tout le réseau de l'émetteur du paquet et aux services(//TODO(préciser)).
+\paragraph{Code 3}
+Ce code indique que la redirection est adresser à l'émetteur du paquet(//TODO(préciser)).
 \subsection{IGMP}
 \subsection{DHCP}
 
