@@ -128,6 +128,14 @@ une reduction du rythme au quel les packets sont envoye, avec l'objectif de redu
 la perte de packets.
 
 \item [Total length]
+Comme le suggere le nom, ce champs est utilise pour indiquer la taille totale du
+packet IPv4: en tete plus donnes. Le champ {\it Total length} est defini sur 16
+bits, ceci permet de indiquer un valeur compri entre 0 et 65,535 octets. Comme l'en-tete
+est compris dans la longeur totale d'un packet cet valeur ne sarait jamais inferieur
+a 20 (taille minimale d'un en-tete IPv4 en octets).
+RFC 791 impose a toutes les dispositifs d'une reseau IPv4 la capacite de recevoir
+des packets jusq'a une taille de 576 octets, cette prerogative permet de
+eviter une excessive fragmentation.
 
 \item [Fragment Offset]
 %Here will be fun to talk about the evil bit
