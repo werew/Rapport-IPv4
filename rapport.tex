@@ -146,7 +146,7 @@ Un de ces bit est emploie pour indiquer si le paquet peut etre fragmente ou
 non. Cet bit, appelle DF ({\it Don't Fragment}), doit etre pris en consideration
 par les routers dans le chemin pour decider si un paquet trop grand pour etre
 trasmis peut etre retrasmis sous forme de fragments plus petits ou rejete. 
-Un autre bit, appelle MF ({\it More Fragment}), indique si le paquet est suivi 
+Un autre bit, appelle MF ({\it More Fragments}), indique si le paquet est suivi 
 par d'autres fragments. Le bit MF est mis a 0 dans le dernier fragment ou dans
 des paquet qui n'ont pas ete fragmente.
 
@@ -159,10 +159,19 @@ titre tous les paquets etant envoye avec ce bit (renomme "{\it Evil Bit}")
 mis a 1 seront mis a la poubelle.
 }
 
-
-
 \item [Fragment Offset]
-%Memo: unique difference entre dernier fragment et paquet pas fragmente est un offset > 0%
+Lorsque un paquet a ete fragmentee cet en-tete est utilisee pour determiner la 
+position (offset) d'un fragment par rapport a les donnees du paquet reassemble.
+Le decalage de chaque fragment est exprime en bloques de huit octets (ou 64
+bits).  Le champ Fragment Offset utilise 13 bits de l'en-tete IPv4, cela permet
+un offset maximale de 65,528 octets.\footnote {En pratique un tel offset n'est
+jamais utilisee car, en ajoutant un en-tete minimale de 20 octets, la taille 
+totale du paquet reassemble depaserait la longeur maximale d'un paquet IPv4.}
+Etant donne que la flag MF ({\it More Fragments}) doit etre mise a zero lorsque 
+si un paquet n'est pas fragmentee ou si il est le dernier fragment d'un paquet
+plus grand, l'unique difference entre ce deux types de paquets est le valeur
+de le champ Fragement Offset que, dans le cas d'un paquet pas fragmentee, est
+toujours zero.
 
 \end{description}
 
