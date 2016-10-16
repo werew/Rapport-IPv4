@@ -151,9 +151,12 @@ par d'autres fragments. Le bit MF est mis a 0 dans le dernier fragment ou dans
 des paquet qui n'ont pas ete fragmente.
 
 Un des trois bits de ce champs n'est pas actuallement utilise mais il a ete
-reserve pour applications possibles futures.
-\footnote {
-%Here will be fun to talk about the evil bit
+reserve pour applications futures possibles.
+\footnote {Cet bit a ete aussi le protagoniste d'un des plus connu poissons
+d'avril presentee par le IETF. Pour faciliter les taches des systems de filtrage 
+le RFC 3514 propose d'utiliser ce bit pour etiqueter paquets mailveillant, a ce
+titre tous les paquets etant envoye avec ce bit (renomme "{\it Evil Bit}") 
+mis a 1 seront mis a la poubelle.
 }
 
 
