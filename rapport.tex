@@ -120,6 +120,13 @@ node implements its own response based on how it is configured."} -
 Implementing Quality of Service Policies with DSCP
 http://www.cisco.com/c/en/us/support/docs/quality-of-service-qos/qos-packet-marking/10103-dscpvalues.html
 }}
+Le dernieres 2 bits du champ ToS sont utilise pour l'extension ECN ({\it Explicit Congestion
+Notification }). Cette extension, propose par RFC2481 et introduite deux annees apres avec le RFC3168,
+ajoute un systeme de controle de la congestion du traffic reseau. Dans le cas d'une saturation
+de la reseau cet champ est utilise pour notifier cet probleme et demander a le dispositif emetteur
+une reduction du rythme au quel les packets sont envoye, avec l'objectif de reduir l'attente et
+la perte de packets.
+
 \item [Total length]
 
 \item [Fragment Offset]
