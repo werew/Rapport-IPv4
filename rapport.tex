@@ -137,8 +137,29 @@ RFC 791 impose a toutes les dispositifs d'une reseau IPv4 la capacite de recevoi
 des packets jusq'a une taille de 576 octets, cette prerogative permet de
 eviter une excessive fragmentation.
 
-\item [Fragment Offset]
+\item [Identification]
+Cet en-tete (sur 16 bits) permet d'identifier les fragments appartenent au meme packet.
+
+\item [Flags]
+Le 3 bits du champs Flags sont utilise pour gerer la fragmentation d'un packet.
+Un de ces bit est emploie pour indiquer si le paquet peut etre fragmente ou
+non. Cet bit, appelle DF ({\it Don't Fragment}), doit etre pris en consideration
+par les routers dans le chemin pour decider si un paquet trop grand pour etre
+trasmis peut etre retrasmis sous forme de fragments plus petits ou rejete. 
+Un autre bit, appelle MF ({\it More Fragment}), indique si le paquet est suivi 
+par d'autres fragments. Le bit MF est mis a 0 dans le dernier fragment ou dans
+des paquet qui n'ont pas ete fragmente.
+
+Un des trois bits de ce champs n'est pas actuallement utilise mais il a ete
+reserve pour applications possibles futures.
+\footnote {
 %Here will be fun to talk about the evil bit
+}
+
+
+
+\item [Fragment Offset]
+%Memo: unique difference entre dernier fragment et paquet pas fragmente est un offset > 0%
 
 \end{description}
 
