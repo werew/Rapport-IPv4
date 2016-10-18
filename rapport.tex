@@ -313,12 +313,28 @@ Les messages de type 8 et 0 servent à faire des envoies et des renvoies d'infor
 Les champs Identifier et Sequence Number aide l'émetteur de l'echo request à associer les echos request qu'il à envoyés avec les echos reply qu'il à reçus.
 //TODO(qui a t-il dans data?)
 \subsection{IGMP}
-\subsection{DHCP\footnote{RFC 2131: https://tools.ietf.org/html/rfc2131}}
+\subsection{DHCP}
+\footnote{RFC 2131: https://tools.ietf.org/html/rfc2131}
 Le protocole DHCP (Dynamic Host Configuration Protocol) sert à l'autoconfiguration des interfaces. Plus précisement, il  permet d'attribuer une adresse IP à une interface et de lui faire parvenir d'autres information essentielle pour le fonctionnement de l'interface sur le réseau.
 Voyons comment une interface peut ce configurer aurpès d'un serveur DHCP.
 
 \includegraphics[width=6cm]{./pics/timeline_dhcp.eps}
 \\
+Lorsqu'une interface, qui n'a pas d'adresse IP, souhaite en recevoir une, elle va emettre un message DHCPDISCOVER en broadcast sur son réseau. Des agents DHCP peuvent faire passer ce message DHCP sur un autre réseau si le serveur DHCP (qui distribue les adresses) ne se trouve pas sur le même réseau que l'hôte qui fait la demande.
+\\Etant donnée que le message est envoyé en broadcast, tout les hôtes sur le réseau vont recevoir le message, et en particulier le ou les serveurs DHCP qui pourraient s'y trouver. Si cela est le cas, ceux-ci vont répondre avec un DHCPOFFER. Ce message contient entre autre l'adresse IP proposé pour le client souhaitant se configurer, ainsi que le masque de sous-réseau de l'adresse. A ce moment là l'adresse n'est pas encore attribuer et réservé pour l'hôte étant donnée qu'il peux refuser l'offre et accepter l'offre d'un autre serveur. Si jamais l'hôte ne reçoit aucun DHCPOFFER, il va ré-émettre un DHCPDISCOVERY. Si il reçoit un ou plusieurs DHCPOFFER, l'hôte va devoir choisir une configuration qui lui est proposé. Une fois ce choix fait, il va informé les serveurs DHCP de son choix à l'aide d'un message DHCPREQUEST émis en broadcast. Ce message va contenir l'identifiant du serveur DHCP retenu ainsi que la configuration souhaité par l'hôte (adresse IP et masque de sous-réseau). Ce message peut être interprété de deux manières différentes selon le serveur:
+\item- si ce n'est pas le serveur retenu, il considère le message comme une déclinaison de l'offre.
+\item- si c'est le serveur retenu, il va sortir l'adresse attribué l'hôte de la plage d'adresse libre pour ne plus l'attribuer à un autre hôte. Il va ensuite émmetre un message DHCPACK contenant la configuration effective de l'hôte avec notemment: l'adresse IP, le masque de sous-réseau, la durée du bail, l'adresse de la passerelle par défaut et l'adresse du serveur DNS.
+Si pour quelque raisons le serveur n'est pas capable d'attribuer l'adresse proposé dans l'offre (par exemple si l'adresse à été attribuer entre temps), le serveur emet un DHCPNAK pour avertir l'hôte que l'adresse n'est plus disponible. L'hôte devra alors recommencer la procédure pour obtenir une adresse IP.
+\\Enfin si le serveur ne reçoit pas de message DHCPREQUEST, la procédure s'arrêtrra à ce moment et l'adresse n'étant pas encore attribuer à l'hôte elle reste disponible pour être attribuer à d'autre hôte.
+Arrive la dernière étape. Si le client reçois un message DHCPACK, il peux prendre en compte la configuration (adresse IP, masque de sous-réseau, DNS, passerelle par défaut et durée de bail). Il va effectuer une dernière vérification pour s'assurer que l'adresse qui lui à été attribué est bien unique sur le réseau pour éviter d'avoir deux hôte avec la même adresse. Il va pour cela utilisé le protocole ARP et la méthode de vérification vu plus haut. Si jamais l'adresse est déjà utilisé par un autre hôte, il va envoyer un message DHCPDECLINE au serveur DHCP pour lui indiquer qu'il n'utilisera pas la configuration proposé par celui-ci, et il va recommencer la procédure pour pouvoir obtenir une nouvelle configuration.
+\\Si jamais l'adresse proposé par le serveur est unique sur le réseau, la configuration est terminé et l'hôte peut utiliser l'adresse (durant la durée du bail de celle-ci).
+Dernier cas possible, si jamais le l'hôte ne reçoit pas de DHCPACK ou de DHCPNAK, il va réemettre le message DHCPREQUEST pour esperer recevoir une réponse du serveur.
+
+//TODO algo de retransmission
+//TODO fonctionnement agent relais dhcp
+//client peut renoncer à son bail
+//identification des message faisant partit d'un meme echange avec client identifier, server identifier
+
 \includegraphics[width=8cm]{./pics/paquet_dhcp.eps}
 
 
@@ -327,7 +343,6 @@ Voyons comment une interface peut ce configurer aurpès d'un serveur DHCP.
 \section{Conclusion}
 \label{sec:ccl}
 
-\cleardoublepage
 \addcontentsline{toc}{section}{Références}
 \bibliographystyle{plain}
 \bibliography{rapport}
