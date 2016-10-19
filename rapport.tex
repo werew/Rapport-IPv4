@@ -260,6 +260,27 @@ propose dans le chapitre
 de ce rapport.
 
 
+\item [Options] 
+Cet champ n'est pas obligatoire et donc il peut ne pas etre present dans un
+en-tete IPv4. La presence de cet champ est determine par le valeur du
+IHL: lorsque cette valeur indique une taille de l'en-tete IPv4 superieure a 
+la taille minimale (20 octets), l'en-tete contiens des options.
+Etant donne que un en-tete IPv4 peut avoir une taille maximale de 
+60 octets (le valeur du IHL est egal a 15), le champ Options peut occuper
+40 octets au meximum.
+
+Ce champ est ne pour etendre les possibilites de IPv4 en ajoutant par example 
+des fonctions de debuggage, de securite, etc ....
+Aujord'hui il y a quelque dizaine de options qui ont ete specifie\footnote
+{http://www.iana.org/assignments/ip-parameters/ip-parameters.xhtml} (si on
+considere aussi les options experimentales) mais peu entre eux sont reelement
+utilise. 
+Entre les options les plus connues on retrouve les options:
+SEC, TR, MTUP et MTUR, TS et RR.
+%TODO describe some options %
+%TODO talk about NOP and EOOL %
+
+
 
 
 
