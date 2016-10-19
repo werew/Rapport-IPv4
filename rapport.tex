@@ -67,9 +67,12 @@ utilise pour determiner le type de protocole utilise` par la couche
 reseau (chouche 3). Dans le cas de IPv4 cet champs contiendra toujours
 la valeur 4, qui justement identifie le protocole IPv4.
 
-Cet champ n'est pas tres utilise, en tenant compte que le protocole 
-a utiliser pour la couche 3 est presque toujour specifie dans l'en-tete
-de la couche liason.
+La position de ce champ dans l'en-tete n'est pas casuelle. En effet pour
+connaitre la positions des autres champs de l'en-tete il faut d'abord savoir
+quel est le protocole utilise et donc le type de en-tete.
+En pratique dans la plus part des cas cet champ n'est pas tres utile, car le
+protocole a utiliser pour la couche 3 est souvent specifie dans l'en-tete du
+protocol de la couche liason.
 
 \item [IHL]
 Le champ IHL specifie la taille de l'en-tete IPv4, en fait IHL est 
@@ -241,7 +244,6 @@ aussi l'adresse destination peut contenir des valeur speciaux. En effet certains
 valeurs puvent etre utilise par example pour identifier plusieurs machines
 (adresses multicast), toutes le machines d'une reseau (adresse de broadcast) ou
 la machine actuelle (adresse de loopback).
-
 
 Une description plus detaile des mechanismes lies aux adresses IPv4 est
 propose dans le chapitre 
