@@ -210,20 +210,45 @@ presente dans l'en-tete le paquet est detruit.
 
 
 \item [Addresse source et Addresse destination]
-L'addresse source de chaque packet est une suite de 32 bits que, dans la plus
-part des cas, representent l'addresse logique\footnote {Il ne faut surtout pas
-oublier la difference entre un addresse physique, comme par example un addresse
-MAC (qui est lie a l'hardware et est donc unique pour chaque machine), et un
-addresse logique, comme par example un addresse IP (qui peut changer et
-identifie une machine dans une certaine resau dans le monde).} de la machine
-qui a envoye le paquet (a laquelle il faudra eventuellement repondre donc).
-Dans certains cas specifiques cette addresse ne correspond pas a celui de
-la machine qui a envoye le paquet, c'est par exemple ce qui se passe dans une
-requete {\it ARP probe} quand une machine n'a pas encore determine son addresse
-IP. 
+Les addresses de chaque paquet IPv4 (soit l'adresse source que l'adresse de
+destination d'un paquet) sont represente sous forme d'une suite de 32 bits.
+
+L'addresse source de chaque packet represente dans la plus part des cas
+l'addresse logique\footnote {Il ne faut surtout pas oublier la difference entre
+un addresse physique, comme par example un addresse MAC (qui est lie a
+l'hardware et est donc unique pour chaque machine), et un addresse logique,
+comme par example un addresse IP (qui peut changer et identifie une machine
+dans une reseau en particuliere).} de la machine qui a envoye le paquet
+(a laquelle il faudra eventuellement repondre donc).  Dans certains cas
+specifiques cette addresse ne correspond pas a celui de la machine qui a envoye
+le paquet, c'est par exemple ce qui se passe dans une requete {\it ARP probe}
+la ou le valeur de l'adresse de la machine source est 0.0.0.0 (ce qui represente
+un adresse indefini\footnote {Notex que la signification de l'adresse 0.0.0.0
+est lie a la facon dont il est utilise. En general il indique {\it aucune
+adresse en particulier}.  Dans la plus part des cas cet adresse est utilise
+pour indiquer un de ces valeurs: l'adresse de la machine courant (c'est
+l'adresse de loopback), n'importe quel adresse ou reseau (c'est le cas de la
+route par default dans une table de routage), un adresse indefini ou bien une
+combinaison des possibilites precedentes (c'est le cas d'une requete {\it ARP
+probe} ou bien d'une requete {\it DHCP Discovery} ou {\it DHCP Request}, ou en
+fait l'adresse source 0.0.0.0 indique un adresse indefinie mais aussi l'adresse
+de la machine actuelle, que del reste n'est pas encore defini...).}
+) car elle n'a pas encore determine son addresse IP. 
+
+L'addresse de destination d'un paquet IPv4 identifie la machine vers
+laquelle le paquet doit etre expedie. Comme dans le cas de l'adresse source,
+aussi l'adresse destination peut contenir des valeur speciaux. En effet certains 
+valeurs puvent etre utilise par example pour identifier plusieurs machines
+(adresses multicast), toutes le machines d'une reseau (adresse de broadcast) ou
+la machine actuelle (adresse de loopback).
 
 
-%TODO why it is not the first thing?%
+Une description plus detaile des mechanismes lies aux adresses IPv4 est
+propose dans le chapitre 
+%TODO mettre chapitre% 
+de ce rapport.
+
+
 
 
 
