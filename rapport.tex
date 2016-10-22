@@ -40,12 +40,51 @@
 
 % Daniel intro
 
-A la fin des années 1960 il y eu une forte demande de la part des universités et centres de recherche aux Etats-Unis pour la création d'un réseau permettant d'une part, d'interconnecter les différentes structures afin de partager les informations et d'autre part, de faire des expérimentations sur les réseaux. 
-C'est dans le but de faire ce réseau que l'ARPA a créé l'ARPANET qui est l'ancêtre d'internet. En effet, c'est à partir des principes de ce réseau qu'a été créé internet. L'ARPA (Advanced Research Project Agency ) est une agence de recherche créée par le département américain de la défense en 1957 afin de développer de nouvelles technologies à usage militaire. L'ARPA a mis en place en 1969 le premier réseau mondial qui a été appelé ARPANET ( Advanced Research Project Agency NETwork ). Ce réseau a été conçu de façon a ne pas dépendre d'un centre névralgique qui aurait pu être détruit en cas d'attaque nucléaire. Ce réseau a été constitué comme une toile reliants plusieurs serveurs. Chaque serveur est un noeud et peut stocker, traiter ou servir de relais. Ainsi, il existe plusieurs chemins pour accéder à un noeud et lorsqu'un noeud est hors service, il est toujours possible de rejoindre le noeud destinataire en passant par un autre chemin. Avant ARPANET, la communication réseau était également basée sur la communication par circuit électrique dont les  informations étaient envoyées en continue dans un seul morceau. Ce réseau est  le premier qui fonctionne sur la base de paquets. L.e principe de communication par paquet est de découper l'information à transmettre en de plus petits paquets qui peuvent chacun prendre un chemin différent pour arriver à destination.
-Ce réseau se développa est il compta 23 noeuds en 1971 et en 1977 il en compta 111. Afin d'uniformiser ce réseau, Vint Cerf et Bob Kahn on introduit la première version du protocol TCP.
-Historiquement, les protocoles IP constituaient la partie du protocole TCP qui s'occupe de la transmission en mode sans connexion. La transmission en mode sans connexion est une transmission de donnée dans laquelle chaque paquet contient l'adresse de destination. Ceci permet une transmission  du paquet sans que les deux hôtes soient obligés d'établir une connexion auparavant. Cette version est ce qu'on aurait pu nommer l'IPV1 et elle est documentée dans la RFC 675. Cette version fut modifiée et publiée en 1977. Elle correspond à la deuxième version de TCP (IPV2).
-Initialement, le protocole TCP avait deux fonctions. ( as a host level end to end protocol, and to serve as an internet packaging and routing protocol. These two things should be provided in a layered and modular way. I suggest that a new distinct internetwork protocol is needed, and that TCP be used strictly as a host level end to end protocol.”) Premièrement, il devait permettre une transmission fiable d'informations entre deux hôtes. Il devait également servir en tant que protocole de routage et de packaging. Cependant, pour être cohérant avec le modèle en couche, qui différencie la fiabilité (couche transport) et le routage (couche réseau), il fut décidé en 1978 de diviser le protocole TCP. Le protocole TCP ne s'occupe maintenant plus que de la partie transport. La partie réseau a été prise en charge par les protocoles IP.
-C'est finalement le 1er janvier 1983 que l'ARPANET adopte les protocoles TCP/IP et donc l'IPV4. 
+A la fin des années 1960 il y eu une forte demande de la part des universités
+et centres de recherche aux Etats-Unis pour la création d'un réseau permettant
+d'une part, d'interconnecter les différentes structures afin de partager les
+informations et d'autre part, de faire des expérimentations sur les réseaux.
+C'est dans le but de faire ce réseau que l'ARPA a créé l'ARPANET qui est
+l'ancêtre d'internet. En effet, c'est à partir des principes de ce réseau qu'a
+été créé internet. L'ARPA (Advanced Research Project Agency ) est une agence de
+recherche créée par le département américain de la défense en 1957 afin de
+développer de nouvelles technologies à usage militaire. L'ARPA a mis en place
+en 1969 le premier réseau mondial qui a été appelé ARPANET ( Advanced Research
+Project Agency NETwork ). Ce réseau a été conçu de façon a ne pas dépendre d'un
+centre névralgique qui aurait pu être détruit en cas d'attaque nucléaire. Ce
+réseau a été constitué comme une toile reliants plusieurs serveurs. Chaque
+serveur est un noeud et peut stocker, traiter ou servir de relais. Ainsi, il
+existe plusieurs chemins pour accéder à un noeud et lorsqu'un noeud est hors
+service, il est toujours possible de rejoindre le noeud destinataire en passant
+par un autre chemin. Avant ARPANET, la communication réseau était également
+basée sur la communication par circuit électrique dont les  informations
+étaient envoyées en continue dans un seul morceau. Ce réseau est  le premier
+qui fonctionne sur la base de paquets. L.e principe de communication par paquet
+est de découper l'information à transmettre en de plus petits paquets qui
+peuvent chacun prendre un chemin différent pour arriver à destination.  Ce
+réseau se développa est il compta 23 noeuds en 1971 et en 1977 il en compta
+111. Afin d'uniformiser ce réseau, Vint Cerf et Bob Kahn on introduit la
+première version du protocol TCP.  Historiquement, les protocoles IP
+constituaient la partie du protocole TCP qui s'occupe de la transmission en
+mode sans connexion. La transmission en mode sans connexion est une
+transmission de donnée dans laquelle chaque paquet contient l'adresse de
+destination. Ceci permet une transmission  du paquet sans que les deux hôtes
+soient obligés d'établir une connexion auparavant. Cette version est ce qu'on
+aurait pu nommer l'IPV1 et elle est documentée dans la RFC 675. Cette version
+fut modifiée et publiée en 1977. Elle correspond à la deuxième version de TCP
+(IPV2).  Initialement, le protocole TCP avait deux fonctions. ( as a host level
+end to end protocol, and to serve as an internet packaging and routing
+protocol. These two things should be provided in a layered and modular way. I
+suggest that a new distinct internetwork protocol is needed, and that TCP be
+used strictly as a host level end to end protocol.”) Premièrement, il devait
+permettre une transmission fiable d'informations entre deux hôtes. Il devait
+également servir en tant que protocole de routage et de packaging. Cependant,
+pour être cohérant avec le modèle en couche, qui différencie la fiabilité
+(couche transport) et le routage (couche réseau), il fut décidé en 1978 de
+diviser le protocole TCP. Le protocole TCP ne s'occupe maintenant plus que de
+la partie transport. La partie réseau a été prise en charge par les protocoles
+IP.  C'est finalement le 1er janvier 1983 que l'ARPANET adopte les protocoles
+TCP/IP et donc l'IPV4. 
 
 
 % ------------------------------------------------
