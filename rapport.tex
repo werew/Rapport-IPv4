@@ -53,7 +53,7 @@ C'est finalement le 1er janvier 1983 que l'ARPANET adopte les protocoles TCP/IP 
 La technique de classe d'adressage IP ( classful network ) est une méthode utilisée de 1981 à 1993 pour allouer des adresses IPV4. Il a été défini en 1981 qu'une adresse IP est divisée en deux parties : une partie qui sert à identifier le réseau et une partie qui sert à identifier une interface sur ce réseau.
 Dans cette méthode une adresse IP est divisée en 5 plages d'adresses IP et sont appelées classes. Ils sont organisés comme dans le tableau ci-dessous  :
 
-\includegraphics{tableau.eps}
+\includegraphics{./pics/tableau.eps}
 
 
 Chaque classe a un certain nombre d'octets servant à identifier le réseau. Une adresse IP de classe A à un identificateur de réseau sur 1 seul octet. Une adresse IP de classe B sur 2 octet et une de classe C sur 3 octets. Les adresses IP de classe D et E correspondent à des adresses IP particulières.
@@ -287,15 +287,22 @@ Etant donne que un en-tete IPv4 peut avoir une taille maximale de
 60 octets (le valeur du IHL est egal a 15), le champ Options peut occuper
 40 octets au meximum.
 
-Ce champ est ne pour etendre les possibilites de IPv4 en ajoutant par example 
-des fonctions de debuggage, de securite, etc ....
+Ce champ est ne pour etendre les possibilites de IPv4 en ajoutant des fonctions extra.
 Aujord'hui il y a quelque dizaine de options qui ont ete specifie\footnote
 {http://www.iana.org/assignments/ip-parameters/ip-parameters.xhtml} (si on
 considere aussi les options experimentales) mais peu entre eux sont reelement
 utilise. 
-Entre les options les plus connues on retrouve les options:
-SEC, TR, MTUP et MTUR, TS et RR.
-%TODO describe some options %
+Entre les options les plus connues on retrouve par example des ajoutes
+utiles a l'administration et au debouggage d'une reseau, comme {\it Record route}
+qui permet de enregistrer les addresses des routeurs dans le chemin d'un 
+paquet IP, et {\it Timestamp} qui permet de savoir le temp passe 
+entre chaque hop du chemin.
+
+Entre les options il en y a deux qui ont une fonction speciale: EOL 
+(\it End Of Option Linst) and NOP ({\it No Operation}).
+
+
+
 %TODO talk about NOP and EOOL %
 
 
@@ -401,6 +408,8 @@ Les messages de type 8 et 0 servent à faire des envoies et des renvoies d'infor
 Les champs Identifier et Sequence Number aide l'émetteur de l'echo request à associer les echos request qu'il à envoyés avec les echos reply qu'il à reçus.
 //TODO(qui a t-il dans data?)
 \subsection{IGMP}
+
+
 \subsection{DHCP}
 \footnote{RFC 2131: https://tools.ietf.org/html/rfc2131}
 Le protocole DHCP (Dynamic Host Configuration Protocol) sert à l'autoconfiguration des interfaces. Plus précisement, il  permet d'attribuer une adresse IP à une interface et de lui faire parvenir d'autres information essentielle pour le fonctionnement de l'interface sur le réseau.
@@ -408,7 +417,7 @@ Voyons comment une interface peut ce configurer aurpès d'un serveur DHCP.
 
 \includegraphics[width=6cm]{./pics/timeline_dhcp.eps}
 \\
-Lorsqu'une interface, qui n'a pas d'adresse IP, souhaite en recevoir une, elle va emettre un message DHCPDISCOVER en broadcast sur son réseau. Des agents DHCP peuvent faire passer ce message DHCP sur un autre réseau si le serveur DHCP (qui distribue les adresses) ne se trouve pas sur le même réseau que l'hôte qui fait la demande.
+Lorsqu'une interface, qui n'a pas d'adresse IP, souhaite en recevoir une, elle va emettre un message DHCPDISCOVER en broadcast sur son réseau. Des agents DHCP peuvent faire passer ce message DHCP sur un autre réseau si le serveur DHCP (qui distribue les adresses) ne se trouve pas sur le même réseau que l'hôte qui fait la demande. L'hote va utiliser comme adresse IP 0.0.0.0.
 \\Etant donnée que le message est envoyé en broadcast, tout les hôtes sur le réseau vont recevoir le message, et en particulier le ou les serveurs DHCP qui pourraient s'y trouver. Si cela est le cas, ceux-ci vont répondre avec un DHCPOFFER. Ce message contient entre autre l'adresse IP proposé pour le client souhaitant se configurer, ainsi que le masque de sous-réseau de l'adresse. A ce moment là l'adresse n'est pas encore attribuer et réservé pour l'hôte étant donnée qu'il peux refuser l'offre et accepter l'offre d'un autre serveur. Si jamais l'hôte ne reçoit aucun DHCPOFFER, il va ré-émettre un DHCPDISCOVERY. Si il reçoit un ou plusieurs DHCPOFFER, l'hôte va devoir choisir une configuration qui lui est proposé. Une fois ce choix fait, il va informé les serveurs DHCP de son choix à l'aide d'un message DHCPREQUEST émis en broadcast. Ce message va contenir l'identifiant du serveur DHCP retenu ainsi que la configuration souhaité par l'hôte (adresse IP et masque de sous-réseau). Ce message peut être interprété de deux manières différentes selon le serveur:
 \item- si ce n'est pas le serveur retenu, il considère le message comme une déclinaison de l'offre.
 \item- si c'est le serveur retenu, il va sortir l'adresse attribué l'hôte de la plage d'adresse libre pour ne plus l'attribuer à un autre hôte. Il va ensuite émmetre un message DHCPACK contenant la configuration effective de l'hôte avec notemment: l'adresse IP, le masque de sous-réseau, la durée du bail, l'adresse de la passerelle par défaut et l'adresse du serveur DNS.
@@ -429,8 +438,10 @@ Une fois que l'hôte à atteind le temps T1, il va chercher à contacter le serv
 Si jamais l'hôte ne reçoit pas de reponse DHCPACK avant l'arrivé de T2, il passe en état REBINDING. A ce moment il va émettre un DHCPREQUEST en broadcast pour espérer pourvoir étendre son bail auprès de n'importe quel serveur DHCP. Pour parer aux eventuels cas de perte de DHCPREQUEST, l'hôte va renvoyer un message une fois la moitié de la durée entre T1 et T2 passé, en état RENEWING; et une fois la moitié de la durée entre T2 et la fin du baille , en état REBINDING(et avec un minimum de temps de 60 secondes).
 Si malgré tout, la durée du bail venait à expirer, alors l'hôte ne possèderait plus de configuration réseau et ne pourrait plus communiquer avec d'autre hôtes. Il rentre alors en état INIT; il doit alors recommencer la procédure pour obtenir une adresse configuration.
 
-//TODO conf en réutilisiant une ancienne conf.
+Cependant,dans ce cas comme dans d'autre, l'hôte peut ré-utiliser une configuration précédement utilisée. Cela permet de raccourcir la négociation entre l'hôte et le serveur DHCP. L'hôte va directement commencé la négociation en faisant un DHCPREQUEST en broadcast et contenant la configuration qu'il souhaite ré-utiliser. Le serveur concerné par l'attribution antérieur de la configuration va donc accepter la demande de l'hôte à l'aide d'un DHCPACK ou la refuser, si la demande n'est pas correct ou si l'adresse est utilisé par un autre hôte, à l'aide d'un DHCPNAK.
+Cette négociation se fait de manière similaire qu'un négocation complète, elle a juste été raccourci en enlevant quelque étape non indispensable.
 
+\includegraphics[width=6cm]{./pics/timeline_dhcp_reuse_add.eps}
 
 
 \section{Passage de IPv4 à IPv6}
