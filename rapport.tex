@@ -406,15 +406,19 @@ comme etant aligne sur 4 octets (20 est un multiple de 4).
 
 \subsection{ARP}
 ARP (Address resolution protocol) est un protocole à cheval sur la couche 2 et
-la couche 3. La fonction principale d'ARP est de faire la conversion entre les
-adresses de niveau 2 et de niveau 3. Cela est très utilisé étant donné que les
-hôte connaissent souvent les adresses IP de leur destinataire, mais rarement
-l'adresse de niveau 2 de ce destinataire ou de la passerelle à contacter pour joindre
+la couche 3 permettant de faire la conversion entre les adresses de niveau 2 et de niveau 3.
+Cela est très utilisé étant donné que les hôte connaissent souvent les adresses IP de leur destinataire,
+mais rarement l'adresse de niveau 2 de ce destinataire ou de la passerelle à contacter pour joindre
 le destinataire.
+
+\subsubsection{Cache ARP}
+//TODO temps de vie des entrée, structure,...
+
+
 
 \subsubsection{Exemple}
 Dans la partie qui suit nous allons nous placer dans l'exemple suivant.
-TODO LAN exemple
+//TODO LAN exemple
 \subsubsection{Entête}
 
 \subsubsection{Fonctionnement}
@@ -428,8 +432,20 @@ l'adresse de niveau 2 du destinataire. La paquet reste bloqué en couche 2 et ne
 peux pas être envoyé au destinataire. Comment obtenir l'adresse de niveau 2 du destinaire?
 Le protocole ARP est capable de faire cette translation.
 
+Pour faire cela l'hôte A va tout d'abord regarder dans sa table ARP si il n'a pas une entrée pour l'adresse IP à laquelle il souhaite envoyer son paquet. Si il tourve une correpondance, il va utiliser l'adresse MAC stocker en correspondance avec l'adresse IP recherché.
+Si il ne trouve pas de correspondance il va emmetre une trame ARPREQUEST pour tenter de contacter le possesseur de l'adresse IP qu'il souhaite contacter. Il va mettre dans cette trame (en plus de l'entête de niveau 2) un entête ARP. Celui-ci contient plusieurs informations:
+//TODO quels info mettre? type de trame ARP: request ou reply
+Les informations importantes pour permettre la résolution d'adresse sont les adresses IP source et destination, ainsi que les adresses MAC source et destination.
+L'hôte A va donc mettre son adresse IP en IP source (entête ARP) et son adresse MAC dans l'adresse physique source (entête ARP). Dans le champ d'adresse IP destination (entête ARP) l'hôte A va mettre l'adresse IP de l'hôte qu'il veut contacter. Etant qu'il cherche à avoir l'adresse physique de l'hôte B, il ne peut pas indiquer d'adresse MAC dans le champ d'adresse physique destinataire. Ce champ est donc rempli avec la valeur 0.
+Sachant que l'hôte A n'a pas l'adresse physique du destinataire, il va envoyer sa trame en broadcast pour espérer atteindre l'hôte B sans connaitre son adresse MAC.
+Une fois que l'hôte B reçoit la requète ARP, il va analyser son entête et remplir sa table ARP avec l'adresse IP de l'hôte A et l'adresse physique de A. Cela permet de créer une correspondance entre l'adresse IP et MAC de A, pour non seulement pouvoir répondre à sa requête ARP, et pour pouvoir contacter A dans le futur sans avoir besoin de refaire la demande ARP.
+Ensuite l'hôte B va répondre avec une trame ARPREPLY. L'entête est similaire aux ARPREQUEST, seul le champ indiquant s'il s'agit d'une trame ARPREQUEST ou ARPREPLY change. Dans cette trame, l'hôte B va placer son adresse IP dans le champ adresse IP source et son adresse physique dans le champ d'adresse physique source. Il va aussi mettre l'adresse IP de A dans le champ adresse IP destination et l'adresse MAC de A dans le champ d'adresse physique destination. Il va ensuite envoyer cette trame en unicast à A.
+Lorsque A reçoit la trame ARPREPLY, il va à son tour mettre dans sa table ARP, la correspondance entre l'adresse IP source et l'adresse MAC source de la trame (soit les adresses de B).
+Une fois cette association mise en place, le paquet IP que voulait envoyer A au début et mis en pause le temps que le protocole ARP fasse l'association, est enfin envoyé étant donné que A à maintenant l'adresse physique de B.
+
 \subsubsection{ACD}
 Adresse conflict detection
+
 \subsection{ICMP}
 ICMP (Internet Control Message Protocol) est un protocole de niveau 3 faisant partie intégrante du protocole IPv4. Il permet de transmettre des informations de controle et d'erreur. Les messages ICMP sont empaquetés dans des paquets IP, ils diposent donc d'un entête de paquet IP. Cet entête est le même que pour tout les autres entêtes de paquet d'IPv4. Deux champs son intéressant dans le cas d'un paquet ICMP, les champs Protocol et Type of service. Le champ Protocol est mis à à la valeur 1 pour dire que le paquet contient un message ICMP, et le champ ToS est mis à 0 //TODO(pourquoi 0?)//.
 Après le header du paquet IPv4, commence la partie data qui contient le message ICMP. Ce message contient des champs différent en fonction du type de message à passer. Cependant les trois premier champs sont toujours les mêmes.
