@@ -1,0 +1,49 @@
+\section{Passage de IPv4 à IPv6}
+\subsection{Raison du passage de IPv4 à IPv6}
+\subsubsection{Problème posé par IPv4}
+//Pénrurie, adressage privé/publique compliqué
+% Il se trouve que apparement il y a des problemes de
+% penurie d'adresses meme dans certaines reseau prive`
+% http://blog.erratasec.com/2013/12/dod-address-space-its-not-conspiracy.html#.WAf_d7Wf21F
+
+PROBLÈMES DE IPV4
+
+ÉPUISEMENT DES ADRESSES
+Lorsque IPV4 a été développé dans les années 70-début des années 80, personnes n'aurait imaginé qu'il y aurait un jour autant d'interfaces qui se connectent à Internet. On pensait qu'une adresse sur 32 bits serait suffisante. De plus, les plages d'adresses étaient distribuées généreusement au début. Cela veut dire que l'on attribuait des adresses permettant un nombre d'interfaces beaucoup plus grand que nécessaire.
+Cependant, avec la croissance du nombre d'utilisateurs, la plage d'adresses IPV4 disponible a diminué progressivement. C'est en février 2011 que la réserve de bloc libres d'adresses publics IPV4 de l'IANA (Internet Assigned Numbers Authority) est arrivée à épuisement.
+Afin de résoudre ce problème, plusieurs techniques ont été proposées.
+La première a été le changement de teechnique d'adressage. On est passé de la technique de classe d'adressage IP à la technique Classless Inter-Domain Routing. Ceci à permis une meilleure efficacité dans la distribution des adresses IP grâce à la création de réseau de tailles intermédiaire. En effet, avant on ne disposait que de réseau de 3 tailles différentes.
+Les politiques d'assignement d'adresses ont également été rendu plus stricte afin de mieux tenir compte des besoin réels des demandeurs d'adresses IP.
+Il a aussi été décidé d'utiliser des blocs autrefois réservé comme 14.0.0.0.
+Sur base de volontarisme, des blocs autrefois attribués généreusement ou alors des IP non utilisées ont été récupérées. 
+Finalement, il a été remarqué qu'il n'était pas nécessaire que chaque interface a son adresse IP public et le protocole NAT a été développé afin de regrouper plusieurs interface sous une même adresse IP. Ce protocole est de plus en plus utilisé dans IPV4 depuis la fin des années 90.
+
+Fonctionnement du NAT dynamique (Network Adress Translation)
+Le NAT est une technique utilisée au niveau du routeur. Le principe du NAT est que le routeur fait correspondre à une adresse IP une autre adresse IP. En général cette technique est utilisée pour avoir une même adresse IP pour tout un réseau comme un intranet ou encore un réseau domestique. Dans ce réseau, toutes les interfaces - même le routeur - auront une adresse privée. Le routeur dispose en plus de cela de une ou plusieurs adresses publics avec lesquelles il est connecté à internet. Une adresse privée est une adresse qui est utilisée à l'intérieur d'un réseau local. Les adresses privées peuvent être choisies parmi les suivantes : 10.0.0.0/8, 172.16.0.0/12 ou 192.168.0.0/16.
+Lorsqu'une interface envoie un paquet vers l'extérieur du réseau, le routeur effectue plusieurs changements. Il traduit d'abord l'adresse privée en adresse public et la met dans l'en-tête du paquet. Puis il change tous les checksums qui tiennent compte de l'adresse IP. Enfin, il garde en mémoire dans une table la correspondance entre adresse privée/adresse public comme ci-dessous.
+<tableau adresse public / privée >
+Cela n'est cependant pas suffisant. En effet, lorsqu'un paquet arrivera de l'extérieur du réseau,  et si tous les interfaces utilisent la même adresse public sans distinction supplémentaire, le routeur ne saura pas à quelle interface envoyer le paquet. 
+Une solution à ce problème existe pour les protocoles utilisant les ports comme TCP et UDP. Le routeur ajoute une information supplémentaire dans la table qui est le port source d'où vient le paquet. Les ports, qui sont implémentés dans la couche transport (couche 4), sont des sortes de ''portes'' qui permettent de communiquer avec un système d'exploitation. Le numéro de port est un numéro choisit aléatoirement entre 1024 et 65535.
+Pour illustrer le fonctionnement du NAT imaginons qu'une interface A dont l'ip est 192.168.0.1 veut envoyer un paquet à l'interface B d'ip 217.70.184.38. Le port source est le port 10277 et le port destination est le port 80. 
+La table NAT ressemblera à ceci : 
+
+<TABLE NAT complète > 
+
+La box internet enverra le paquet : 
+
+L'interface B répondra en envoyant le paquet :
+
+Lorsque la box reçoit ce paquet, elle voit que le port de destination est le port 10277. Elle cherche ensuite le port correspondant dans sa table NAT. Lorsqu'elle le trouve elle effectue les changements nécessaire sur le paquet et transmet le paquet à l'interface A.
+Mais même si cette solution fonctionne la plupart du temps, la probabilité est faible que 2 interfaces envoient des paquet sur les même port. C'est pour éviter cela que la box change le port source lorsqu'elle reçoit un paquet de l'interface A. Ainsi on s'assure que aucun port n'est utilisé plusieurs fois. Enfin, pour éviter de saturer les ports utilisés, un compteur est associé à chaque paire adresse public/adresse privée. Lorsqu'il n'y a pas de trafic entre une adresse privée et l'extérieur durant une durée fixée, le port qui lui est associée peut être réutilisé pour une autre adresse privée.
+
+Le NAT dynamique apporte cependant un grand problème. Lorsqu'une interface extérieur veut se connecter à une interface dans le réseau, elle ne dispose d'aucune autre information que l'adresse IP public. Si elle envoie alors un paquet à cette adresse, le routeur qui le réceptionnera ne saura pas quoi faire avec et le paquet sera perdu. 
+ On a réussi à pallier à ce problème grâce au port forwarding. 
+
+PORT FORWARDING
+
+NAT STATIQUE
+
+
+\subsubsection{Solutions}
+//NAT,IPv6
+\subsection{Différence entre IPv4 et IPv6}
