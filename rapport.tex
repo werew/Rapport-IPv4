@@ -101,21 +101,29 @@ mode sans connexion. La transmission en mode sans connexion est une
 transmission de donnée dans laquelle chaque paquet contient l'adresse de
 destination. Ceci permet une transmission  du paquet sans que les deux hôtes
 soient obligés d'établir une connexion auparavant. Cette version est ce qu'on
-aurait pu nommer l'IPV1 et elle est documentée dans la RFC 675. Cette version
+aurait pu nommer l'IPv1 et elle est documentée dans la RFC 675. Cette version
 fut modifiée et publiée en 1977. Elle correspond à la deuxième version de TCP
-(IPV2).  Initialement, le protocole TCP avait deux fonctions. ( as a host level
-end to end protocol, and to serve as an internet packaging and routing
-protocol. These two things should be provided in a layered and modular way. I
-suggest that a new distinct internetwork protocol is needed, and that TCP be
-used strictly as a host level end to end protocol.”) Premièrement, il devait
-permettre une transmission fiable d'informations entre deux hôtes. Il devait
-également servir en tant que protocole de routage et de packaging. Cependant,
+(IPv2). 
+\\
+Initialement, le protocole TCP avait deux fonctions: premièrement, il devait
+permettre une transmission fiable d'informations entre deux hôtes en plus
+il devait
+également servir en tant que protocole de routage et de packaging. 
+Cependant,
 pour être cohérant avec le modèle en couche, qui différencie la fiabilité
 (couche transport) et le routage (couche réseau), il fut décidé en 1978 de
-diviser le protocole TCP. Le protocole TCP ne s'occupe maintenant plus que de
-la partie transport. La partie réseau a été prise en charge par les protocoles
-IP.  C'est finalement le 1er janvier 1983 que l'ARPANET adopte les protocoles
-TCP/IP et donc l'IPV4. 
+diviser le protocole TCP\footnote {
+{\it "We are screwing up in our design of internet protocols by violating the
+principle of layering. Specifically we are trying to use TCP to do two
+things: serve as a host level end to end protocol, and to serve as an
+internet packaging and routing protocol. These two things should be
+provided in a layered and modular way. I suggest that a new distinct
+internetwork protocol is needed, and that TCP be used strictly as a host
+level end to end protocol." } - IEN 2 (Comments on Internet Protocol and TCP)
+}.
+Le protocole TCP ne s'occupe maintenant plus que de la partie transport. La
+partie réseau a été prise en charge par les protocoles IP.  C'est finalement le
+1er janvier 1983 que l'ARPANET adopte les protocoles TCP/IP et donc l'IPv4. 
 
 
 % ------------------------------------------------
