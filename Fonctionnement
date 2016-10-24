@@ -119,10 +119,11 @@ Exemple : 172.27.255.255 / 255.255.0.0	=	172.27.1111111.11111111
 Donc nous pouvons en déduire que parmi tout les adresses assignable, ces derniers sont des adresses interdites.
 
 
-2.2.3 Notation CIDR
+2.2.3 Notation CIDR (Classless Inter-Domain Routing)
 
-
-	Dans un premier temps nous avons vu que pour connaître l’adresse d’un réseau il faut forcement passé par le masque, une seconde forme existe et est connue sous le nom de notation CIDR (classless inter-domain routing) RFC 1519 ou l’adressage sans classe, ce qui veut dire qu’ici on ne tient plus compte de l’adressage par classe; Donc aucun masque n’est fixé par rapport à une classe. Elle s’écrit avec le numéro du réseau suivi d’un slash et le nombre de bits à 1 (en partant de la gauche) en binaire du masque sous-réseau. De nos jours cette notation est la plus utiliser car les différentes classes utiliser sont devenues  obsolètes.
+CIDR (RFC 1518 et 4632) l’adressage hors classe (ou sur-adressage) a été introduit à cause des inconvénients des classes et du sous-adressage puisque en 1993, les adresses de la classe B se trouvent déjà tous user à cause la mauvaise répartition en classe (A,B et C) et du sous-adressage.
+De ce fait il fallait trouver une solution temporaire qui est le CIDR en attendant l’achèvement et la mise en place de IPV6 avec ses adresses composer sur 16 octets. 
+Donc ci-dessus nous avons vu que pour connaître l’adresse d’un réseau il faut forcement passé par le masque, avec la notation CIDR qui nous permet de palier aux problèmes d’adressage avec les classes; Donc aucun masque n’est fixé par rapport à une classe. Elle s’écrit avec le numéro du réseau suivi d’un slash et le nombre de bits à 1 (en partant de la gauche) en binaire du masque sous-réseau. De nos jours cette notation est la plus utiliser car les différentes classes utiliser sont devenues  obsolètes.
 
 Exemple : 186.52.0.0/16
 
