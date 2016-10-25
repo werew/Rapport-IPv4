@@ -217,16 +217,14 @@ Etant donne que un en-tete IPv4 peut avoir une taille maximale de
 60 octets (le valeur du IHL est egal a 15), le champ Options peut occuper
 40 octets au meximum.
 
-Ce champ est ne pour etendre les possibilites de IPv4 en ajoutant des fonctions extra.
-Aujord'hui il y a quelque dizaine de options qui ont ete specifie\footnote
-{http://www.iana.org/assignments/ip-parameters/ip-parameters.xhtml} (si on
-considere aussi les options experimentales) mais peu entre eux sont reelement
-utilise. 
-Entre les options les plus connues on retrouve par example des ajoutes
-utiles a l'administration et au debouggage d'une reseau, comme {\it Record route}
-qui permet de enregistrer les addresses des routeurs dans le chemin d'un 
-paquet IP, et {\it Timestamp} qui permet de savoir le temp passe 
-entre chaque hop du chemin.
+Ce champ est ne pour etendre les possibilites de IPv4 en ajoutant des fonctions
+extra.  Aujord'hui il y a quelque dizaine de options qui ont ete
+specifie\cite{url-optsIPv4} (si on considere aussi les options experimentales)
+mais peu entre eux sont reelement utilise.  Entre les options les plus connues
+on retrouve par example des ajoutes utiles a l'administration et au debouggage
+d'une reseau, comme {\it Record route} qui permet de enregistrer les addresses
+des routeurs dans le chemin d'un paquet IP, et {\it Timestamp} qui permet de
+savoir le temp passe entre chaque hop du chemin.
 
 Entre les options il en y a deux qui ont une fonction speciale: EOL 
 ({\it End Of Option List}) and NOP ({\it No Operation}): l'option EOL 
