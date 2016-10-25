@@ -19,10 +19,10 @@ Commencons par voir plus en detail les 13 champs d'un en-tete IPv4 standard:
 
 \begin{description}
 \item [Version] 
-Cette champ occupe les premiers 4 bits de l'en-tete IPv4. Il est
-utilise pour determiner le type de protocole utilise` par la couche
-reseau (chouche 3). Dans le cas de IPv4 cet champs contiendra toujours
-la valeur 4, qui justement identifie le protocole IPv4.
+Cette champ occupe les premiers 4 bits de l'en-tete IPv4.\\
+Il est utilise pour determiner le type de protocole utilise` par la couche
+reseau (chouche 3).Dans le cas de IPv4 cet champs contiendra toujours la valeur
+4, qui justement identifie le protocole IPv4.
 
 La position de ce champ dans l'en-tete n'est pas casuelle. En effet pour
 connaitre la positions des autres champs de l'en-tete il faut d'abord savoir
@@ -78,8 +78,7 @@ DS1) settings; and even when these settings are recognized, they do not
 necessarily trigger the same PHB forwarding action at each network node. Each
 node implements its own response based on how it is configured."} - 
 Implementing Quality of Service Policies with DSCP
-http://www.cisco.com/c/en/us/support/docs/quality-of-service-qos/qos-packet-marking/10103-dscpvalues.html
-}}
+http://www.cisco.com/c/en/us/support/docs/quality-of-service-qos/qos-packet-marking/10103-dscpvalues.html}
 Le dernieres 2 bits du champ ToS sont utilise pour l'extension ECN ({\it Explicit Congestion
 Notification }). Cette extension, propose par RFC2481 et introduite deux annees apres avec le RFC3168,
 ajoute un systeme de controle de la congestion du traffic reseau. Dans le cas d'une saturation
@@ -116,21 +115,20 @@ reserve pour applications futures possibles.
 d'avril presentee par le IETF. Pour faciliter les taches des systems de filtrage 
 le RFC 3514 propose d'utiliser ce bit pour etiqueter paquets mailveillant, a ce
 titre tous les paquets etant envoye avec ce bit (renomme "{\it Evil Bit}") 
-mis a 1 seront mis a la poubelle.
-}
+mis a 1 seront mis a la poubelle.}
 
 \item [Fragment Offset]
-Lorsque un paquet a ete fragmentee cet en-tete est utilisee pour determiner la 
+Lorsque un paquet a ete fragmentee cet en-tete est utilisee pour determiner la
 position (offset) d'un fragment par rapport a les donnees du paquet reassemble.
 Le decalage de chaque fragment est exprime en bloques de huit octets (ou 64
-bits).  Le champ Fragment Offset utilise 13 bits de l'en-tete IPv4, cela permet
+bits). Le champ Fragment Offset utilise 13 bits de l'en-tete IPv4, cela permet
 un offset maximale de 65,528 octets.\footnote {En pratique un tel offset n'est
-jamais utilisee car, en ajoutant un en-tete minimale de 20 octets, la taille 
+jamais utilisee car, en ajoutant un en-tete minimale de 20 octets, la taille
 totale du paquet reassemble depaserait la longeur maximale d'un paquet IPv4.}
-Etant donne que la flag MF ({\it More Fragments}) doit etre mise a zero lorsque 
+Etant donne que la flag MF ({\it More Fragments}) doit etre mise a zero lorsque
 si un paquet n'est pas fragmentee ou si il est le dernier fragment d'un paquet
-plus grand, l'unique difference entre ce deux types de paquets est le valeur
-de le champ Fragement Offset que, dans le cas d'un paquet pas fragmentee, est
+plus grand, l'unique difference entre ce deux types de paquets est le valeur de
+le champ Fragement Offset que, dans le cas d'un paquet pas fragmentee, est
 toujours zero.
 
 \item [Time to Live]
@@ -185,7 +183,9 @@ le paquet, c'est par exemple ce qui se passe dans une requete {\it ARP probe}
 la ou le valeur de l'adresse de la machine source est 0.0.0.0 (ce qui represente
 un adresse indefini\footnote {Notex que la signification de l'adresse 0.0.0.0
 est lie a la facon dont il est utilise. En general il indique {\it aucune
-adresse en particulier}.  Dans la plus part des cas cet adresse est utilise
+adresse en particulier}. 
+
+Dans la plus part des cas cet adresse est utilise
 pour indiquer un de ces valeurs: l'adresse de la machine courant (c'est
 l'adresse de loopback), n'importe quel adresse ou reseau (c'est le cas de la
 route par default dans une table de routage), un adresse indefini ou bien une

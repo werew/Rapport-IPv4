@@ -132,6 +132,7 @@ si l'adresse IP source correspond à une de ces adresses, et si cela est la cas 
 MAC ne correspond à son adresse MAC, alors cela veut dire qu'un autre hôte utilise la même
 adresse IP. Il y a donc un conflit d'adresse.
 Pour résoudre ce problème, l'hôte peut réagir de différente manière:
+\begin{itemize}
 \item Il cesse d'utiliser l'adresse IP en question.
 \item Si l'hôte doit pour quelque raison que ce soit garder son adresse IP, par exemple si il
 utilise une connection TCP, alors il peut "défendre" sa possession de l'adresse IP, seulement si
@@ -145,6 +146,7 @@ d'adresse sont détecté dans les 10 dernières secondes (d'où l'importance de 
 pour éviter de rentrer dans une boucle sans fin d'échange d'ARP Announcement.
 \item Si l'hôte à été configurer pour garder son adresse IP (par exemple si c'est un routeur
 ou un serveur) alors l'hôte va défendre son adresse indéfiniment. //TODO compléter
+\end{itemize}
 
 
 \subsection{ICMP} ICMP (Internet Control Message Protocol) est un protocole de
@@ -174,7 +176,7 @@ possèdent l'ensemble de champs le plus simple.
 
 \includegraphics[width=15cm]{./pics/header1.eps}
 
-\\Les messages qui utilisent cette organisation sont les messages de type 3, 4
+Les messages qui utilisent cette organisation sont les messages de type 3, 4
 et 11.
 
 \subsubsection{Message de type 3: Unreachable Destination}
@@ -289,10 +291,11 @@ son choix à l'aide d'un message DHCPREQUEST émis en broadcast. Ce message va
 contenir l'identifiant du serveur DHCP retenu ainsi que la configuration
 souhaité par l'hôte (adresse IP et masque de sous-réseau). Ce message peut être
 interprété de deux manières différentes selon le serveur:
-\item- si ce n'est pas le serveur retenu, il considère le message comme une
+\begin{itemize}
+\item si ce n'est pas le serveur retenu, il considère le message comme une
 déclinaison de l'offre.
 
-\item- si c'est le serveur retenu, il va sortir l'adresse attribué l'hôte de la
+\item si c'est le serveur retenu, il va sortir l'adresse attribué l'hôte de la
 plage d'adresse libre pour ne plus l'attribuer à un autre hôte. Il va ensuite
 émmetre un message DHCPACK contenant la configuration effective de l'hôte avec
 notemment: l'adresse IP, le masque de sous-réseau, la durée du bail, l'adresse
@@ -301,6 +304,7 @@ raisons le serveur n'est pas capable d'attribuer l'adresse proposé dans l'offre
 (par exemple si l'adresse à été attribuer entre temps), le serveur emet un
 DHCPNAK pour avertir l'hôte que l'adresse n'est plus disponible. L'hôte devra
 alors recommencer la procédure pour obtenir une adresse IP.
+\end{itemize}
 
 Enfin si le serveur ne reçoit pas de message DHCPREQUEST, la procédure
 s'arrêtrra à ce moment et l'adresse n'étant pas encore attribuer à l'hôte elle

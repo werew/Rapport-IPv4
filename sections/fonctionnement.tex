@@ -13,12 +13,12 @@ l’utilisation des adresses multicast et broadcast en dehors des adresses
 unicast.
 
 \vspace{1cm}
-Exemple : adresse à valeur décimale : 212.217.0.1 => correspond sous sa forme
-binaire à : 11010100.11011001.00000000.00000001
+Exemple: adresse à valeur décimale: 212.217.0.1 => correspond sous sa forme
+binaire à: 11010100.11011001.00000000.00000001
 \vspace{1cm}
 
 \subsection{Notion de netid et hostid}
-Une adresse ipv4 est la composition de deux partie distinctes : une première
+Une adresse ipv4 est la composition de deux partie distinctes: une première
 partie de l’adresse qui identifie le réseau communément appeler netid , elle
 est la partie gauche de l’adresse et designe le réseau auquel appartient les
 ordinateurs (hôte).  Une seconde partie de l’adresse qui identifie le numéro de
@@ -55,43 +55,43 @@ et ne peuvent pas être utilisés.
 
 \subsubsection{Format du masque}
 Il est composée de 32 bits alors même taille qu’un adresse IPV4, dans le masque
-ont place les bits à « 1 » de manière contigus et les bits à « 0 » à droite.
+ont place les bits à 1 de manière contigus et les bits à 0 à droite.
 
 \vspace{1cm}
-{\it Exemples :\\
+{\it Exemples:\\
 11111111.00000000.00000000.00000000 =   255.0.0.0\\
 11111111.11111111.11111111.00000000 =   255.255.255.0\\
 11110000.00000000.00000000.00000000 =   240.0.0.0 
 }
 
 \vspace{1cm}
-{\it Exemple invalide :\\
+{\it Exemple invalide:\\
 11111111.01111111.00000000.00000000
 }
 
 \vspace{1cm}
 
 \subsubsection{Calcul de l’adresse réseau et numéro de l’hôte}
-Pour le calcul d’un adresse réseau on effectue un « ET » logique bit à bit
-entre le masque de réseau et l’adresse IP. Alors on détermine :
+Pour le calcul d’un adresse réseau on effectue un ET logique bit à bit
+entre le masque de réseau et l’adresse IP. Alors on détermine:
 
-Pour la partie réseau (netid) : on effectue l’opération suivante :
-    net-id ← adresse IP ET (bit à bit) Masque
-Exemple : 192.168.52.0 ← 192.168.52.85  &  255.255.255.0
+Pour la partie réseau (netid): on effectue l’opération suivante:
+    net-id <== adresse IP ET (bit à bit) Masque
+Exemple: 192.168.52.0 <== 192.168.52.85 \& 255.255.255.0
 
-Pour la partie hôte (hostid) : on effectue l’opération suivante :
-    host-id ← adresse IP ET (bit à bit) ~Masque
-Exemple : 0.0.0.85 ← 192.168.52.85 & 0.0.0.255
+Pour la partie hôte (hostid): on effectue l’opération suivante:
+    host-id <== adresse IP ET (bit à bit) ~Masque
+Exemple: 0.0.0.85 <== 192.168.52.85 \& 0.0.0.255
 
-\textbf{ Remarque :}
+\textbf{Remarque:}
 De ce fait on distingue deux adresses particulières parmi tout ceux possible,
-qui ne doivent jamais être attribué à des machines :
+qui ne doivent jamais être attribué à des machines:
 
-     les bits Host-ID sont à « 0 » : adresse attribue qu’à un réseau.
-Exemple : 192.168.10.0 / 255.255.255.0  =   192.168.10.00000000
+     les bits Host-ID sont à 0 : adresse attribue qu’à un réseau.
+Exemple: 192.168.10.0 / 255.255.255.0 = 192.168.10.00000000
 
-    les bits Host-ID sont à « 1» : c’est un adresse de  diffusion (broadcast),
-Exemple : 172.27.255.255 / 255.255.0.0  =   172.27.1111111.11111111
+    les bits Host-ID sont à 1 : c’est un adresse de  diffusion (broadcast),
+Exemple: 172.27.255.255 / 255.255.0.0 = 172.27.1111111.11111111
 
 Donc nous pouvons en déduire que parmi tout les adresses assignable, ces
 derniers sont des adresses interdites.
@@ -107,9 +107,9 @@ Elle s’écrit avec le numéro du réseau suivi d’un slash et le nombre de bi
 notation est la plus utiliser car les différentes classes utiliser sont
 devenues  obsolètes.
 \vspace{1cm}
-Exemple : 186.52.0.0/16
+Exemple: 186.52.0.0/16
 \vspace{1cm}
-\textbf{ Remarque :} \\
+\textbf{Remarque:}\\
 cette notation CIDR ne permet pas la construction des masques réseau à trous,
 alors que c’était possible dans la construction de base de IPV4 mais rarement
 utilisés car fastidieux la gestion.  IPV6 intègre dés sa conception l’écriture
@@ -117,19 +117,19 @@ et l’agrégation maximale des routes introduites par CIDR.
 
 
 \subsubsection{Adresses non utilisées}
-il existe des adresses non utilisable comme adresse IP pour une machine :\\
-les adresses réseaux : qui correspond aux adresses qui ont tous les bits de
+il existe des adresses non utilisable comme adresse IP pour une machine:\\
+les adresses réseaux: qui correspond aux adresses qui ont tous les bits de
 leur partie hostid à zéro(0);\\
-les adresses de diffusion (broadcast) : qui correspond aux adresses qui ont
+les adresses de diffusion (broadcast): qui correspond aux adresses qui ont
 tous les bits de leur partie hostid à un(1)\\
-0.0.0.0 : utilise par différentes services (table de routage, DHCP) et possède
+0.0.0.0: utilise par différentes services (table de routage, DHCP) et possède
 souvent une signification particulières. \\
-127.X.X.X : désigne l’ordinateur lui-même ou dite adresse de bouclage
+127.X.X.X: désigne l’ordinateur lui-même ou dite adresse de bouclage
 (lookback), 127.0.0.1 pour le localhost\\
-> à 223.255.255.255 : pour le multicast et la recherche.\\
+> à 223.255.255.255: pour le multicast et la recherche.\\
 
 \subsection{Type d’adresse IP (Schéma dans pics sur comment c’est utilisé dans un ensemble de réseau )}
-On distingue deux (2) types d’adresse IP qui sont les adresses IP publiques & privées : 
+On distingue deux (2) types d’adresse IP qui sont les adresses IP publiques \& privées:
 Les adresses IP privées Les adresses IP privées sont représentés par toutes les
 adresses IP de classe A, B et C qui sont utilisable dans un réseau local (par
 exemple le LAN) alors ce qui correspond au réseau de votre entreprise ou celle
@@ -143,15 +143,15 @@ géante (entreprise) avec des espaces adressage qui se chevauche peut causer des
 problèmes. Une adresse IP privées est librement paramétrée par l’administrateur
 du réseau local.
 \vspace{1cm}
-Les adresses privées de la classe A : 10.0.0.0 à 10.255.255.255\\
-Les adresses privées de la classe B : 172.16.0.0 à 172.31.255.255\\
-Les adresses privées de la classe C : 192.168.1.0 à 192.168.255.255\\
+Les adresses privées de la classe A: 10.0.0.0 à 10.255.255.255\\
+Les adresses privées de la classe B: 172.16.0.0 à 172.31.255.255\\
+Les adresses privées de la classe C: 192.168.1.0 à 192.168.255.255\\
 \vspace{1cm}
 
 Alors on vient de voir que les adresses IP privées sont utilisable uniquement
 sur des réseaux locaux, tandis qu’il y a des adresses IP qui ne sont utilisées
 uniquement que sur internet donc nous pouvons en déduir que c’est les adresses
-IP publiques non utilisable dans un réseau local. Les routeurs (par exemple :
+IP publiques non utilisable dans un réseau local. Les routeurs (par exemple:
 votre box) ont une adresse IP publique du côté d’internet, ce qui permet de
 rendre votre box visible sur internet (elle répondra certainement au ping). De
 plus, au moment de vos connexion sur un site web vous utilisez l’adresse
@@ -175,6 +175,6 @@ pour faciliter le routage (ou cheminement) des paquets. Structurée en 5 classes
 
 De ce fait on remarque une distribution de l’espace d’adressage selon laquelle
 la classe A possède 50\% l’espace et soit 25\% pour la classe B, 12,5\% classe
-C et 6,25\% pour D & E. on peut en-déduire une mauvaise répartition de cette
+C et 6,25\% pour D \& E. on peut en-déduire une mauvaise répartition de cette
 espace d’adressage. 
 
