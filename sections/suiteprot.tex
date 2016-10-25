@@ -3,10 +3,10 @@
 
 \subsection{ARP} ARP (Address resolution protocol) est un protocole à cheval
 entre la couche 2 et la couche 3 permettant de faire la conversion entre les
-adresses de niveau 2 et de niveau 3.  Cela est très utilisé étant donné que les
-hôte connaissent souvent les adresses IP de leur destinataire, mais rarement
-l'adresse de niveau 2 de ce destinataire ou de la passerelle à contacter pour
-joindre le destinataire.
+adresses de niveau 2 et de niveau 3. Il fut décrit dans le RFC 826\cite{url-RFC-ARP}.
+Il est très utilisé étant donné que les hôte connaissent souvent les adresses
+IP de leur destinataire, mais rarement l'adresse de niveau 2 de ce destinataire
+ou de la passerelle à contacter pour joindre le destinataire.
 
 \subsubsection{Cache ARP} Le cache ARP ou table ARP est une table sotcké en
 local par un hôte et qui ressence les associations entre adresse IP et adresse
@@ -74,9 +74,9 @@ maintenant l'adresse physique de B.
 
 \subsubsection{ACD} Le protocole ACD (Adresse conflict detection) permet, comme
 son nom l'indique, de détecter les conflits d'adresse, qui sont l'utilisation
-de la même adresse IP par deux ou plusieurs hôtes en même temps.  Pour ce faire
+de la même adresse IP par deux ou plusieurs hôtes en même temps. Pour ce faire
 il utilise le protocole ARP avec une succession d'étape permettant de garantir
-l'utilisation de manière unique d'une adresse IP.
+l'utilisation de manière unique d'une adresse IP. Il fut décrit dans le RFC 5227\cite{url-RFC-ACD}.
 
 Pour commencer, ACD intervient au moment où une interface reçoit une adresse IP
 (soit par DHCP, soit par une configuration manuelle,...). Il faut à ce moment vérifier si
@@ -150,18 +150,19 @@ ou un serveur) alors l'hôte va défendre son adresse indéfiniment. //TODO comp
 
 
 \subsection{ICMP} ICMP (Internet Control Message Protocol) est un protocole de
-niveau 3 faisant partie intégrante du protocole IPv4. Il permet de transmettre
-des informations de controle et d'erreur. Les messages ICMP sont empaquetés
-dans des paquets IP, ils diposent donc d'un entête de paquet IP. Cet entête est
-le même que pour tout les autres entêtes de paquet d'IPv4. Deux champs sont
-intéressant dans le cas d'un paquet ICMP, les champs Protocol et Type of
-service. Le champ Protocol est mis à à la valeur 1 pour dire que le paquet
-contient un message ICMP, et le champ ToS est mis à 0 //TODO(pourquoi 0?)//.
-Après le header du paquet IPv4, commence la partie data qui contient le message
-ICMP. Ce message contient des champs différent en fonction du type de message à
-passer. Cependant les trois premier champs sont toujours les mêmes.  Les types
-de messages ICMP qui vont suivrent sont décrit dans la RFC
-792.\footnote{https://tools.ietf.org/html/rfc792}
+niveau 3 faisant partie intégrante du protocole IPv4. Il fut initialement
+décrit dans le RFC 792\cite{url-RFC-ICMP}.
+Il permet de transmettre des informations de controle et d'erreur. Les messages
+ICMP sont empaquetés dans des paquets IP, ils diposent donc d'un entête de
+paquet IP. Cet entête est le même que pour tout les autres entêtes de paquet
+d'IPv4. Deux champs sont intéressant dans le cas d'un paquet ICMP, les champs
+Protocol et Type of service. Le champ Protocol est mis à à la valeur 1 pour
+dire que le paquet contient un message ICMP, et le champ ToS est mis à 0
+//TODO(pourquoi 0?)//.  Après le header du paquet IPv4, commence la partie data
+//qui contient le message ICMP. Ce message contient des champs différent en
+//fonction du type de message à passer. Cependant les trois premier champs sont
+//toujours les mêmes.
+\footnote{https://tools.ietf.org/html/rfc792}
 
 \includegraphics[width=15cm]{./pics/header.eps}
 
@@ -286,12 +287,14 @@ associer les echos request qu'il à envoyés avec les echos reply qu'il à reçu
 \subsection{IGMP}
 
 
-\subsection{DHCP} \footnote{RFC 2131: https://tools.ietf.org/html/rfc2131} Le
-protocole DHCP (Dynamic Host Configuration Protocol) sert à l'autoconfiguration
+\subsection{DHCP}
+Le protocole DHCP (Dynamic Host Configuration Protocol) sert à l'autoconfiguration
 des interfaces. Plus précisement, il  permet d'attribuer une adresse IP à une
 interface et de lui faire parvenir d'autres information essentielle pour le
-fonctionnement de l'interface sur le réseau.  Voyons comment une interface peut
-ce configurer aurpès d'un serveur DHCP.
+fonctionnement de l'interface sur le réseau. La version initiale de DHCP fut décrit
+dans le RFC 1531\cite{url-RFC-DHCP1}, mais cette version fut rendue obselète par un autre
+RFC, lui même rendue obselète par le RFC 2131\cite{url-RFC-DHCP2} qui est la dernière version non
+obselète.Voyons comment une interface peut ce configurer aurpès d'un serveur DHCP.
 
 \includegraphics[width=6cm]{./pics/timeline_dhcp.eps}
 
