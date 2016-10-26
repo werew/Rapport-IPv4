@@ -104,17 +104,37 @@ IPv4 ete distribue dans divers document, dont chaqun a propos d'une
 problematique en particuliere. Le RFC3330 est un des premiers document a
 rassembler les classification des adresses IPv4 selon leur role et signification.
 
+%TODO lien%
+
+\begin{description}
+\item[0.0.0.0/8]
+Cette plage d'adresses indique la machine courante dans la reseau courante.
+Les adresses dans cette plage sont notement utilise dans certain protocoles de
+configuration comme adresses source, lorsque une machine n'a pas encore etabli
+son adresse effective.
+%RFC 1122 %
+
+\item[127.0.0.0/8]
+Un adresse appartenent a cet bloque est denommes adresse de {\it loopback}.  Un
+paquet envoye vers un tel adresse returne directement l'expediteur, sans sortir
+du contexte de la machine emettrice. Parmi les adresses de cette plage,
+127.0.0.1 est celui utilise le plus frequent\footnote{Comme le indique
+le RFC 1122, certaines implementations de l'adresse de {\it loopback} se
+limitent a utiliser le bloque 127.0.0.1/32, ce qui se traduit en utiliser juste
+l'adresse 127.0.0.1 .}: dans plusieurs contextes cet adresses est referencee par
+l'alias "{\it localhost}".\footnote{La correpondence entre le nom {\it localhost} et
+l'adresse 127.0.0.1 est generalement mise en place par le systeme d'exploitation.
+Dans les systemes de type UNIX une entree reliant ces deux entites est generalement
+present dans le fichier "/etc/hosts".}
+Un adresse de {\it loopback} n'a pas de sens au dehors
+d'un host, pour cette raison normalement il ne devrait pas apparaitre dans la
+reseau a aucun moment.
 
 
 
+%RFC 1122 %
 
-
-petit a petit, de que il avait une exigence
-rfc3330 regroupe
-
-adresses recouvrant des roles speciaux 
-
-
+%Note: private --> 10.0.0.0/8
 
 
 
