@@ -49,8 +49,31 @@ En conséquence plus le nombre de bit à 1 dans le masque est grand, plus le NET
 //TODO exemple invalide
 
 \subsubsection{Classes d'adresse IP}
+Historiquement les classes d'adresse IP correspondaient à une plages d'adresses avec un masque figer pour une classe donnée.
+Ce système permettait de déduire le masque en fonction
+de l'adresse IP étant donné que chaque classe avait son masque défini de manière standard.
+Il fut décrit dans le RFC 791\cite{url-RFC-791}.
+
+//TODO tableau classe
+
+A partir de ce tableau nous pouvons voir qu'il suffit de regarder les 4 bits de poids fort pour déduire
+à quelle classe appartient une adresse.
+Par exemple si une machine à pour adresse 152.123.87.45 on sait en regardant les 4 premiers bits
+que cette adresse fait partie de la classe B (car l'adresse commence par 10). De là, la machine n'a
+pas besoin de masque en plus car elle sait que le masque correspondant un adresse de classe B est 255.255.0.0 .
+
+Ce système permet donc d'adresser de nombreux réseaux avec un nombre de machine variable en fonction de la classe,
+et tout cela sans avoir besoin de communiquer ou de paramétrer un masque; celui-ci étant normalisé pour chaque classe.
+Cependant il a un gros inconvénient, étant donné que les masques sont figé, un réseau peux ne peux pas utiliser une partie
+plus ou moins importante de ses adresses. Par exemple si un réseau contient 500 machines, il ne peux pas utiliser d'adresse
+de classe A étant donné que celle-ci ne permettent d'avoir que des réseaux de 254 machines maximum. Il va donc falloir utiliser
+des adresses de classe B minimum, car elles permettent d'adresser 65534 machines au sein d'un réseau. Nous pouvons donc utiliser
+500 adresses sur les 65534 disponible, mais le reste sera "perdu".
+Ce système était simpliste mais n'était pas utilisable sur le long terme car il "gache" des adresses en n'utilisant pas tout
+son espace d'adressage.
 
 
+\subsubsection{Notation CIDR}
 
 Alors on vient de voir que les adresses IP privées sont utilisable uniquement
 sur des réseaux locaux, tandis qu’il y a des adresses IP qui ne sont utilisées
@@ -107,24 +130,6 @@ Exemple: 172.27.255.255 / 255.255.0.0 = 172.27.1111111.11111111
 Donc nous pouvons en déduire que parmi tout les adresses assignable, ces
 derniers sont des adresses interdites.
 
-\subsubsection{Notation CIDR}
-Dans un premier temps nous avons vu que pour connaître l’adresse d’un
-réseau il faut forcement passé par le masque, une seconde forme existe et est
-connue sous le nom de notation CIDR (classless inter-domain routing) RFC 1519
-ou l’adressage sans classe, ce qui veut dire qu’ici on ne tient plus compte de
-l’adressage par classe; Donc aucun masque n’est fixé par rapport à une classe.
-Elle s’écrit avec le numéro du réseau suivi d’un slash et le nombre de bits à 1
-(en partant de la gauche) en binaire du masque sous-réseau. De nos jours cette
-notation est la plus utiliser car les différentes classes utiliser sont
-devenues  obsolètes.
-\vspace{1cm}
-Exemple: 186.52.0.0/16
-\vspace{1cm}
-\textbf{Remarque:}\\
-cette notation CIDR ne permet pas la construction des masques réseau à trous,
-alors que c’était possible dans la construction de base de IPV4 mais rarement
-utilisés car fastidieux la gestion.  IPV6 intègre dés sa conception l’écriture
-et l’agrégation maximale des routes introduites par CIDR. 
 
 
 \subsubsection{Adresses non utilisées}
