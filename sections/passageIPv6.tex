@@ -1,47 +1,65 @@
 \section{Passage de IPv4 à IPv6}
+
 \subsection{Raison du passage de IPv4 à IPv6}
-\subsubsection{Problème posé par IPv4}
+%\subsubsection{Problème posé par IPv4}
+
+
 //Pénrurie, adressage privé/publique compliqué
 % Il se trouve que apparement il y a des problemes de
 % penurie d'adresses meme dans certaines reseau prive`
 % http://blog.erratasec.com/2013/12/dod-address-space-its-not-conspiracy.html#.WAf_d7Wf21F
 
-PROBLÈMES DE IPV4
+\subsection{Problèmes posés par IPv4}
 
-ÉPUISEMENT DES ADRESSES
-Lorsque IPV4 a été développé dans les années 70-début des années 80, personnes 
-n'aurait imaginé qu'il y aurait un jour autant d'interfaces qui se connectent à
-Internet. On pensait qu'une adresse sur 32 bits serait suffisante. De plus, les
-plages d'adresses étaient distribuées généreusement au début. Cela veut dire
-que l'on attribuait des adresses permettant un nombre d'interfaces beaucoup 
-plus grand que nécessaire.
-Cependant, avec la croissance du nombre d'utilisateurs, la plage d'adresses
-IPV4 disponible a diminué progressivement. C'est en février 2011 que la réserve
-de bloc libres d'adresses publics IPV4 de l'IANA (Internet Assigned Numbers 
-Authority) est arrivée à épuisement.
+\subsubsection{Épuisement des adresses IPV4}
 
-Afin de résoudre ce problème, plusieurs techniques ont été proposées.
-La première a été le changement de teechnique d'adressage. On est passé de la
-technique de classe d'adressage IP à la technique Classless Inter-Domain
-Routing. Ceci à permis une meilleure efficacité dans la distribution des
+Lorsque IPV4 a été développé dans les années 70-début des années 80, personne 
+n'aurait imaginé qu'il y aurait un jour autant d'interfaces qui se connectent à 
+Internet. On pensait que seul les militaires et les scientifiques utiliseront 
+internet et qu'un espace d'adressage sur 32 bits serait largement suffisante. 
+De plus, les plages d'adresses étaient distribuées généreusement au début. 
+Cela veut dire que l'on attribuait des adresses permettant la création de réseaux 
+avec un nombre d'interfaces pouvant se connecter largement au-dessus de ce qui était 
+nécessaire.
+Cependant, avec la croissance du nombre d'utilisateurs et des équipements connectés, 
+la plage d'adresses IPV4 disponible a diminué progressivement. C'est en février 2011 
+que la réserve de bloc d'adresses publiques libres IPV4 de l'IANA (Internet Assigned 
+Numbers Authority) est arrivée à épuisement.
+\smallbreak
+Afin de résoudre ce problème, plusieurs techniques ont été proposées:
+\begin{itemize}
+\item La première a été le changement de technique d'adressage. On est passé de la
+technique de classe d'adressage IP à la technique \textbf{Classless Inter-Domain
+Routing}. Ceci a permit une meilleure efficacité dans la distribution des
 adresses IP grâce à la création de réseau de tailles intermédiaire. En effet,
-avant on ne disposait que de réseau de 3 tailles différentes.
+avant on ne disposait que de réseau de 3 tailles différentes et l'on attribuait
+souvent des adresses permettant des réseaux bien plus grand que nécessaire.
 
-Les politiques d'assignement d'adresses ont également été rendu plus stricte
+\begin{itemize}
+\item Les politiques d'assignement d'adresses ont également été rendues plus stricte
 afin de mieux tenir compte des besoin réels des demandeurs d'adresses IP.
 
-Il a aussi été décidé d'utiliser des blocs autrefois réservé comme 14.0.0.0.
+\item Des blocs autrefois réservé comme 14.0.0.0 ont également été distribués.
 
-Sur base de volontarisme, des blocs autrefois attribués généreusement ou alors
+\item Sur base de volontarisme, des blocs autrefois attribués généreusement ou alors
 des IP non utilisées ont été récupérées.
 
-Finalement, il a été remarqué qu'il n'était pas nécessaire que chaque interface
-a son adresse IP public et le protocole NAT a été développé afin de regrouper
-plusieurs interface sous une même adresse IP. Ce protocole est de plus en plus
-utilisé dans IPV4 depuis la fin des années 90.
+\item Finalement, il a été remarqué qu'il n'était pas nécessaire que chaque interface
+a sa propre adresse IP publique et le protocole NAT a été développé afin de regrouper
+plusieurs interfaces sous une même adresse IP. Ce protocole est de plus en plus
+utilisé dans IPV4 depuis la fin des années 90. Le fonctionnement du NAT sera explicité
+plus loin.
+\end{itemize}
 
 
-Fonctionnement du NAT dynamique (Network Adress Translation)
+\subsection{ Solutions proposées }
+
+\subsubsection{Traduction d'adresse réseau (Network Adress Translation}
+Comme vu au-dessus, au fur et à mesure que l'IPV4 s'est répandu, il y a eu un manque
+d'espace d'adressage. Afin de limiter le nombre d'adresse IP publiques nécessaires
+à un réseau, le NAT a été développé.
+
+\subsubsubsection{Fonctionnement du NAT dynamique (Network Adress Translation)}
 Le NAT est une technique utilisée au niveau du routeur. Le principe du NAT est
 que le routeur fait correspondre à une adresse IP une autre adresse IP en
 changeant l'adresse IP dans les headers des paquets IP. Cette technique permet
@@ -49,58 +67,64 @@ d'échanger des paquets entre 2 domaines d'adresses. En général cette techniqu
 est utilisée pour avoir une même adresse IP pour tout un réseau comme un 
 intranet ou encore un réseau domestique. Dans ce réseau, toutes les interfaces
 - même le routeur - auront une adresse privée. Le routeur dispose en plus de
-cela de une ou plusieurs adresses publics avec lesquelles il est connecté à
+cela de une ou plusieurs adresses publiques avec lesquelles il est connecté à
 internet. Une adresse privée est une adresse qui est utilisée à l'intérieur
-d'un réseau local, indépendant de tout réseau externe. Les adresses privées
-peuvent être choisies parmi les suivantes: 10.0.0.0/8, 172.16.0.0/12 ou
-192.168.0.0/16.
-
+d'un réseau local. Dans un réseau local, les adresses utlisées sont locales et donc
+indépendantes de tout réseau externe. Cela veut dire qu'elles n'ont aucune
+signification en dehors du réseau local et qu'elles ne sont donc utilisées qu'à
+l'intérieur de celui-ci. Les adresses privées peuvent être choisies parmi les
+suivantes: 10.0.0.0/8, 172.16.0.0/12 ou 192.168.0.0/16.
+\smallbreak
 Lorsqu'une interface envoie un paquet vers l'extérieur du réseau, le routeur
 effectue plusieurs changements. Il traduit d'abord l'adresse privée en adresse
-public et la met dans l'en-tête du paquet. Puis il change tous les checksums
+publique et la met dans l'en-tête du paquet. Puis il change tous les checksums
 qui tiennent compte de l'adresse IP. Enfin, il garde en mémoire dans une table,
- appelée table NAT la correspondance entre adresse privée/adresse public et le
-protocole utilisé, comme ci-dessous.
-
+ appelée table NAT la correspondance entre adresse privée/adresse publique et le
+protocole utilisé.
+\newline
 Cela n'est cependant pas suffisant. En effet, lorsqu'un paquet arrivera de
-l'extérieur du réseau,  et si toutes les interfaces utilisent la même adresse
-public sans distinction supplémentaire, le routeur ne saura pas à quelle
+l'extérieur du réseau, et si toutes les interfaces utilisent la même adresse
+publique sans distinction supplémentaire, le routeur ne saura pas à quelle
 interface envoyer le paquet et il sera donc perdu.
 
 Une solution à ce problème existe pour les protocoles utilisant les ports comme
-TCP et UDP. Le routeur ajoute une information supplémentaire dans la table qui
-est le port source d'où vient le paquet. Les ports, qui sont implémentés dans
+TCP et UDP. Le routeur ajoute des informations supplémentaires dans la table qui
+sont le port source et destination d'où viennent le paquet. Les ports, qui sont implémentés dans
 la couche transport (couche 4), sont des sortes de "portes" qui permettent de
 communiquer avec un système d'exploitation. Le numéro de port est un numéro
-choisit aléatoirement entre 1024 et 65535, les ports 0 à 1023 étant réservés
+choisit aléatoirement entre 1024 et 65535 pour le client. Les ports 0 à 1023 étant réservés
 pour les serveurs qui "écoutent" pour des connexions entrantes.
 
+\newline
 Pour illustrer le fonctionnement du NAT imaginons qu'une interface A dont l'ip
 est 192.168.0.1 veut envoyer un paquet TCP à l'interface B d'ip 217.70.184.38.
 Le port source est le port 10277 et le port destination est le port 80. Le
-routeur a l'adresse IP  82.240.25.50.
+routeur, qui est une box, a l'adresse IP  82.240.25.50.
 
 L'interface A envoie le paquet:
+{\includegraphics ./pics/PaquetAR.eps}
 
-La box internet enverra le paquet:
-
+La box effectue un changement de l'adresse et envoie le paquet:
+{\includegraphics ./pics/PaquetRB.eps}
 L'interface B répondra en envoyant le paquet:
-
+{\includegraphics ./pics/PaquetBR.eps}
+\smallbreak
 Finalement, la table NAT ressemblera à ceci:
 
-<TABLE NAT 1 > 
+{\includegraphics ./pics/TableNAT1.eps}
 
 Lorsque la box reçoit ce paquet, elle voit que le port de destination est le
 port 10277. Elle cherche ensuite le port correspondant dans sa table NAT.
 Lorsqu'elle le trouve elle effectue les changements nécessaire sur le paquet et
 transmet le paquet à l'interface A.
-
+\newline
 Mais même si cette solution fonctionne la plupart du temps, la probabilité est
-faible que 2 interfaces envoient des paquet sur les même port. C'est pour
-éviter cela que la box change le port source lorsqu'elle reçoit un paquet de
+faible, mais existe, que 2 interfaces envoient des paquet sur les même port. Par exemple,
+lorsque 2 interfaces envoient des paquets à un serveur HTTP, elles utilisent le port 80. 
+C'est pour éviter cela que la box change le port source lorsqu'elle reçoit un paquet de
 l'interface A. Ainsi on s'assure que aucun port n'est utilisé plusieurs fois.
 On obtient donc des tables de NAT comme dans l'exemple ci dessous:
-
+\newline
 On reprend les mêmes informations qu'avant. On a donc une interface A dont l'ip
 est 192.168.0.1 veut envoyer un paquet TCP à l'interface B d'ip 217.70.184.38.
 Le port source est le port 10277 et le port destination est le port 80. Le
@@ -109,48 +133,51 @@ On y ajoute une interface C, sur le même réseau que A et qui veut également
 envoyer un paquet TCP à la même adresse avec le même port source. L'IP de C
 sera 192.168.1.2.
 On obtient la table:
-<TABLE NAT 2>
+{\includegraphics ./pics/TableNAT2.eps}
 
 Enfin, pour éviter de saturer les ports utilisés il est nécessaire de recycler
  ceux qui ne sont plus utilisés. Lorsqu'on utilise un protocole comme UDP le
-routeur n'a aucune possibilité de savoir si le transfert et terminé. Lorsqu'on
+routeur n'a aucune possibilité de savoir si le transfert est terminé. Lorsqu'on
 utilise une connexion TCP entre A et B, des messages de fin de session sont
 envoyés par A et B lors de la fin du transfert. Lorsque la transmission est
 finit, A envoie un message FIN à B qui lui répond par un message ACK et vice
 versa. Mais ces messages ne sont pas utilisables pour reconnaître la fin de
 connexion car lors de la réception de ce message il est toujours possible qu'un
 paquet ai du être retransmit. Ainsi, on utilise un compteur de temps qui est
-associé à chaque paire adresse public/adresse privée. Lorsqu'il n'y a pas de
+associé à chaque paire adresse publique/adresse privée. Lorsqu'il n'y a pas de
 trafic entre une adresse privée et l'extérieur durant une durée fixée, le port
 qui lui est associée peut être réutilisé pour une autre adresse privée.
 
-
-2) Différents types de NAT
+\subsubsubsection{Différents types de NAT}
 
 Il existe différents types de NAT:
-- Le NAT dynamique PAT (Port Address Translation du port source). Ici les
-adresses externes sont indifférentes.
-- Masquerading où il n'y a qu'une adresse IP, celle du routeur, qui est
+\begin{itemize}
+\item Le NAT dynamique PAT (Port Address Translation du port source). Ici les
+adresses externes sont indifférentes. C'est le mécanisme qui utilise le port forwarding.
+\item Masquerading où il n'y a qu'une adresse IP, celle du routeur, qui est
 utilisée comme adresse IP externe.
-- NAT pool de source. Ici la première connexion privée prend la première
+\item NAT pool de source. Ici la première connexion privée prend la première
 adresse ip externe, la deuxième prend la deuxième ip externe, etc.
-- NAT pool de destination. Elle permet de répartir la charge entre plusieurs
+\item NAT pool de destination. Elle permet de répartir la charge entre plusieurs
 serveurs.
+\end{itemize}
 
-PORT FORWARDING
+
+\subsubsubsection{Redirection de port(Port forwarding)}
+
 Le NAT dynamique apporte cependant un grand problème. Lorsqu'une interface
 extérieur veut se connecter à une interface dans le réseau, elle ne dispose
-d'aucune autre information que l'adresse IP public. Si elle envoie alors un
+d'aucune autre information que l'adresse IP publique. Si elle envoie alors un
 paquet à cette adresse, le routeur qui le réceptionnera ne saura pas quoi en
-faire car il ne sait pas à quelle interface le paquet est destiné et il sera
-donc perdu. 
+faire car il ne sait pas à quelle interface le paquet est destiné et le paquet sera
+donc perdu. Il n'est donc pas possible, pour une machine externe au réseau local, d'établir 
+une connexion avec une interface connectée au réseau local.
 
 On a réussi à pallier à ce problème grâce à la redirection de port (port 
 forwarding). 
 
 Le principe du port forwarding est de rediriger tout paquet qui arrive sur un
-port du routeur vers le port d'une interface locale. Les connexions le
-nécessitant sont les connexions point à point.
+port du routeur vers le port d'une interface locale.
 Par exemple, prenons un routeur qui a comme IP externe 82.240.25.50.
 Nous le réglons de façon qu'il redirige tout paquet arrivant sur son port 80
 vers une interface locale A d'adresse locale 192.168.1.1.
@@ -159,26 +186,27 @@ Imaginons qu'une interface sur le réseau essaie de se connecter à cette adress
 Lorsque le routeur reçoit le paquet il va le transmettre à l'interface A comme
 dans le schéma ci-dessous:
 
-<SCHEMA PORT FORWARDING> FAIT
+{\includegraphics ./pics/port_forwarding.eps}
 
 Il est possible de faire du port forwarding sur plusieurs port et vers des
 interfaces différentes simultanément.
 
-NAT STATIQUE
+\subsubsubsection{NAT statique}
 Le NAT statique est l'attribution d'une adresse IP externe à une adresse IP 
-privé. Grâce à cette méthode une interface sur un réseau privé peut avoir une
-IP publique. Pour faire une traduction d'adresse statique il faut la configurer
+privée. Grâce à cette méthode une interface sur un réseau privé peut avoir une
+IP publique à elle seule. Pour faire une traduction d'adresse statique il faut la configurer
 manuellement dans la table de routage du routeur. Cette traduction restera dans
 la table jusqu'à ce qu'elle soit supprimée. La traduction d'adresse statique
 est le plus souvent utilisée pour interconnecter deux réseaux avec des
 adressages différents.
 
-4) NAT et sécurité
+\subsubsubsection{NAT et sécurité}
 
 Même si ça n'a pas été le but de la traduction d'adresses, un des effets
 secondaires du NAT a été d'apporter de la sécurité. En effet, auparavant, une
 interface pouvait se connecter à n'importe quel port sur une machine du réseau,
-à condition que ce port soit ouvert. Avec la traduction d'adresse, il n'est pas
+à condition que ce port soit ouvert. Certains systèmes comme Windows ouvrent des ports
+par défaut pour "écouter" le réseau. Avec la traduction d'adresse, il n'est pas
 possible d'atteindre n'importe quel port d'une interface. Il est uniquement
 possible d'atteindre un port lorsqu'une connexion a été établit avec ce port
 spécifique ou si le routeur cible a configuré l'interface cible comme interface
