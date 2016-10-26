@@ -10,13 +10,16 @@
 % http://blog.erratasec.com/2013/12/dod-address-space-its-not-conspiracy.html#.WAf_d7Wf21F
 
 \subsection{Problèmes posés par IPv4}
+L'IPV4 a été développé dans les années 70-début des années 80, donc il y a 30-40 ans.
+Lors de son développement personne n'a cru qu'internet serait un jour utilisé comme il l'est 
+aujourd'hui. N'ayant pas été développé pour l'utilisation que nous en faisons, l'IPV4 présente 
+plusieurs problèmes auxquels ont été trouvé des solutions définitives ou provisoires.
 
 \subsubsection{Épuisement des adresses IPV4}
 
-Lorsque IPV4 a été développé dans les années 70-début des années 80, personne 
-n'aurait imaginé qu'il y aurait un jour autant d'interfaces qui se connectent à 
+Personne n'aurait imaginé il y a 40 ans qu'il y aurait un jour autant d'interfaces qui se connectent à 
 Internet. On pensait que seul les militaires et les scientifiques utiliseront 
-internet et qu'un espace d'adressage sur 32 bits serait largement suffisante. 
+internet et qu'un espace d'adressage sur 32 bits serait largement suffisant. 
 De plus, les plages d'adresses étaient distribuées généreusement au début. 
 Cela veut dire que l'on attribuait des adresses permettant la création de réseaux 
 avec un nombre d'interfaces pouvant se connecter largement au-dessus de ce qui était 
@@ -25,7 +28,20 @@ Cependant, avec la croissance du nombre d'utilisateurs et des équipements conne
 la plage d'adresses IPV4 disponible a diminué progressivement. C'est en février 2011 
 que la réserve de bloc d'adresses publiques libres IPV4 de l'IANA (Internet Assigned 
 Numbers Authority) est arrivée à épuisement.
-\smallbreak
+
+
+\subsection{Sécurité}
+Même s'il existe beaucoup de protocoles pour assurer la sécurité sous IPV4, il y en a 
+beaucoup qui ne sont pas standardisé. L'IPV6 a standardisé et rendu obligatoire des 
+technologies dont certaines étaient auparavant utilisées dans IPV4. 
+
+
+
+
+\subsection{ Solutions proposées }
+
+\subsubsection{Solutions pour l'épuisement des adresses IPV4}
+
 Afin de résoudre ce problème, plusieurs techniques ont été proposées:
 \begin{itemize}
 \item La première a été le changement de technique d'adressage. On est passé de la
@@ -52,14 +68,22 @@ plus loin.
 \end{itemize}
 
 
-\subsection{ Solutions proposées }
+\subsubsubsection{CIDR(Classless Inter-Domain Routing)}
+Nous avons vu le fonctionnement du CIDR dans la partie fonctionnement. Pour rappel, le
+CIDR a été développé en 1993 dans le but de diminuer la taille des tables de routage. Pour 
+cela le concept de classe d'adresse a été abandonné et a été remplacé par une agrégation de 
+plusieurs entrées dans une table de routage par une seule entrée.
+Avec ce nouveau concept il a été possible de diviser une adresse IP plus finement. Cela veut 
+dire qu'il est maintenant possible de donner des plages d'adresse ayant des préfixes allant 
+de 0 à 31. Il est donc possible de créer 31 sortes de réseaux de taille différente. Il y a 
+donc, d'une part, moins de gaspillage d'adresse IP, et d'autre part, il y en a plus qui sont disponibles.
 
-\subsubsection{Traduction d'adresse réseau (Network Adress Translation}
+\subsubsubsection{Traduction d'adresse réseau (Network Adress Translation}
 Comme vu au-dessus, au fur et à mesure que l'IPV4 s'est répandu, il y a eu un manque
 d'espace d'adressage. Afin de limiter le nombre d'adresse IP publiques nécessaires
 à un réseau, le NAT a été développé.
 
-\subsubsubsection{Fonctionnement du NAT dynamique (Network Adress Translation)}
+\subsubsubsubsection{Fonctionnement du NAT dynamique (Network Adress Translation)}
 Le NAT est une technique utilisée au niveau du routeur. Le principe du NAT est
 que le routeur fait correspondre à une adresse IP une autre adresse IP en
 changeant l'adresse IP dans les headers des paquets IP. Cette technique permet
@@ -93,7 +117,7 @@ sont le port source et destination d'où viennent le paquet. Les ports, qui sont
 la couche transport (couche 4), sont des sortes de "portes" qui permettent de
 communiquer avec un système d'exploitation. Le numéro de port est un numéro
 choisit aléatoirement entre 1024 et 65535 pour le client. Les ports 0 à 1023 étant réservés
-pour les serveurs qui "écoutent" pour des connexions entrantes.
+pour les serveurs qui "écoutent" pour des connections entrantes.
 
 \newline
 Pour illustrer le fonctionnement du NAT imaginons qu'une interface A dont l'ip
@@ -138,17 +162,17 @@ On obtient la table:
 Enfin, pour éviter de saturer les ports utilisés il est nécessaire de recycler
  ceux qui ne sont plus utilisés. Lorsqu'on utilise un protocole comme UDP le
 routeur n'a aucune possibilité de savoir si le transfert est terminé. Lorsqu'on
-utilise une connexion TCP entre A et B, des messages de fin de session sont
+utilise une connection TCP entre A et B, des messages de fin de session sont
 envoyés par A et B lors de la fin du transfert. Lorsque la transmission est
 finit, A envoie un message FIN à B qui lui répond par un message ACK et vice
 versa. Mais ces messages ne sont pas utilisables pour reconnaître la fin de
-connexion car lors de la réception de ce message il est toujours possible qu'un
+connection car lors de la réception de ce message il est toujours possible qu'un
 paquet ai du être retransmit. Ainsi, on utilise un compteur de temps qui est
 associé à chaque paire adresse publique/adresse privée. Lorsqu'il n'y a pas de
 trafic entre une adresse privée et l'extérieur durant une durée fixée, le port
 qui lui est associée peut être réutilisé pour une autre adresse privée.
 
-\subsubsubsection{Différents types de NAT}
+\subsubsubsubsection{Différents types de NAT}
 
 Il existe différents types de NAT:
 \begin{itemize}
@@ -156,14 +180,14 @@ Il existe différents types de NAT:
 adresses externes sont indifférentes. C'est le mécanisme qui utilise le port forwarding.
 \item Masquerading où il n'y a qu'une adresse IP, celle du routeur, qui est
 utilisée comme adresse IP externe.
-\item NAT pool de source. Ici la première connexion privée prend la première
+\item NAT pool de source. Ici la première connection privée prend la première
 adresse ip externe, la deuxième prend la deuxième ip externe, etc.
 \item NAT pool de destination. Elle permet de répartir la charge entre plusieurs
 serveurs.
 \end{itemize}
 
 
-\subsubsubsection{Redirection de port(Port forwarding)}
+\subsubsubsubsection{Redirection de port(Port forwarding)}
 
 Le NAT dynamique apporte cependant un grand problème. Lorsqu'une interface
 extérieur veut se connecter à une interface dans le réseau, elle ne dispose
@@ -171,7 +195,7 @@ d'aucune autre information que l'adresse IP publique. Si elle envoie alors un
 paquet à cette adresse, le routeur qui le réceptionnera ne saura pas quoi en
 faire car il ne sait pas à quelle interface le paquet est destiné et le paquet sera
 donc perdu. Il n'est donc pas possible, pour une machine externe au réseau local, d'établir 
-une connexion avec une interface connectée au réseau local.
+une connection avec une interface connectée au réseau local.
 
 On a réussi à pallier à ce problème grâce à la redirection de port (port 
 forwarding). 
@@ -191,7 +215,7 @@ dans le schéma ci-dessous:
 Il est possible de faire du port forwarding sur plusieurs port et vers des
 interfaces différentes simultanément.
 
-\subsubsubsection{NAT statique}
+\subsubsubsubsection{NAT statique}
 Le NAT statique est l'attribution d'une adresse IP externe à une adresse IP 
 privée. Grâce à cette méthode une interface sur un réseau privé peut avoir une
 IP publique à elle seule. Pour faire une traduction d'adresse statique il faut la configurer
@@ -200,7 +224,7 @@ la table jusqu'à ce qu'elle soit supprimée. La traduction d'adresse statique
 est le plus souvent utilisée pour interconnecter deux réseaux avec des
 adressages différents.
 
-\subsubsubsection{NAT et sécurité}
+\subsubsubsubsection{NAT et sécurité}
 
 Même si ça n'a pas été le but de la traduction d'adresses, un des effets
 secondaires du NAT a été d'apporter de la sécurité. En effet, auparavant, une
@@ -208,13 +232,13 @@ interface pouvait se connecter à n'importe quel port sur une machine du réseau
 à condition que ce port soit ouvert. Certains systèmes comme Windows ouvrent des ports
 par défaut pour "écouter" le réseau. Avec la traduction d'adresse, il n'est pas
 possible d'atteindre n'importe quel port d'une interface. Il est uniquement
-possible d'atteindre un port lorsqu'une connexion a été établit avec ce port
+possible d'atteindre un port lorsqu'une connection a été établit avec ce port
 spécifique ou si le routeur cible a configuré l'interface cible comme interface
 par défaut pour ce port.
 
 
-\subsubsection{Solutions}
-//NAT,IPv6
+Cependant même toutes ces sollutions n'ont pas suffit pour +++
+
 \subsection{Différence entre IPv4 et IPv6}
 
 % MOSSI
