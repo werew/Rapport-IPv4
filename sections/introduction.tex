@@ -1,6 +1,42 @@
 \section{Introduction}
 \label{sec:intro}
 
+Dans les réseaux locaux, les machines peuvent communiquer directement les unes
+avec les autres par le biais d'un lien physique.\footnote{Ce lien peut directe
+de machine à machine, ou indirecte: passant par d'autre équipement (switch, hub,...).}
+En revanche, établir un lien entre des machines sur des réseaux différents n'est pas
+aussi facile, cela pose en effet deux problèmes majeurs:
+\begin{itemize}
+\item Deux réseaux différents n'utilisent pas forcement la même technologie pour transmettre
+des données au niveau protocolaire ou du lien physqiue.
+\item Comme les machines ne sont pas physiquement sur le même réseau, il faut un système d'adressage
+afin qu'une machine puisse joindre une autre machine située dans un réseau différent,
+peu importe sa localisation.
+\end{itemize}
+
+\emptyline
+Dans le cadre d'une communication, il est souvent pratique de diviser les
+fonctionnalités nécessaire à l'échange d'information.  Pour cette raison il est
+utile de définir un modèle théorique pour séparer les différentes tâches.
+Aujourd'hui le standard en terme de modèle de communication est le modèle OSI
+(\it{Open Systems Interconnection}), qui divise en 7 couches les
+fonctionnalités en question.
+
+\emptyline 
+Le problème relative à l'interconnection des réseaux (vu plus haut)
+est traité par la couche 3 (nommé couche réseau) du modèle OSI.
+
+Cette couche peux être fonctionnellement mise en oeuvre par le protocole IPv4.
+C'est actuellement le protocole réseau (relative à la couche 3 du modèle OSI) le plus
+utilisé et qui à permit le déployement massive d'Internet dans le monde.
+
+Dans la suite de ce rapport, nous allons étudier le fonctionnement d'IPv4, les possibilités qu'il offre et
+l'écosystème de protocoles qui gravitent autour d'IPv4 et qui sont nécessaires à son bon fonctionnement.
+
+Nous allons commencer par explorer le contexte de création de ce protocole et comprendre les motivations
+qui ont pousser le concevoir.
+
+
 % Daniel intro
 
 Une forte demande de la part des universités et centres de recherche aux
