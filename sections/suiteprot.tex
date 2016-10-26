@@ -463,7 +463,11 @@ quelque étape non indispensable.
 
 \includegraphics[width=6cm]{./pics/timeline_dhcp_reuse_add.eps}
 
-\subsection{PMTU}
+\subsection{PMTU discovery}
+Le protocole PMTU discovery (Path MTU discovery) décrit dans le RFC 1191\cite{url-RFC-PMTU}, permet de trouver le plus petit MTU d'un chemin entre l'émetteur et le récepteur. Cela permet d'éviter la fragmentation des paquet IP ce qui permet entre autre de soulagé la charge des routeurs.
+L'hôte souhaitant connaitre le plus petit MTU pour un chemin vers autre hôte va envoyer un paquet avec un certain MTU et en plaçant le bit DF de l'entête sur DF, pour éviter la fragmentation du paquet. Ainsi si le MTU est trop grand à un moment donné du chemin, le routeur ne pourra pas fragmenter le paquet mais ne pourra non plus pas transmettre le paquet en l'état. Il va alors détruire le paquet, et émettre un message ICMP de type 3 et de code 4 à la source, signalant que la destination n'est pas joignable, et que cela est à un paquet nécessitant une fragmentation. Mais la fragmentation est interdite pour ce paquet. Le MTU est donc trop élevé. Le message ICMP contient le MTU qu'il faut passé le routeur.
+L'émetteur va alors créer un nouveau paquet avec le nouveau MTU. Il fera cela autant de fois que cela est nécessaire pour déterminer le MTU du chemin.
+
 \subsection{DNS}
 Le protocole DNS (Domain Name System) permet de faire de la résolution d'adresse.
 Cela permet grâce à des échange entre un ou plusieurs serveur DNS de faire la traduction
