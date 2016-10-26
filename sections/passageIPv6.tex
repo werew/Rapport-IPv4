@@ -52,7 +52,7 @@ intranet ou encore un réseau domestique. Dans ce réseau, toutes les interfaces
 cela de une ou plusieurs adresses publics avec lesquelles il est connecté à
 internet. Une adresse privée est une adresse qui est utilisée à l'intérieur
 d'un réseau local, indépendant de tout réseau externe. Les adresses privées
-peuvent être choisies parmi les suivantes : 10.0.0.0/8, 172.16.0.0/12 ou
+peuvent être choisies parmi les suivantes: 10.0.0.0/8, 172.16.0.0/12 ou
 192.168.0.0/16.
 
 Lorsqu'une interface envoie un paquet vers l'extérieur du réseau, le routeur
@@ -70,23 +70,23 @@ interface envoyer le paquet et il sera donc perdu.
 Une solution à ce problème existe pour les protocoles utilisant les ports comme
 TCP et UDP. Le routeur ajoute une information supplémentaire dans la table qui
 est le port source d'où vient le paquet. Les ports, qui sont implémentés dans
-la couche transport (couche 4), sont des sortes de ''portes'' qui permettent de
+la couche transport (couche 4), sont des sortes de "portes" qui permettent de
 communiquer avec un système d'exploitation. Le numéro de port est un numéro
 choisit aléatoirement entre 1024 et 65535, les ports 0 à 1023 étant réservés
-pour les serveurs qui ''écoutent'' pour des connexions entrantes.
+pour les serveurs qui "écoutent" pour des connexions entrantes.
 
 Pour illustrer le fonctionnement du NAT imaginons qu'une interface A dont l'ip
 est 192.168.0.1 veut envoyer un paquet TCP à l'interface B d'ip 217.70.184.38.
 Le port source est le port 10277 et le port destination est le port 80. Le
 routeur a l'adresse IP  82.240.25.50.
 
-L'interface A envoie le paquet :
+L'interface A envoie le paquet:
 
-La box internet enverra le paquet : 
+La box internet enverra le paquet:
 
-L'interface B répondra en envoyant le paquet :
+L'interface B répondra en envoyant le paquet:
 
-Finalement, la table NAT ressemblera à ceci : 
+Finalement, la table NAT ressemblera à ceci:
 
 <TABLE NAT 1 > 
 
@@ -99,7 +99,7 @@ Mais même si cette solution fonctionne la plupart du temps, la probabilité est
 faible que 2 interfaces envoient des paquet sur les même port. C'est pour
 éviter cela que la box change le port source lorsqu'elle reçoit un paquet de
 l'interface A. Ainsi on s'assure que aucun port n'est utilisé plusieurs fois.
-On obtient donc des tables de NAT comme dans l'exemple ci dessous :
+On obtient donc des tables de NAT comme dans l'exemple ci dessous:
 
 On reprend les mêmes informations qu'avant. On a donc une interface A dont l'ip
 est 192.168.0.1 veut envoyer un paquet TCP à l'interface B d'ip 217.70.184.38.
@@ -108,7 +108,7 @@ routeur a l'adresse IP  82.240.25.50.
 On y ajoute une interface C, sur le même réseau que A et qui veut également
 envoyer un paquet TCP à la même adresse avec le même port source. L'IP de C
 sera 192.168.1.2.
-On obtient la table :
+On obtient la table:
 <TABLE NAT 2>
 
 Enfin, pour éviter de saturer les ports utilisés il est nécessaire de recycler
@@ -127,7 +127,7 @@ qui lui est associée peut être réutilisé pour une autre adresse privée.
 
 2) Différents types de NAT
 
-Il existe différents types de NAT : 
+Il existe différents types de NAT:
 - Le NAT dynamique PAT (Port Address Translation du port source). Ici les
 adresses externes sont indifférentes.
 - Masquerading où il n'y a qu'une adresse IP, celle du routeur, qui est
@@ -157,7 +157,7 @@ vers une interface locale A d'adresse locale 192.168.1.1.
 Imaginons qu'une interface sur le réseau essaie de se connecter à cette adresse
  IP au port 80.
 Lorsque le routeur reçoit le paquet il va le transmettre à l'interface A comme
-dans le schéma ci-dessous :
+dans le schéma ci-dessous:
 
 <SCHEMA PORT FORWARDING> FAIT
 
