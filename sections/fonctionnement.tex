@@ -1,87 +1,98 @@
+Des données transmissent en utilisant le protocole IPv4 sont encapsulées dans un message que
+l'on appelle un paquet IPv4. Ces paquets sont consitué d'un entête suivis des données à transmettre.
 
 % Mossi
-\subsection{Fonctionnement et Adressage de IPV4}
-Une adresse ip est un nombre de 32 bits codé sur 4 octets dont 1 octet égal à 8
-bits séparés par un point. Souvent cette adresse est écrite avec des valeurs
-décimales.  Il est aussi possible de la saisir sous forme binaire quand c’est
-indispensable. Chaque nombre étant compris entre 0 et 255. ou en binaire entre
-00000000 et 11111111.  Pour un réseau informatique, cette adresse ip est un
-identifiant unique attribué à chaque interface avec le réseau ip et associé à
-une machine. Cette adresse est unicast utiliser comme adresse soucre ou de
-destination. Il faudrait aussi préciser que le protocole IPV4 permet aussi
-l’utilisation des adresses multicast et broadcast en dehors des adresses
-unicast.
+\subsection{Adresse IPv4}
+
+L'entête contient des informations essentielles pour la transmission d'un paquet, notamment les
+adresses source et destination.
+
+Une adresse IP sert à identifier une machine (et plus précisement une des interfaces de cette machine)
+dans un réseau particulié.
+Comme nous le verrons plus tard cet identifiant unique permet de désigner à la fois un
+réseau et une machine précise au sein de ce réseau.
+Une adresse est codé sur 32 bits ce qui permet de coder 2^32 soit 4294967296 adresses différentes.
+Par convention on peut représenter une adresse IPv4 comme une suite de 4 nombres décimaux séparés par des points,
+chacun traduisant un octet. Cette représentation a contribuée à simplifier l'utilisation et la manipulation
+des adresses.
+Comme chaque nombre représente un octet, les valeurs de celui-ci sont comprises entre 0 et 255.
 
 \vspace{1cm}
 Exemple: adresse à valeur décimale: 212.217.0.1 => correspond sous sa forme
 binaire à: 11010100.11011001.00000000.00000001
 \vspace{1cm}
 
-\subsubsection{Notion de netid et hostid}
-Une adresse ipv4 est la composition de deux partie distinctes: une première
-partie de l’adresse qui identifie le réseau communément appeler netid , elle
-est la partie gauche de l’adresse et designe le réseau auquel appartient les
-ordinateurs (hôte).  Une seconde partie de l’adresse qui identifie le numéro de
-l’hôte appeler host-ID, elle est la partie droite de l’adresse et désigne
-l’ensemble des hôtes du réseau.
+\subsubsection{Notion de NET ID et HOST ID}
+Une adresse IPv4, en tant qu'inditifiant d'une machine dans un réseau, contient deux informations:
+une première partie qui identifie le réseau appellé NET ID (les bits de poids fort), une seconde qui identifie l’hôte appeler host-ID (les bits de poids faible).
+Les machines qui se trouvent donc sur le même réseau partage le même NET ID pour leur adresse.
 
-\vspace{1cm} 
-%TODO image goes here
-<-----------------------4 octects------------------------------------>
-        Net ID                              Host ID
-   Identifiant réseau               Identifiant de l’hôte
-\vspace{1cm} 
-
-
-Pour connaître la limite entre netID et hostID, il faudrait connaître d’abord
-le masque du réseau que nous introduirons la suite.
-
-\textbf{ Remarque:} on distingue alors deux situations qui peuvent être soit
-des échanges directes ou indirectes.  Les différentes matériels communiquent
-entre eux dans la mesure qu’ils soient tous sur le même réseau IP(netid). Et
-peuvent être reliée physqiuement.  Et en deuxième cas l’échange indirect ou les
-matériels ne sont pas sur le même réseau, passage obligatoire à travers un
-routeur pour réaliser une communication externe.   
+La longueur de ces deux parties est variable: la taille du HOST ID dépend de la taille du NET ID. Pour représenter la longueur de ces différentes parties on a introduit la notion de masque
 
 \subsubsection{Masque de réseau}
 
-Une adresse masque est sous forme de 32 bits, elle est utilisé pour diviser
-une adresse IP en sous-réseaux et spécifier les hôtes disponibles du réseau.
-Dans un masque, deux bits sont toujours affectés automatiquement. Par exemple,
-dans 255.255.225.0, "0" est l'adresse de réseau assignée. Dans 255.255.255.255,
-"255" est l'adresse de diffusion attribué. Le 0 et 255 sont toujours assignés
-et ne peuvent pas être utilisés.
+Le masque sert à représenter la scission entre le NET ID et le HOST ID.
+Il est codé sur 32 bits et adopte la même représentation qu'une adresse IP, à savoir
+4 nombres décimaux séparé par des points.
+La position des bits à 1 dans le masque corresponde à la position des bits définissant le NET ID dans l'adresse IP.
+Pour obtenir les bits du NET ID il suffit de faire un ET logique entre l'adresse et son masque. Tous les autres bits (donc les bits à 0)
+feront donc partie du HOST ID.
+Les bits à 1 sont contiguës et commencent au bit de poids fort: le nombre de bit à 1 dans le masque, donne
+le nombre de bit faisant partie du NET ID en partant du bit de poids fort dans l'adresse.
+
+En conséquence plus le nombre de bit à 1 dans le masque est grand, plus le NET ID sera grand, et plus le HOST ID sera petit, car il restera moins de bit pour définir le HOST ID (la somme des deux devant évidemment faire 32 bits).
+
+//TODO image
 
 
-\subsubsection{Format du masque}
-Il est composée de 32 bits alors même taille qu’un adresse IPV4, dans le masque
-ont place les bits à 1 de manière contigus et les bits à 0 à droite.
+//TODO exemple
+//TODO exemple invalide
 
-\vspace{1cm}
-{\it Exemples:\\
-11111111.00000000.00000000.00000000 =   255.0.0.0\\
-11111111.11111111.11111111.00000000 =   255.255.255.0\\
-11110000.00000000.00000000.00000000 =   240.0.0.0 
-}
+\subsubsection{Classes d'adresse IP}
 
-\vspace{1cm}
-{\it Exemple invalide:\\
-11111111.01111111.00000000.00000000
-}
 
-\vspace{1cm}
 
-\subsubsection{Calcul de l’adresse réseau et numéro de l’hôte}
-Pour le calcul d’un adresse réseau on effectue un ET logique bit à bit
-entre le masque de réseau et l’adresse IP. Alors on détermine:
+Alors on vient de voir que les adresses IP privées sont utilisable uniquement
+sur des réseaux locaux, tandis qu’il y a des adresses IP qui ne sont utilisées
+uniquement que sur internet donc nous pouvons en déduir que c’est les adresses
+IP publiques non utilisable dans un réseau local. Les routeurs (par exemple:
+votre box) ont une adresse IP publique du côté d’internet, ce qui permet de
+rendre votre box visible sur internet (elle répondra certainement au ping). De
+plus, au moment de vos connexion sur un site web vous utilisez l’adresse
+publique du serveur web. De ce fait une adresse IP publique est unique dans le
+monde, ce qui n’est pas le cas dans le systèmes d’adressage des adresses IP
+privées qui doivent être unique seulement dans un même réseau local mais pas au
+niveau planétaire étant donné que ces adresses ne peuvent pas être routées sur
+internet. Une adresse IP publique est soit acheté ou fournie par la FAI.  Les
+IP publiques représentent toutes les adresses IP des classes A, B et C qui ne
+font pas partie de la plage d’adresses privées de ces classes ou des exceptions
+de la classe A (voir Adresse non utilisé ci-dessus).
 
-Pour la partie réseau (netid): on effectue l’opération suivante:
-    net-id <== adresse IP ET (bit à bit) Masque
-Exemple: 192.168.52.0 <== 192.168.52.85 \& 255.255.255.0
 
-Pour la partie hôte (hostid): on effectue l’opération suivante:
-    host-id <== adresse IP ET (bit à bit) ~Masque
-Exemple: 0.0.0.85 <== 192.168.52.85 \& 0.0.0.255
+\subsubsection{Les classes d’adresses}
+Au début de la création de IPV4, maintes groupes d’adresses ont été définis
+pour faciliter le routage (ou cheminement) des paquets. Structurée en 5 classes
+(A,B,C,D,E) selon la valeur du première octet.
+
+%TODO images classes %
+%TODO tableau recapitulatif %
+
+De ce fait on remarque une distribution de l’espace d’adressage selon laquelle
+la classe A possède 50\% l’espace et soit 25\% pour la classe B, 12,5\% classe
+C et 6,25\% pour D \& E. on peut en-déduire une mauvaise répartition de cette
+espace d’adressage. 
+
+%--------------------------------------
+Les classes A, B et C ont chacune une correspondance de plage
+d’adresses IP privées à l’intérieur de la plage globale qui a été définie par
+la RFC 1918. Mais l’utilisation  de celui-ci pour inter-connecter des réseau
+géante (entreprise) avec des espaces adressage qui se chevauche peut causer des
+problèmes. Une adresse IP privées est librement paramétrée par l’administrateur
+du réseau local.
+Les adresses privées de la classe A: 10.0.0.0 à 10.255.255.255\\
+Les adresses privées de la classe B: 172.16.0.0 à 172.31.255.255\\
+Les adresses privées de la classe C: 192.168.1.0 à 192.168.255.255\\
+
 
 \textbf{Remarque:}
 De ce fait on distingue deux adresses particulières parmi tout ceux possible,
@@ -128,53 +139,4 @@ souvent une signification particulières. \\
 (lookback), 127.0.0.1 pour le localhost\\
 > à 223.255.255.255: pour le multicast et la recherche.\\
 
-\subsubsection{Type d’adresse IP (Schéma dans pics sur comment c’est utilisé dans un ensemble de réseau )}
-On distingue deux (2) types d’adresse IP qui sont les adresses IP publiques \& privées:
-Les adresses IP privées Les adresses IP privées sont représentés par toutes les
-adresses IP de classe A, B et C qui sont utilisable dans un réseau local (par
-exemple le LAN) alors ce qui correspond au réseau de votre entreprise ou celle
-de votre réseau domestique. D’autre part, les adresses IP privées ne sont pas
-utilisable sur internet (car elles ne peuvent pas être routées sur internet),
-les machines qui les utilisent ne peuvent être atteint qu’à partir de votre
-réseau local. Les classes A, B et C ont chacune une correspondance de plage
-d’adresses IP privées à l’intérieur de la plage globale qui a été définie par
-la RFC 1918. Mais l’utilisation  de celui-ci pour inter-connecter des réseau
-géante (entreprise) avec des espaces adressage qui se chevauche peut causer des
-problèmes. Une adresse IP privées est librement paramétrée par l’administrateur
-du réseau local.
-\vspace{1cm}
-Les adresses privées de la classe A: 10.0.0.0 à 10.255.255.255\\
-Les adresses privées de la classe B: 172.16.0.0 à 172.31.255.255\\
-Les adresses privées de la classe C: 192.168.1.0 à 192.168.255.255\\
-\vspace{1cm}
-
-Alors on vient de voir que les adresses IP privées sont utilisable uniquement
-sur des réseaux locaux, tandis qu’il y a des adresses IP qui ne sont utilisées
-uniquement que sur internet donc nous pouvons en déduir que c’est les adresses
-IP publiques non utilisable dans un réseau local. Les routeurs (par exemple:
-votre box) ont une adresse IP publique du côté d’internet, ce qui permet de
-rendre votre box visible sur internet (elle répondra certainement au ping). De
-plus, au moment de vos connexion sur un site web vous utilisez l’adresse
-publique du serveur web. De ce fait une adresse IP publique est unique dans le
-monde, ce qui n’est pas le cas dans le systèmes d’adressage des adresses IP
-privées qui doivent être unique seulement dans un même réseau local mais pas au
-niveau planétaire étant donné que ces adresses ne peuvent pas être routées sur
-internet. Une adresse IP publique est soit acheté ou fournie par la FAI.  Les
-IP publiques représentent toutes les adresses IP des classes A, B et C qui ne
-font pas partie de la plage d’adresses privées de ces classes ou des exceptions
-de la classe A (voir Adresse non utilisé ci-dessus).
-
-
-\subsubsection{Les classes d’adresses}
-Au début de la création de IPV4, maintes groupes d’adresses ont été définis
-pour faciliter le routage (ou cheminement) des paquets. Structurée en 5 classes
-(A,B,C,D,E) selon la valeur du première octet.
-
-%TODO images classes %
-%TODO tableau recapitulatif %
-
-De ce fait on remarque une distribution de l’espace d’adressage selon laquelle
-la classe A possède 50\% l’espace et soit 25\% pour la classe B, 12,5\% classe
-C et 6,25\% pour D \& E. on peut en-déduire une mauvaise répartition de cette
-espace d’adressage. 
 
