@@ -79,10 +79,23 @@ n'était pas utilisable sur le long terme car il "gache" des adresses en
 n'utilisant pas tout son espace d'adressage.
 
 
-\subsubsection{Notation CIDR}
+\subsubsection{CIDR}
 
-
-
+Aujourd'hui le système le plus utilisé est CIDR (Classless Inter-Domain
+Routing) remplace le système de classe d'adresse. CIDR permet de créer des
+masque beaucoup plus fin, étant donné qu'on n'est plus limité à des masque de
+réseau fixe, on peut ajuster le masque pour avoir le nombre de machine
+adressable dans un réseau le plus proche possible du nombre de machine que l'on
+souhaite adressé.  Cela permet de limiter les pertes en adresse inutilisé, si
+la plage est correctement découpée.  On peut donc créer des masques à la
+séparation entre le NET ID et le HOST ID se trouve n'importe où, même en plein
+milieu des octets (ce qui était impossible avec les classes d'adresse), ce qui
+apporte une plus grande fléxibilité.  Cela permet aussi de créer une hiérarchie
+dans une plage d'adresse réseau qui serait découper en plusieurs réseaux
+"fils", et cela permet notamment, avec cette hierarchie, de réduire la table de
+routage des routeur.  De là est né une nouvelle notation des masques: on écrit
+le nombre de bit à 1 dans le masque à la suite de l'adresse IP et séparé par un
+slash.
 
 
 
