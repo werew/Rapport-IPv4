@@ -3,123 +3,40 @@
 
 Dans les réseaux locaux, les machines peuvent communiquer directement les unes
 avec les autres par le biais d'un lien physique.\footnote{Ce lien peut directe
-de machine à machine, ou indirecte: passant par d'autre équipement (switch, hub,...).}
-En revanche, établir un lien entre des machines sur des réseaux différents n'est pas
-aussi facile, cela pose en effet deux problèmes majeurs:
+de machine à machine, ou indirecte: passant par d'autre équipement (switch,
+hub,...).} En revanche, établir un lien entre des machines sur des réseaux
+différents n'est pas aussi facile, cela pose en effet deux problèmes majeurs:
 \begin{itemize}
-\item Deux réseaux différents n'utilisent pas forcement la même technologie pour transmettre
-des données au niveau protocolaire ou du lien physqiue.
-\item Comme les machines ne sont pas physiquement sur le même réseau, il faut un système d'adressage
-afin qu'une machine puisse joindre une autre machine située dans un réseau différent,
-peu importe sa localisation.
+\item Deux réseaux différents n'utilisent pas forcement la même technologie
+pour transmettre des données au niveau protocolaire ou du lien physqiue.
+\item Comme les machines ne sont pas physiquement sur le même réseau, il faut
+un système d'adressage afin qu'une machine puisse joindre une autre machine
+située dans un réseau différent, peu importe sa localisation.
 \end{itemize}
 
-\emptyline
+\bigskip
 Dans le cadre d'une communication, il est souvent pratique de diviser les
 fonctionnalités nécessaire à l'échange d'information.  Pour cette raison il est
 utile de définir un modèle théorique pour séparer les différentes tâches.
 Aujourd'hui le standard en terme de modèle de communication est le modèle OSI
-(\it{Open Systems Interconnection}), qui divise en 7 couches les
+({\it Open Systems Interconnection}), qui divise en 7 couches les
 fonctionnalités en question.
 
-\emptyline 
-Le problème relative à l'interconnection des réseaux (vu plus haut)
-est traité par la couche 3 (nommé couche réseau) du modèle OSI.
+\bigskip
+Le problème relatif à l'interconnection des réseaux (vu plus haut) est traité
+par la couche 3 (nommé couche réseau) du modèle OSI.
 
 Cette couche peux être fonctionnellement mise en oeuvre par le protocole IPv4.
-C'est actuellement le protocole réseau (relative à la couche 3 du modèle OSI) le plus
-utilisé et qui à permit le déployement massive d'Internet dans le monde.
+C'est actuellement le protocole réseau (relative à la couche 3 du modèle OSI)
+le plus utilisé et qui à permit le déployement massive d'Internet dans le
+monde.
 
-Dans la suite de ce rapport, nous allons étudier le fonctionnement d'IPv4, les possibilités qu'il offre et
-l'écosystème de protocoles qui gravitent autour d'IPv4 et qui sont nécessaires à son bon fonctionnement.
+Dans la suite de ce rapport, nous allons étudier le fonctionnement d'IPv4, les
+possibilités qu'il offre et l'écosystème de protocoles qui gravitent autour
+d'IPv4 et qui sont nécessaires à son bon fonctionnement.
 
-Nous allons commencer par explorer le contexte de création de ce protocole et comprendre les motivations
+Nous allons commencer par explorer le contexte de création de ce protocole et
+comprendre les motivations
 qui ont pousser le concevoir.
 
 
-% Daniel intro
-
-Une forte demande de la part des universités et centres de recherche aux
-Etats-Unis a donne lieu a la creation et la mise en ouvre d'un nouveau concept
-de reseau permettant d'interconnecter les différentes structures de facon
-efficace afin de partager les informations, et d'autre part, de faire des
-expérimentations sur les réseaux.
-\\
-En effet jusqu'alors les reseau informatiques utilisent les memes principes des
-reseau telephoniques: la commutation de circuits, ce qui n'etait pas tres 
-efficace en terme de resources et materiel\footnote {
-Dans une reseau a commutation de circuits chaque peripherique pouvent utiliser
-un seul lien a la fois (ciruit): lors d'une trasmission  un lien etait reserve
-pour tout la dure de la communication et rendait donc la peripherique
-inutiilisable pour des trasmission vers un different destinataire (c'est le meme
-principe des reseau telephoniques)
-http://www.tcpipguide.com/free/t\_CircuitSwitchingandPacketSwitchingNetworks.htm .}.
-\\
-Pendant les années 1960 le concept de reseau a paquets commute a ete invente et mise en 
-pratique d'abord dans la reseau du NPL (UK National Physical Laboratory) et
-puis dans l'agence americaine ARPA ({\it Advanced Research Project Agency})
-\footnote {http://www.livinginternet.com/i/iw\_packet\_inv.htm}.
-\\
-Dans une reseau a commutation de paquets ({\it Packet Switching}) la connection
-entre deux machines n'est pas continue mais elle est coupe en plusieurs
-paquets.  L'abandon d'une connexion continue a permit de se passer de la
-reservation d'un lien (circuit) dediee ce qui comporte la possibilite de
-envoier et recevoir en meme temps paquet vers different destinataires (un peu
-comme une boite a lettre). 
-\\
-La reseau créé au sein de l'agence gouvernative ARPA et baptisee ARPANET, est une
-des premieres reseaux a fonctionner sur la base de paquets. Le principe de
-communication par paquet est de découper l'information à transmettre en de plus
-petits paquets qui peuvent chacun prendre un chemin différent pour arriver à
-destination.  Avant ARPANET, la communication réseau était basée sur la
-communication par circuit électrique dont les informations étaient envoyées en
-continue dans un seul morceau. Dans ce sens ARPANET a posee la base a partir de 
-laquelle l'internet a ete cree. 
-\\
-L'ARPA (aujourd'hui DARPA: {\it Defence Advanced Research Project Agency}) est
-une agence de recherche créée par le département américain de la défense en
-1957 afin de développer de nouvelles technologies à usage militaire.  ARPANET,
-la reseau mis en place par ARPA, a été constitué comme une toile reliants
-plusieurs serveurs. Chaque serveur est un noeud et peut stocker, traiter ou
-servir de relais. Ainsi, il existe plusieurs chemins pour accéder à un noeud et
-lorsqu'un noeud est hors service, il est toujours possible de rejoindre le
-noeud destinataire en passant par un autre chemin: une des caracteristiques
-plus interessant de ARPANET a été une certaine robustesse, ARPANET ne dépendait
-pas d'un centre névralgique qui aurait pu être détruit en cas
-d'attaque\footnote { Il faut par contre noter que l'hypothese qui affirme que
-ARPANET ait ete construit dans le but de creer une reseau resistante aux
-attaques nucleaires a ete demystifie par le {\it Internet Society}: 
-http://www.internetsociety.org/internet/what-internet/history-internet/brief-history-internet
-.}
-\\
-Ce réseau se développa est il compta 23 noeuds en 1971 et en 1977
-il en compta 111. Afin d'uniformiser ce réseau, Vint Cerf et Bob Kahn on
-introduit la première version du protocol TCP.  Historiquement, les protocoles
-IP constituaient la partie du protocole TCP qui s'occupe de la transmission en
-mode sans connexion. La transmission en mode sans connexion est une
-transmission de donnée dans laquelle chaque paquet contient l'adresse de
-destination. Ceci permet une transmission  du paquet sans que les deux hôtes
-soient obligés d'établir une connexion auparavant. Cette version est ce qu'on
-aurait pu nommer l'IPv1 et elle est documentée dans la RFC 675. Cette version
-fut modifiée et publiée en 1977. Elle correspond à la deuxième version de TCP
-(IPv2). 
-\\
-Initialement, le protocole TCP avait deux fonctions: premièrement, il devait
-permettre une transmission fiable d'informations entre deux hôtes en plus
-il devait
-également servir en tant que protocole de routage et de packaging. 
-Cependant,
-pour être cohérant avec le modèle en couche, qui différencie la fiabilité
-(couche transport) et le routage (couche réseau), il fut décidé en 1978 de
-diviser le protocole TCP\footnote {
-{\it "We are screwing up in our design of internet protocols by violating the
-principle of layering. Specifically we are trying to use TCP to do two
-things: serve as a host level end to end protocol, and to serve as an
-internet packaging and routing protocol. These two things should be
-provided in a layered and modular way. I suggest that a new distinct
-internetwork protocol is needed, and that TCP be used strictly as a host
-level end to end protocol." } - IEN 2 (Comments on Internet Protocol and TCP)
-}.
-Le protocole TCP ne s'occupe maintenant plus que de la partie transport. La
-partie réseau a été prise en charge par les protocoles IP.  C'est finalement le
-1er janvier 1983 que l'ARPANET adopte les protocoles TCP/IP et donc l'IPv4. 
