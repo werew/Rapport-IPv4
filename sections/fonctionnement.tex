@@ -1,6 +1,6 @@
 
 % Mossi
-\section{Fonctionnement et Adressage de IPV4}
+\subsection{Fonctionnement et Adressage de IPV4}
 Une adresse ip est un nombre de 32 bits codé sur 4 octets dont 1 octet égal à 8
 bits séparés par un point. Souvent cette adresse est écrite avec des valeurs
 décimales.  Il est aussi possible de la saisir sous forme binaire quand c’est
@@ -17,7 +17,7 @@ Exemple: adresse à valeur décimale: 212.217.0.1 => correspond sous sa forme
 binaire à: 11010100.11011001.00000000.00000001
 \vspace{1cm}
 
-\subsection{Notion de netid et hostid}
+\subsubsection{Notion de netid et hostid}
 Une adresse ipv4 est la composition de deux partie distinctes: une première
 partie de l’adresse qui identifie le réseau communément appeler netid , elle
 est la partie gauche de l’adresse et designe le réseau auquel appartient les
@@ -43,7 +43,7 @@ peuvent être reliée physqiuement.  Et en deuxième cas l’échange indirect o
 matériels ne sont pas sur le même réseau, passage obligatoire à travers un
 routeur pour réaliser une communication externe.   
 
-\subsection{Masque de réseau}
+\subsubsection{Masque de réseau}
 
 Une adresse masque est sous forme de 32 bits, elle est utilisé pour diviser
 une adresse IP en sous-réseaux et spécifier les hôtes disponibles du réseau.
@@ -128,7 +128,7 @@ souvent une signification particulières. \\
 (lookback), 127.0.0.1 pour le localhost\\
 > à 223.255.255.255: pour le multicast et la recherche.\\
 
-\subsection{Type d’adresse IP (Schéma dans pics sur comment c’est utilisé dans un ensemble de réseau )}
+\subsubsection{Type d’adresse IP (Schéma dans pics sur comment c’est utilisé dans un ensemble de réseau )}
 On distingue deux (2) types d’adresse IP qui sont les adresses IP publiques \& privées:
 Les adresses IP privées Les adresses IP privées sont représentés par toutes les
 adresses IP de classe A, B et C qui sont utilisable dans un réseau local (par
@@ -165,7 +165,7 @@ font pas partie de la plage d’adresses privées de ces classes ou des exceptio
 de la classe A (voir Adresse non utilisé ci-dessus).
 
 
-\subsection{Les classes d’adresses}
+\subsubsection{Les classes d’adresses}
 Au début de la création de IPV4, maintes groupes d’adresses ont été définis
 pour faciliter le routage (ou cheminement) des paquets. Structurée en 5 classes
 (A,B,C,D,E) selon la valeur du première octet.
