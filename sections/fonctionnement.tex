@@ -63,7 +63,27 @@ Il fut décrit dans le RFC 791\cite{url-RFC-791}.
 Selon cet principe chaque adresse IPv4 peut appartenir a une entres 5 plages
 d'adresses (appelées classes):
 
-//TODO tableau classe
+\begin{table}[h]
+  \centering
+% On paramètre ici le placement du texte dans les cases, en mode paragraphe de 5cm de large dans la case de gauche ("p{5cm}") et automatique avec un alignement à droite dans la case de droite ('r')
+  \begin{tabular}{| p{5cm} | p{5cm} | r |}
+    \hline
+    \textbf{Classe} & \textbf{Masque reseau} & \textbf{Adresses}\\
+    \hline
+    A & 255.0.0.0 & De 0.0.0.0 a 127.255.255.255\\
+    \hline
+    B & 255.255.0.0 & De 128.0.0.0 a 191.255.255.255\\
+    \hline
+    C & 255.255.255.0 & De 192.0.0.0 a 223.255.255.255\\
+    \hline
+    D & 240.0.0.0 & De 224.0.0.0 a 239.255.255.255\\
+    \hline
+    E & Non defini & De 240.0.0.0 a 255.255.255.255\\
+    \hline
+  \end{tabular}
+  \caption{Classes IPv4}
+  \label{tab:classes}
+\end{table}
 
 A partir de ce tableau nous pouvons voir qu'il suffit de regarder les 4 bits de
 poids fort pour déduire à quelle classe appartient une adresse.  Par exemple si
