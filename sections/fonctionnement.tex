@@ -119,6 +119,8 @@ rassembler les classification des adresses IPv4 selon leur role et signification
 
 %TODO lien%
 
+%TODO portee d'un adresse: broadcast, multicast, anycast unicast%
+
 \begin{description}
 \item[0.0.0.0/8]
 Cette plage d'adresses indique la machine courante dans la reseau courante.
@@ -208,7 +210,16 @@ retrasmis par un host intermediaire.\footnote{Dans ls paquets destine
 a un adresse de {\it lien local} le champ TTL est de norme mis a 1
 pour empecher des forwarding.}
 
-%Note: private --> 10.0.0.0/8
+\item[192.88.99.0/24]
+Les adresses appartenant a cet bloque designant des routeurs 
+fournissant un service du type {\it 6to4}. Cet type de service
+permet de relier des reseau IPv4 avec des reseau IPv6.
+Les adresses dans cette place sont traite comme etant des adresses
+de type {\it anycast}.
+
+%Note: private --> 10.0.0.0/8, 172.16.0.0/12
+
+\end{description}
 
 
 
