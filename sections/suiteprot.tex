@@ -164,7 +164,7 @@ dire que le paquet contient un message ICMP, et le champ ToS est mis à 0
 //toujours les mêmes.
 
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=15cm]{./pics/header.eps}
 \caption{Champs de l'entête communs à tous les types de message ICMP}
@@ -180,7 +180,7 @@ précis. Enfin le troisième champ est la somme de contrôle
 (checksum).  Commençons avec les messages qui
 possèdent l'ensemble de champs le plus simple.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=15cm]{./pics/header1.eps}
 \caption{Entête des messages de type 3, 4 et 11}
@@ -256,7 +256,7 @@ des hôtes connecté au réseau). Concernant le paquet que le premier routeur à
 reçu, il va le transmettre vers sa destination.
 
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=15cm]{./pics/header2.eps}
 \caption{Entête des messages de type 5}
@@ -283,7 +283,7 @@ du paquet et aux services(//TODO(préciser)).
 \paragraph{Code 3} Ce code indique que la redirection est adresser à l'émetteur
 du paquet(//TODO(préciser)).
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=15cm]{./pics/header3.eps}
 \caption{Entête des messages de type 0 et 8}
@@ -382,7 +382,7 @@ dans le RFC 1531\cite{url-RFC-DHCP1}, mais cette version fut rendue obsolète pa
 RFC, lui même rendue obsolète par le RFC 2131\cite{url-RFC-DHCP2} qui est la dernière version non
 obsolète. Voyons comment une interface peut ce configurer auprès d'un serveur DHCP.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=6cm]{./pics/timeline_dhcp.eps}
 \caption{Déroulement de la négociation DHCP}
@@ -487,7 +487,7 @@ autre hôte, à l'aide d'un DHCPNAK.  Cette négociation se fait de manière
 similaire qu'un négociation complète, elle a juste été raccourci en enlevant
 quelque étape non indispensable.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=6cm]{./pics/timeline_dhcp_reuse_add.eps}
 \caption{Déroulement de la négociation DHCP pour la réutilisation d'une adresse}
