@@ -48,7 +48,7 @@ spécifier la qualité de service souhaité pour l'envoie d'un paquet IPv4.
 Ce champ occupe un octet de l'en-tête et il est composé de trois parties.
 Une première partie de 3 bits permettant d'indiquer la priorité avec laquelle
 le paquet doit être traité, les 3 bits suivants sont utilisés pour spécifier 
-certaines caractéristiques du service, notament: le temps, le débit et la fiabilité.
+certaines caractéristiques du service, notamment: le temps, le débit et la fiabilité.
 Enfin, les deux derniers bits n'ont pas été utlisés et leur signification a été 
 réservée pour des implémentations futures.
 
@@ -56,8 +56,8 @@ En realité l'histoire de ces champs est bien plus longue et complexe,
 car en pratique la façon d'utiliser ces champs a été modifée plusieurs fois au 
 cours du temps.
 \footnote{L'utilisation des 8 bits du champ ToS a été redéfinie
-par cinq standard différents (plus divers standards experimentaux).
-Les documents présentant ces standards sont mentionnés dans le chapitre 
+par cinq standards différents (plus divers standards experimentaux).
+Les documents présentants ces standards sont mentionnés dans le chapitre 
 "Historical Definitions for the IPv4 TOS Octet" du RFC 3168}
 Ce manque de stabilité a parfois causé une certaine confusion lors des différentes implémentations.
 \footnote{Comme le souligne le RFC 3260 {\it "At least one implementor has expressed confusion about the
@@ -65,12 +65,12 @@ relationship of the DSField, as defined in RFC 2474, to the use of
 the TOS bits, as described in RFC 1349"}}
 
 Aujourd'hui les 8 bits du champ ToS sont utilisés par le mécanisme DiffServ
-(Differentiated Services). Ce système utilise les premiers 6 bits du champ
+(Differentiated Services). Ce système utilise les 6 bits premiers du champ
 ToS (DSCP - Differentiated Services Code Point) pour marquer chaque paquet
 comme appartenant à un niveau de priorité et à une classe de service. Chaque
 classe détermine le type de traitement que doivent effectuer les routeurs sur le paquet qui le traverse
  (PHB - Per-Hop behaviour), toutefois le service offert
-par chaque router est fortement lié à sa configuration.
+par chaque routeur est fortement lié à sa configuration.
 \footnote {
 {\it "The DiffServ standard does not specify a precise definition of "low," "medium,"
 and "high" drop probability. Not all devices recognize the DiffServ (DS2 and
@@ -93,7 +93,7 @@ bits, ce qui permet d'indiquer une valeur comprise entre 0 et 65 535 octets. Com
 est compris dans la longeur totale d'un paquet, cette valeur ne sera jamais inférieure
 à 20 (taille minimale d'un en-tête IPv4 en octets).
 Le RFC 791 impose à tous les dispositifs d'un réseau IPv4 la capacité de recevoir
-des paquets d'une taille maximale de 576 octets, cette prérogative permet d'éviter une fragmentation excéssive.
+des paquets d'une taille maximale de 576 octets, cette prérogative permet d'éviter une fragmentation excessive.
 
 \item [Identification]
 Ce champ (sur 16 bits) permet d'identifier les fragments appartenant au même paquet.
@@ -103,12 +103,12 @@ Les 3 bits du champ Flags sont utilisés pour gérer la fragmentation d'un paque
 Un de ces bits est utilisé pour indiquer si le paquet peut être fragmenté ou
 non. Ce bit, appellé DF ({\it Don't Fragment}), doit être pris en considération
 par les routeurs sur le chemin du paquet pour décider si un paquet est trop grand pour être
-transmit ou s'il doit être retransmit sous forme de fragments plus petits ou s'il doit être rejeté. 
+transmit, s'il doit être retransmit sous forme de fragments plus petits ou s'il doit être rejeté. 
 Un autre bit, appellé MF ({\it More Fragments}), indique si le paquet est suivi 
 par d'autres fragments. Le bit MF est mis à 0 dans le dernier fragment ou dans
 les paquets qui n'ont pas été fragmentés.
 
-Un des trois bits de ce champs n'est pas actuellement utilisé mais il a été
+Un des trois bits de ce champs n'est pas utilisé actuellement mais il a été
 réservé pour de possibles applications futures.
 \footnote {Ce bit a aussi été le protagoniste d'un des plus connu poissons
 d'avril de l'IETF. Pour faciliter les tâches des systèmes de filtrage 
@@ -132,7 +132,7 @@ toujours zero.
 
 \item [Time to Live]
 Ce champ détermine le nombre maximal de fois qu'un paquet peut être retransmit. 
-Il est utilisé pour empêcher qu'un paquet puisse être retransmis à l'infini.
+Il est utilisé pour empêcher qu'un paquet puisse être retransmit à l'infini.
 Chaque routeur le long du chemin d'un paquet regarde la valeur du champ. Si celle-ci
 a atteint 0, il détruit le paquet, et sinon il décrémente le champ par le
 nombre de secondes que le paquet passe en attente avant qu'il soit transmis.
@@ -150,7 +150,7 @@ TTL maximum de 255.\footnote {Le RFC 1700 recommende une valeur par défaut de 6
 Quand un paquet a été détruit suite à l'expiration du TTL, le routeur qui a
 détruit le paquet peut décider d'envoyer un message d'erreur à l'émetteur du
 paquet détruit. Ce type de message (ICMP Time exceeded) est également utilisé comme
-outils par {\it traceroute} pour découvrir, approximativement, le chemin 
+outil par {\it traceroute} pour découvrir, approximativement, le chemin 
 d'un paquet IP.
 
 \item [Protocol]
@@ -188,7 +188,7 @@ adresse en particulier}.
 Dans la plupart des cas, cette adresse est utilisée
 pour indiquer une de ces valeurs: l'adresse de la machine courante (c'est
 l'adresse de loopback), n'importe quelle adresse ou le réseau (c'est le cas de la
-route par default dans une table de routage), une adresse indéfinie ou bien une
+route par défault dans une table de routage), une adresse indéfinie ou bien une
 combinaison des possibilitées précédentes (c'est le cas d'une requête {\it ARP
 probe} ou bien d'une requête {\it DHCP Discovery} ou {\it DHCP Request}, où
  l'adresse source 0.0.0.0 indique une adresse indéfinie mais aussi l'adresse
@@ -197,7 +197,7 @@ de la machine actuelle, qui par ailleur n'est pas encore defini...).}
 
 L'adresse de destination d'un paquet IPv4 identifie la machine vers
 laquelle le paquet doit être expédié. Comme dans le cas de l'adresse source,
- l'adresse de destination peut aussi contenir des valeurs speciales. En effet, certaines 
+ l'adresse de destination peut aussi contenir des valeurs spéciales. En effet, certaines 
 valeurs peuvent être utilisée par exemple pour identifier plusieurs machines
 (adresses multicast), toutes les machines d'un réseau (adresse de broadcast) ou
 la machine actuelle (adresse de loopback).
@@ -212,26 +212,26 @@ de ce rapport.
 Ce champ n'est pas obligatoire et il peut donc ne pas être présent dans un
 en-tête IPv4. La présence de ce champ est déterminé par la valeur de
 l'IHL: lorsque cette valeur indique une taille de l'en-tête IPv4 supérieure à 
-la taille minimale (20 octets), l'en-tête contiens des options.
+la taille minimale (20 octets), l'en-tête contient des options.
 Étant donné qu'un en-tête IPv4 peut avoir une taille maximale de 
 60 octets (la valeur du IHL est égal à 15), le champ Options peut occuper
 40 octets au maximum.
 
 Ce champ a été conçu pour étendre les possibilités d'IPv4 en ajoutant des fonctions
-extra.  Aujord'hui il y a quelque dizaines d'options qui ont été
+supplémentaires.  Aujord'hui il y a quelques dizaines d'options qui ont été
 specifiées\cite{url-optsIPv4} (si on considère également les options experimentales)
-mais peut d'entre elles sont rééllement utilisées. Parmi les options les plus connues
+mais peut d'entre elles sont réellement utilisées. Parmi les options les plus connues
 on retrouve par exemple des ajouts utiles à l'administration et au debuggage
 d'un réseau, comme {\it Record route} qui permet d'enregistrer les adresses
 des routeurs dans le chemin d'un paquet IP, et {\it Timestamp} qui permet de
 savoir le temps passé entre chaque saut du chemin.
 
 Parmi les options il en y a deux qui ont une fonction spéciale: EOL 
-({\it End Of Option List}) and NOP ({\it No Operation}): l'option EOL 
+({\it End Of Option List}) et NOP ({\it No Operation}): l'option EOL 
 est utilisée pour indiquer la fin de la chaîne d'options, NOP est une option
 sans aucun effet, elle est utilisée comme remplissage pour aligner les options 
 quand elles ne sont pas alignées sur 4 octets\footnote {On rappelle que 
-le champ IHL indique la longuer de l'en-tête IPv4 en blocs de 32 bits 
+le champ IHL indique la longueur de l'en-tête IPv4 en blocs de 32 bits 
 (4 octets)}.
 
 
@@ -239,7 +239,7 @@ le champ IHL indique la longuer de l'en-tête IPv4 en blocs de 32 bits
 \item [Padding] 
 Le padding ne contient que des zéros et est utilisé quand la fin de l'en-tête
 n'est pas aligné sur 32 bits (4 octets). Bien entendu, ce champ est optionnel:
-en effet, il est necessaire seulement lorsque l'en-tête IPv4 termine avec
+en effet, il est seulement necessaire lorsque l'en-tête IPv4 termine avec
 une option dont la limite n'est pas alignée sur 32 bits. Un en-tête d'un paquet IPv4 
 de 20 octets (donc sans aucune option) n'a besoin d'aucun Padding car il est aligné sur
 4 octets (20 étant un multiple de 4).
