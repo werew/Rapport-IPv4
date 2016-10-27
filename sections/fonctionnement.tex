@@ -1,5 +1,5 @@
-Des données transmissent en utilisant le protocole IPv4 sont encapsulées dans un message que
-l'on appelle un paquet IPv4. Ces paquets sont consitué d'un entête suivis des données à transmettre.
+Des données transmisent en utilisant le protocole IPv4 sont encapsulées dans un message que
+l'on appelle un paquet IPv4. Ces paquets sont constitués d'un entête suivis des données à transmettre.
 
 % Mossi
 \subsection{Adresse IPv4}
@@ -7,13 +7,13 @@ l'on appelle un paquet IPv4. Ces paquets sont consitué d'un entête suivis des 
 L'entête contient des informations essentielles pour la transmission d'un paquet, notamment les
 adresses source et destination.
 
-Une adresse IP sert à identifier une machine (et plus précisement une des interfaces de cette machine)
-dans un réseau particulié.
+Une adresse IP sert à identifier une machine (et plus précisément une des interfaces de cette machine)
+dans un réseau particulier.
 Comme nous le verrons plus tard cet identifiant unique permet de désigner à la fois un
 réseau et une machine précise au sein de ce réseau.
 Une adresse est codé sur 32 bits ce qui permet de coder 2\^32 soit 4294967296 adresses différentes.
 Par convention on peut représenter une adresse IPv4 comme une suite de 4 nombres décimaux séparés par des points,
-chacun traduisant un octet. Cette représentation a contribuée à simplifier l'utilisation et la manipulation
+chacun traduisant un octet. Cette représentation a contribué à simplifier l'utilisation et la manipulation
 des adresses.
 Comme chaque nombre représente un octet, les valeurs de celui-ci sont comprises entre 0 et 255.
 
@@ -23,8 +23,8 @@ binaire à: 11010100.11011001.00000000.00000001
 \vspace{1cm}
 
 \subsubsection{Notion de NET ID et HOST ID}
-Une adresse IPv4, en tant qu'inditifiant d'une machine dans un réseau, contient deux informations:
-une première partie qui identifie le réseau appellé NET ID (les bits de poids fort), une seconde qui identifie l’hôte appeler host-ID (les bits de poids faible).
+Une adresse IPv4, en tant qu'identifiant d'une machine dans un réseau, contient deux informations:
+une première partie qui identifie le réseau appelé NET ID (les bits de poids fort), une seconde qui identifie l’hôte appeler host-ID (les bits de poids faible).
 Les machines qui se trouvent donc sur le même réseau partage le même NET ID pour leur adresse.
 
 La longueur de ces deux parties est variable: la taille du HOST ID dépend de la taille du NET ID. Pour représenter la longueur de ces différentes parties on a introduit la notion de masque
@@ -78,7 +78,7 @@ que des réseaux de 254 machines maximum. Il va donc falloir utiliser des
 adresses de classe B minimum, car elles permettent d'adresser 65534 machines au
 sein d'un réseau. Nous pouvons donc utiliser 500 adresses sur les 65534
 disponible, mais le reste sera "perdu".  Ce système était simpliste mais
-n'était pas utilisable sur le long terme car il "gache" des adresses en
+n'était pas utilisable sur le long terme car il "gâche" des adresses en
 n'utilisant pas tout son espace d'adressage.
 
 
@@ -93,9 +93,9 @@ souhaite adressé.  Cela permet de limiter les pertes en adresse inutilisé, si
 la plage est correctement découpée.  On peut donc créer des masques à la
 séparation entre le NET ID et le HOST ID se trouve n'importe où, même en plein
 milieu des octets (ce qui était impossible avec les classes d'adresse), ce qui
-apporte une plus grande fléxibilité.  Cela permet aussi de créer une hiérarchie
+apporte une plus grande flexibilité.  Cela permet aussi de créer une hiérarchie
 dans une plage d'adresse réseau qui serait découper en plusieurs réseaux
-"fils", et cela permet notamment, avec cette hierarchie, de réduire la table de
+"fils", et cela permet notamment, avec cette hiérarchie, de réduire la table de
 routage des routeur.  De là est né une nouvelle notation des masques: on écrit
 le nombre de bit à 1 dans le masque à la suite de l'adresse IP et séparé par un
 slash.
@@ -111,78 +111,78 @@ slash.
 
 \subsubsection{Types d'adresses}
 La variété des exigences en matière de réseaux a donnée lieu à une
-classification progressive des adresses selon des rôles bien precis. En effet,
+classification progressive des adresses selon des rôles bien précis. En effet,
 pas toutes les adresses IPv4 ont la même signification: à certaines adresses
-(ou plages d'adresses) ont été attribué par convention des fonctions ou
-caracteristiques particulières.  Dans la suite de cette partie on analysera les
-adresses IP sous trois aspects differants: on classifiera d'abord les adresses selon
-le type de diffusion qu'elles permettant de effectuer, puis on introduira le
-concept d'adresse publique et adresse prive, enfin on parlera des fonctions
-speciales qui ont ete assigne a certaines adresses.
+(ou plages d'adresses) ont été attribué par convention des fonctions ou des
+caractéristiques particulières.  Dans la suite de cette partie nous analyserons les
+adresses IP sous trois aspects différents: nous classifierons d'abord les adresses selon
+le type de diffusion qu'elles permettent d'effectuer, puis nous introduirons le
+concept d'adresse publique et d'adresse privée, enfin nous parlerons de l'utilisation
+particulière qui a été faite avec certaines adresses.
+
 
 
 \paragraph{Mode de diffusion}
-Dans le cadre des transmissions, en plus de communiquer avec une seule machine, on
-a par fois la nécessité qu'un message soit reçu par un groupe de machines ou
-même la totalité d'un réseau.
+Dans le cadre des transmissions, en plus de communiquer entre deux interfaces, il est 
+parfois nécessaire qu'un message soit reçu par un groupe de machines ou que 
+même la totalité du réseau reçoivent ce message.
 
-On a pour cela défini plusieurs types de diffusion associés à certaines adresses particluières.
+On a défini pour cela plusieurs types de diffusions associés à certaines adresses particulières.
 
-Le type de diffusion le plus utilisé est la diffusion en unicast. Avec ce mode,
-l'adresse IP va désigner une machine de manière unique. L'adresse IP appartient
-à une seul machine et sert à l'identifier sur un réseau.  C'est le type
+Le type de diffusion le plus utilisé est la diffusion en unicast. Dans ce mode,
+l'adresse IP désigne une machine de manière unique. L'adresse IP appartient
+à une seule machine et sert à l'identifier sur un réseau.  C'est le type
 d'adresse que nous avons abordé jusqu'à présent.  Mais il peut être intéressant
-de pouvoir contacter un plusieurs machines à en même. On pourrait bien sur
-envoyer des paquet en unicast à chaque machine que l'on souhaite contacter,
-mais cela serait fastidieux et inonderai le réseau pour rien. Une solution plus
-pratique d'avoir une adresse qui désigne plusieurs machine à la fois. Cela
-permettrai d'envoyer un seul paquet qui serait remis à plusieurs machines. Il
-existe pour faire cela plusieurs type de diffusion.
+de pouvoir contacter plusieurs machines en même temps. On pourrait bien sûr
+envoyer des paquets en unicast à chaque machine que l'on souhaite contacter,
+mais cela serait fastidieux et inonderait le réseau inutilement. Une solution plus
+pratique est d'avoir une adresse qui désigne plusieurs machines à la fois. Cela
+permet d'envoyer un seul paquet qui est remis à plusieurs machines. Il
+existe pour faire cela plusieurs types de diffusion.
 \begin{itemize}
-\item Le broadcast: Ce mode de diffusion d'envoyer un paquet unique qui permet
-de joindre toutes les machines sur un réseau. Lorsque les machines reçoive ce
-paquet et s'apperçoive que l'adresse déstnation du paquet est l'adresse de
-broadcast, alors elle va traiter le paquet. L'adresse de broadcast d'un réseau
+\item Le broadcast: Ce mode de diffusion permet d'envoyer un paquet unique tout en 
+joignant toutes les machines sur un réseau. Lorsque les machines reçoivent ce
+paquet, elles s'aperçoivent que l'adresse de destination du paquet est l'adresse de
+broadcast et elles vont alors traiter le paquet. L'adresse de broadcast d'un réseau
 est défini comme la plus "haute" adresse du réseau: cela se traduit par la mise
-à 1 de tout les bits de la partie HOST ID. Cette adresse ne peux donc pas être
-attribué à une machine en temps qu'adresse unicast.  Le broadcast est utilisé
-par des protocoles tel que ARP et DHCP.  Nous pouvons remarqué qu'avec cette
+à 1 de tous les bits de la partie HOST ID. Cette adresse ne peut donc pas être
+attribuée à une machine en tant qu'adresse unicast.  Le broadcast est utilisé
+par des protocoles tel que ARP et DHCP.  Nous pouvons remarquer qu'avec cette
 définition, nous pouvons envoyer un message de broadcast à n'importe quel
-réseau, incluant notre réseau mais aussi les autres. En réalité (sauf
-configuration volontaire) les routeurs ne laisse pas passé les messages de
-broadcast d'un réseau à un autre; excepté quelque cas spéciaux comme DHCP où un
-serveur peut adresser plusieurs réseaux, et où ses messages de broadcast
-peuvent être ralyer par des routeurs (des DHCP agents).
-\item Multicast: Ce mode de diffusion permet d'envoyer un paquet qui sera à destination
+réseau, incluant le notre. En réalité (sauf
+configuration volontaire) les routeurs ne laissent pas passer les messages de
+broadcast d'un réseau à un autre; excepté quelques cas spéciaux comme DHCP où un
+serveur peut s'adresser à plusieurs réseaux, et où ses messages de broadcast
+peuvent être relayés par les routeurs (appelés DHCP agents).
+\item Multicast: Ce mode de diffusion permet d'envoyer un paquet à destination
 de plusieurs machines. L'adresse IP multicast sera donc vu comme l'adresse d'un groupe
 mutlicast, qui désigne donc plusieurs machines. Pour qu'une machine fasse partie d'un
-groupe multicast, il faut qu'elle s'abonne à ce groupe: cela veux dire que si elle reçoit
+groupe multicast, il faut qu'elle s'abonne à ce groupe: cela veut dire que si elle reçoit
 un paquet avec comme adresse de destination l'adresse du groupe multicast, elle va traiter
 le paquet.
 Bien entendu les membres d'un même groupe ne sont pas obligés d'être sur le même réseau. Dans ce
-cas les machines doivent leur routeur, qui deviendra un routeur mutlicast, que certaines machines sur
-le réseau font partie d'un ou plusieurs groupe. Le protocole IGMP va entrer en jeu pour faire cet échange.
-Cela est fait dans le but que le routeur ralye uniquement les paquets qui sont à destination des groupes
-multicast  présent dans son réseau. Il n'est en effet pas nécessaire de relayer tous les paquets de tout les groupes
-multicast dans le réseau, si celui-ci ne contient aucun abonné au groupe.
-Le faite d'avertir le routeur qu'il y a des machines abonné à un groupe dans le réseau permet aussi à celui-ci
-de créer une route depuis l'émetteur vers son réseau qui contient des abonnés au groupe. Mais ceci fait partie du
-routage des paquets par le routeur.
-Il existe une plage d'adresse qui est réservé pour les adresses IP multicast. Lorsqu'il y a un besoin de contacter
-plusieurs machines simplement, une adresse peut être utilisé depuis cette plage.
-Elle s'étend de l'adresse 224.0.0.0 à l'adresse 239.255.255.255 et à pour masque 240.0.0.0 . Cela laisse donc 2\^28 adresses
-multicast différente.
+cas les machines doivent indiquer à leur routeur qu'il existe un ou plusieurs groupe multicast et celui-ci deviendra alors un routeur multicast 
+ Le protocole IGMP va entrer en jeu pour faire cet échange.
+Cette indication a été rendu obligatoire dans le but de ne pas faire circuler tous les paquets a destination de groupes multicast.
+ Il n'est en effet pas nécessaire de relayer tous les paquets de tous les groupes
+multicast sur le réseau, si celui-ci ne contient aucun abonné au groupe.
+Le faite d'avertir le routeur qu'il y a des machines abonnées à un groupe dans le réseau permet aussi à celui-ci
+d'établir un lien avec l'émetteur. Mais ceci fait partie du routage des paquets par le routeur.
+Il existe une plage d'adresse qui est réservée pour les adresses IP multicast. Lorsqu'on veut contacter
+plusieurs machines, une adresse dans cette plage peut être utilisée.
+Elle s'étend de l'adresse 224.0.0.0 à l'adresse 239.255.255.255 et a pour masque 240.0.0.0 . Cela laisse donc 2\^28 adresses
+multicast différentes.
 Au sein de cette plage d'adresse il existe une catégorisation:
 //TODO
 \begin{itemize}
 \item
 \end{itemize}
-Ce mode permet de limiter le nombre de paquet envoyé pour joindre plusieurs machine et il est très utilisé dans le cas
-de diffusion en streaming ou de videoconférence, où il faut faire pervenir une même information à plusieurs autres
-participants.
-\item Anycast: Une adresse anycast, tout comme les adresse multicast, identifie plusieurs machines. La diférence avec multicast
-est qu'en mode de diffusion anycast, la paquet ne va pas être remis à tous les membre du groupe, mais seulement à un seul du groupe.
-Le choix de la destination et le routage à adopté se base sur plusieurs critères telle que la "distance" avec la machine, la disponiblité,
+Ce mode permet de limiter le nombre de paquets envoyés pour joindre plusieurs machines et il est très utilisé dans le cas
+de diffusions en streaming ou de vidéoconférences, où il faut faire parvenir une même information à plusieurs participants.
+
+\item Anycast: Une adresse anycast, tout comme les adresse multicast, identifient plusieurs machines. La différence avec multicast
+est qu'en mode de diffusion anycast, la paquet ne va pas être remit à tous les membre du groupe, mais seulement à un seul (le premier qui le réceptionne).
+Le choix de la destination et le routage à adopter se base sur plusieurs critères telles que la "distance" avec la machine, la disponibilité,
 la charge, ... . Cela permet d'avoir des systèmes toujours disponible même en cas de forte charge, en repartissant celle-ci sur
 plusieurs machines.
 \end{itemize}
@@ -190,50 +190,50 @@ plusieurs machines.
 
 
 \paragraph{Adresses publiques et adresses prive}
-L'expansion exponentielle de Internet a pose, presque depuis le debut, des
-souci de penurie d'adresses. Plusieur mesures ont ete pris pour limiter la
-portee de ce probleme, malgre ca le stock d'adresses IPv4 non reservee
-c'est malheurexment vu epuisse deja depuis le 2011.
+L'expansion exponentielle d'Internet a posé, seulement quelques années après sa création, des
+soucis de pénurie d'adresses. Plusieurs mesures ont été prises pour limiter la
+portée de ce problème. Malgré ça, le stock d'adresses IPv4 non réservée
+est malheureusement épuisé depuis le 2011.
 
-Un des disposition les plus connues et efficaces a ete la creation du concept
-d'adresses prive. Le RFC 1918 introduit la notion d'adresse prive: un adresse
-appartenant a cet categorie est un identifiant unique dans une reseau (ou sous
-reseau) mais il ne comporte aucun contraint d'unicite dans l'echelle globale
-(Internet). L'idee derrier la conception des adresses prive etait cella de
-avoir des identifiantes qui peuveant etre utilise lorsque une machine n'a pas
-pas besoin de comuniquer avec des hosts au dela de son reseau.
+Une des dispositions les plus connues et efficaces a été la création du concept
+d'adresses privées. Le RFC 1918 introduit la notion d'adresses privées: une adresse
+appartenant à cet catégorie est un identifiant unique dans un réseau (ou sous
+réseau) mais il ne comporte aucune contrainte d'unicité dans l'échelle globale
+(Internet). L'idée derrière la conception des adresses privées était celle d'
+avoir des identifiants qui peuvent être utilisés lorsque une machine n'a pas
+pas besoin de communiquer avec des interfaces au-delà de son réseau.
 
-A ce titre des plages d'adresses ont ete reserve pour cet usage:
+A ce titre des plages d'adresses ont été réservées pour cet usage:
 
 \begin{itemize}
 \item Un bloc d'adresses appartenant a la classe A: \textbf{10.0.0.0/8}
-\item 16 blocs d'adresses appartenanet a la classe B: \textbf{172.16.0.0/12}
-\item 256 blocs d'adresses appartenanet a la classe C: \textbf{192.168.0.0/16}
+\item 16 blocs d'adresses appartenant a la classe B: \textbf{172.16.0.0/12}
+\item 256 blocs d'adresses appartenant a la classe C: \textbf{192.168.0.0/16}
 \end{itemize}
 
 \smallbreak
-Le concept d'adresse prive s'oppose a celui de adresse publique: ce dernier est 
-un adresse unique dans le globe et en consequence attaignable par n'importe
-quel host dans Internet.
+Le concept d'adresses privées s'oppose à celui d'adresses publiques: ce dernier est 
+une adresse unique sur Internet et est en conséquence atteignable par n'importe
+quel hôte sur Internet.
 
-Aujourd'hui des systemes comme celui de la NAT ({\it Network Address
-Translation}) permet a des machines ayant des adresses IP prive de communiquer
-de maniere trasparent avec des host au dehors de leur reseau. Cet systeme est
-largement utilise dans les reseau domestiques pour permettre aux machines au
-sein de celles ci d'etre directament connecte a Internet. On parlera plus en
-detail du NAT dans la section %TODO \ref{} %.
+Aujourd'hui des systèmes comme celui de la NAT ({\it Network Address
+Translation}) permettent à des machines ayant des adresses IP privée de communiquer
+de manière transparente avec des hôtes en dehors de leur réseau. Ce système est
+largement utilisé dans les réseaux domestiques pour permettre aux machines au
+sein de ceux-ci d'être directement connecté à Internet. On parlera plus en
+détail du NAT dans la section %TODO \ref{} %.
 \smallbreak
 
 
  
-L'augment des difficultes relatives a la procedure de reservation des adresses
+L'augmentation des difficultés relatives à la procédure de réservation des adresses
 publiques au sein des organisme responsables des allocations\cite{url-RFC-1918}
-(tels que le IANA) ont contribue a promouvoir l'utilise d'adresses prive plutot
-que des adresses publiques lorqu'il etait possible.
-L'utilisation des adresse prive a pour consequence la preservation des plages
-d'adresses IP publiques, ce qui constitue un advantage certain: l'utilisation
-des adresses prive permet de eviter le gaspillage de adress publique la ou ils
-ne sont pas necessaires.
+(tels que le IANA) ont contribués a promouvoir l'utilisation des adresses privées à la place
+ des adresses publiques lorsque cela est possible.
+L'utilisation des adresse privées a pour conséquence la préservation des plages
+d'adresses IP publiques, ce qui constitue un avantage certain: l'utilisation
+des adresses privées permet d'éviter le gaspillage des adresses publique là ou elles
+ne sont pas nécessaires.
 
 
 \paragraph{Adresses speciales}
@@ -255,53 +255,53 @@ configuration comme adresse source, lorsqu'une machine n'a pas encore d'adresse 
 %RFC 1122 %
 
 \item[127.0.0.0/8]
-Une adresse appartenant a ce bloc est denommées adresse de {\it loopback}.  Un
+Une adresse appartenant a ce bloc est dénommée adresse de {\it loopback}.  Un
 paquet envoyé vers une telle adresse retourne directement chez l'expéditeur, sans sortir
 du contexte de la machine émettrice. Parmi les adresses de cette plage,
 127.0.0.1 est celle utilisée le plus fréquemment\footnote{Comme l'indique
 le RFC 1122, certaines implémentations de l'adresse de {\it loopback} se
 limitent à utiliser le bloc 127.0.0.1/32, ce qui se traduit par l'unique utilisation de
-l'adresse 127.0.0.1 }: dans plusieurs contextes cet adresses est réferencée par
+l'adresse 127.0.0.1 }: dans plusieurs contextes cet adresses est référencée par
 l'alias "{\it localhost}".\footnote{La correspondance entre le nom {\it localhost} et
 l'adresse 127.0.0.1 est généralement mise en place par le système d'exploitation.
-Dans les systèmes de type UNIX une entrée reliant ces deux entitées est généralement
+Dans les systèmes de type UNIX une entrée reliant ces deux entités est généralement
 présente dans le fichier "/etc/hosts".}
 Une adresse de {\it loopback} n'a pas de sens en dehors
-d'un host, et c'est pour cela qu'elle ne devrait apparaître à aucun moment dans le réseau.
+d'une interface même, et c'est pour cela qu'elle ne devrait apparaître à aucun moment dans le réseau.
 
 %RFC 1122 %
 
 \item[169.254.0.0/16]
 Cet plage d'adresses a été désignée comme contenant les adresses qu'on appelle
-de {\it lien local}.  Les adresses dit de {\it lien local} sont utilisée lorsque
-une machine n'a aucun moyen d'obtenir une adresse IP (par example par le biais
+de {\it lien local}.  Les adresses dites de {\it lien local} sont utilisée lorsqu'une 
+machine n'a aucun moyen d'obtenir une adresse IP (par exemple par le biais
 d'un serveur DHCP ou simplement avec une configuration manuelle).  L'obtention
 d'une adresse de {\it lien local} est faite de façon automatique à travers un
-processus d'autoconfiguration souvent appellé par l'acronyme APIPA ({\it
+processus d'auto-configuration souvent appelé par l'acronyme APIPA ({\it
 Automatic Private Internet Protocol Addressing}) ou par le nom IPv4LL.  Le
-fonctionnement du processus APIPA (decrit dans le RFC 3927) est assez complexe
- et entraîne l'utilisation de certaines fonctionnalitées du
-protocole ARP (qu'on traitera plus en detail dans la section %TODO \ref{sec:suiteproc} % )
-. Son focntionnement peut être synthétisé dans ses grandes lignes par la démarche suivante:
+fonctionnement du processus APIPA (décrit dans le RFC 3927) est assez complexe
+ et entraîne l'utilisation de certaines fonctionnalités du
+protocole ARP (qu'on traitera plus en détail dans la section %TODO \ref{sec:suiteproc} % )
+. Son fonctionnement peut être synthétisé dans ses grandes lignes par la démarche suivante:
 
 \begin{description}
-\item[Selection de l'adresse]
+\item[Sélection de l'adresse]
 La machine choisit aléatoirement
     \footnote{Il est conseillé d'utiliser l'adresse MAC de l'interface en question
     pour générer l'adresse de {\it lien local} pour qu'il y ait une plus forte chance
-    qu'elle soit unique dans le reseau.} 
+    qu'elle soit unique dans le réseau.} 
 une adresse appartenant à la plage 169.254.0.0/16
 
 \item[Sondage sur l'adresse]
-Une fois qu'on a selectionné une adresse, il faut s'assurer que la même adresse ne soit
-pas deja utilisée par d'autres machines sur le réseau. Dans ce but la machine
+Une fois qu'on a sélectionné une adresse, il faut s'assurer que la même adresse ne soit
+pas déjà utilisée par d'autres machines sur le réseau. Dans ce but la machine
 pose la question à toutes les autres machines du réseau au moyen d'un ou plusieurs messages
 en brodcast, et attend une réponse pendant un certain intervalle de temps\footnote{
 Des précautions sont prises pour éviter les conflits générés par plusieurs
-machines qui effectuent simultanément cette action pour le même adresse,
-notamment: des intervalles de temps aléatoires entre l'envoie des messages, la mise
-en place d'une écoute active des autres messages pendant le temps de l'enquete.}
-Le manque de réponse indique que l'adresse est bien unique. Si l'adresse n'est
+machines qui effectuent simultanément cette action pour la même adresse,
+notamment: des intervalles de temps aléatoires entre l'envoie des messages et la mise
+en place d'une écoute active des autres messages pendant le temps de l'enquête.}
+L'absence de réponse indique que l'adresse est bien unique. Si l'adresse n'est
 pas unique il faut en choisir une autre.
 
 \item[Annonciation de l'adresse]
@@ -313,7 +313,7 @@ vient de réserver.
 
 
 Ce processus est basé sur le concept de {\it Zeroconf}: il permet la mise en
-place d'un reseau IPv4 sans aucune configuration. Ce type de système,
+place d'un réseau IPv4 sans aucune configuration. Ce type de système,
 C'est aussi grâce a ce genre de systèmes, qu'on 
 pourrait synthétiser par la devise %TODO slogan??  
 "plug and play", que le concept de Networking (et avec lui Internet) a pu se
@@ -322,21 +322,21 @@ mis en place sans le besoin d'aucune connaissance technique.\\
 
 La plage d'adresses 169.254.0.0/16, désigne une plage d'adresse privée: les
 adresses de type {\it lien local} ne sont donc pas atteignables en dehors de
-leur réseau de definition. 
+leur réseau de définition. 
 Cette plage d'adresses pose par contre des limites par rapport aux autres
 plages d'adresses privée car, à la différence des autres, elle ne peut pas être
 divisée en sous réseaux\footnote{Ce qui est assez logique si on considère que
 le processus d'obtention d'une adresse de {\it lien local} (APIPA) utilise
 les liens "physiques" entre les machines pour communiquer, et il ne peut
- considérer aucune notion de sous-reseau.}
+ considérer aucune notion de sous-réseau.}
 : en effet un paquet destiné à une adresse de {\it lien local} ne doit pas être
-retrasmise par un hôte intermédiaire.\footnote{Dans le paquet destiné
+retransmise par un hôte intermédiaire.\footnote{Dans le paquet destiné
 a une adresse de {\it lien local} le champ TTL est usuellement mis a 1
 pour empêcher des forwarding.}
 
 \item[192.88.99.0/24]
 Les adresses appartenant à ce bloc désignent des routeurs 
-fournissants un service de type {\it 6to4}. Ce type de service
+fournissant un service de type {\it 6to4}. Ce type de service
 permet de relier des réseaux IPv4 avec des réseaux IPv6.
 Les adresses dans cette plage sont traitées comme étant des adresses
 de type {\it anycast}.
@@ -367,7 +367,7 @@ espace d’adressage.
 Les classes A, B et C ont chacune une correspondance de plage
 d’adresses IP privées à l’intérieur de la plage globale qui a été définie par
 la RFC 1918. Mais l’utilisation  de celui-ci pour inter-connecter des réseau
-géante (entreprise) avec des espaces adressage qui se chevauche peut causer des
+géants (entreprise) avec des espaces adressage qui se chevauche peut causer des
 problèmes. Une adresse IP privées est librement paramétrée par l’administrateur
 du réseau local.
 Les adresses privées de la classe A: 10.0.0.0 à 10.255.255.255\\
@@ -376,8 +376,8 @@ Les adresses privées de la classe C: 192.168.1.0 à 192.168.255.255\\
 
 
 \textbf{Remarque:}
-De ce fait on distingue deux adresses particulières parmi tout ceux possible,
-qui ne doivent jamais être attribué à des machines:
+De ce fait on distingue deux adresses particulières, parmi toutes celles possibles,
+qui ne doivent jamais être attribuées à des machines:
 
      les bits Host-ID sont à 0 : adresse attribue qu’à un réseau.
 Exemple: 192.168.10.0 / 255.255.255.0 = 192.168.10.00000000
@@ -385,18 +385,18 @@ Exemple: 192.168.10.0 / 255.255.255.0 = 192.168.10.00000000
     les bits Host-ID sont à 1 : c’est un adresse de  diffusion (broadcast),
 Exemple: 172.27.255.255 / 255.255.0.0 = 172.27.1111111.11111111
 
-Donc nous pouvons en déduire que parmi tout les adresses assignable, ces
-derniers sont des adresses interdites.
+Donc nous pouvons en déduire que parmi toutes les adresses assignables, ces
+dernières sont des adresses interdites.
 
 
 
 \subsubsection{Adresses non utilisées}
 il existe des adresses non utilisable comme adresse IP pour une machine:\\
-les adresses réseaux: qui correspond aux adresses qui ont tous les bits de
+Les adresses réseaux: correspond aux adresses qui ont tous les bits de
 leur partie hostid à zéro(0);\\
-les adresses de diffusion (broadcast): qui correspond aux adresses qui ont
+les adresses de diffusion (broadcast): correspond aux adresses qui ont
 tous les bits de leur partie hostid à un(1)\\
-0.0.0.0: utilise par différentes services (table de routage, DHCP) et possède
+0.0.0.0: utilisée par différents services (table de routage, DHCP) et possède
 souvent une signification particulières. \\
 127.X.X.X: désigne l’ordinateur lui-même ou dite adresse de bouclage
 (lookback), 127.0.0.1 pour le localhost\\

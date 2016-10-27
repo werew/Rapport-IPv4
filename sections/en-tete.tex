@@ -2,7 +2,7 @@
 % Luigi Coniglio 
 \subsection{En-tête IPv4}
 Dans un paquet IPv4, les données utiles sont précédées par un en-tête ayant une longueur minimale de 20 octets 
-(dans les cas où aucune option supplémentaire n'a été specifiée).
+(dans les cas où aucune option supplémentaire n'a été spécifiée).
 La figure suivante montre le contenu de l'en-tête d'un paquet IPv4.
 
 \begin{figure}
@@ -20,7 +20,7 @@ on peut spécifier quelques options qui ne sont pas présentes dans les 13 champ
 au dessus.
 
 
-Commencons par voir en detail les 13 champs d'un en-tête IPv4 standard:
+Commençons par voir en détail les 13 champs d'un en-tête IPv4 standard:
 
 \begin{description}
 \item [Version] 
@@ -34,10 +34,10 @@ connaître la position des autres champs de l'en-tête, il faut d'abord savoir
 quel est le protocole utilisé et donc le type de l'en-tête.
 En pratique, dans la plupart des cas ce champ n'est pas très utile, car le
 protocole à utiliser pour la couche 3 est souvent spécifié dans l'en-tête du
-protocole de la couche liason.
+protocole de la couche liaison.
 
 \item [IHL]
-Le champ IHL (acronyme de Interet Header Length) spécifie la taille de l'en-tête IPv4. 
+Le champ IHL (acronyme de Internet Header Length) spécifie la taille de l'en-tête IPv4. 
 Bien entendu, en disant cela on souligne un concept important du protocole IPv4: 
 la taille de l'en-tête n'est pas fixe.
 
@@ -53,15 +53,15 @@ Ce champ occupe un octet de l'en-tête et il est composé de trois parties.
 Une première partie de 3 bits permettant d'indiquer la priorité avec laquelle
 le paquet doit être traité, les 3 bits suivants sont utilisés pour spécifier 
 certaines caractéristiques du service, notamment: le temps, le débit et la fiabilité.
-Enfin, les deux derniers bits n'ont pas été utlisés et leur signification a été 
+Enfin, les deux derniers bits n'ont pas été utilisés et leur signification a été 
 réservée pour des implémentations futures.
 
-En realité l'histoire de ces champs est bien plus longue et complexe,
-car en pratique la façon d'utiliser ces champs a été modifée plusieurs fois au 
+En réalité l'histoire de ces champs est bien plus longue et complexe,
+car en pratique la façon d'utiliser ces champs a été modifiée plusieurs fois au 
 cours du temps.
 \footnote{L'utilisation des 8 bits du champ ToS a été redéfinie
-par cinq standards différents (plus divers standards experimentaux).
-Les documents présentants ces standards sont mentionnés dans le chapitre 
+par cinq standards différents (plus divers standards expérimentaux).
+Les documents présentant ces standards sont mentionnés dans le chapitre 
 "Historical Definitions for the IPv4 TOS Octet" du RFC 3168}
 Ce manque de stabilité a parfois causé une certaine confusion lors des différentes implémentations.
 \footnote{Comme le souligne le RFC 3260 {\it "At least one implementor has expressed confusion about the
@@ -94,7 +94,7 @@ la perte de paquets.
 Comme le suggère son nom, ce champ est utilisé pour indiquer la taille totale du
 paquet IPv4: en-tête + données. Le champ {\it Total length} est défini sur 16
 bits, ce qui permet d'indiquer une valeur comprise entre 0 et 65 535 octets. Comme l'en-tête
-est compris dans la longeur totale d'un paquet, cette valeur ne sera jamais inférieure
+est compris dans la longueur totale d'un paquet, cette valeur ne sera jamais inférieure
 à 20 (taille minimale d'un en-tête IPv4 en octets).
 Le RFC 791 impose à tous les dispositifs d'un réseau IPv4 la capacité de recevoir
 des paquets d'une taille maximale de 576 octets, cette prérogative permet d'éviter une fragmentation excessive.
@@ -105,10 +105,10 @@ Ce champ (sur 16 bits) permet d'identifier les fragments appartenant au même pa
 \item [Flags]
 Les 3 bits du champ Flags sont utilisés pour gérer la fragmentation d'un paquet.
 Un de ces bits est utilisé pour indiquer si le paquet peut être fragmenté ou
-non. Ce bit, appellé DF ({\it Don't Fragment}), doit être pris en considération
+non. Ce bit, appelé DF ({\it Don't Fragment}), doit être pris en considération
 par les routeurs sur le chemin du paquet pour décider si un paquet est trop grand pour être
 transmit, s'il doit être retransmit sous forme de fragments plus petits ou s'il doit être rejeté. 
-Un autre bit, appellé MF ({\it More Fragments}), indique si le paquet est suivi 
+Un autre bit, appelé MF ({\it More Fragments}), indique si le paquet est suivi 
 par d'autres fragments. Le bit MF est mis à 0 dans le dernier fragment ou dans
 les paquets qui n'ont pas été fragmentés.
 
@@ -116,7 +116,7 @@ Un des trois bits de ce champs n'est pas utilisé actuellement mais il a été
 réservé pour de possibles applications futures.
 \footnote {Ce bit a aussi été le protagoniste d'un des plus connu poissons
 d'avril de l'IETF. Pour faciliter les tâches des systèmes de filtrage 
-le RFC 3514 propose d'utiliser ce bit pour étiqueter les paquets mailveillants et à ce
+le RFC 3514 propose d'utiliser ce bit pour étiqueter les paquets malveillants et à ce
 titre tous les paquets étant envoyés avec ce bit (renommé "{\it Evil Bit}") 
 mis à 1 seraient mis à la poubelle.}
 
@@ -128,11 +128,11 @@ bits). Le champ Fragment Offset utilise 13 bits de l'en-tête IPv4, ce qui perme
 un offset maximale de 65528 octets.\footnote {En pratique un tel offset n'est
 jamais utilisé car, en ajoutant un en-tête minimale de 20 octets, la taille
 totale du paquet réassemblé dépasserait la longueur maximale d'un paquet IPv4.}
-Étant donné que le flag MF ({\it More Fragments}) doit être mis à zero lorsqu'un paquet 
+Étant donné que le flag MF ({\it More Fragments}) doit être mis à zéro lorsqu'un paquet 
 n'est pas fragmenté, ou si il est le dernier fragment d'un paquet plus grand, 
 l'unique différence entre ces deux types de paquets est la valeur du 
-champ Fragement Offset qui, dans le cas d'un paquet non fragmenté, est
-toujours zero.
+champ Fragment Offset qui, dans le cas d'un paquet non fragmenté, est
+toujours zéro.
 
 \item [Time to Live]
 Ce champ détermine le nombre maximal de fois qu'un paquet peut être retransmit. 
@@ -146,10 +146,10 @@ peut continuer à être retransmis dans un réseau, mais un routeur
  décrémente toujours ce champ d'au moins 1 (même si le paquet a été
 retransmis en moins d'une seconde) et, en considérant les performances des routeurs
 d'aujourd'hui, le TTL indique en pratique le nombre maximum de routeur qu'un paquet
- peut traverser au cours de son achemiminement.
+ peut traverser au cours de son acheminement.
 
-L'espace reservé au TTL dans l'en-tête IPv4 est d'un octet, ce qui veut dire qu'on a un 
-TTL maximum de 255.\footnote {Le RFC 1700 recommende une valeur par défaut de 64.}
+L'espace réservé au TTL dans l'en-tête IPv4 est d'un octet, ce qui veut dire qu'on a un 
+TTL maximum de 255.\footnote {Le RFC 1700 recommande une valeur par défaut de 64.}
 
 Quand un paquet a été détruit suite à l'expiration du TTL, le routeur qui a
 détruit le paquet peut décider d'envoyer un message d'erreur à l'émetteur du
@@ -164,10 +164,10 @@ cela est l'objectif de ce champs de 8 bits
 \item [Header Checksum]
 Ce champ contient une somme de contrôle et est utilisé pour détecter des 
 erreurs dans l'en-tête IPv4. La valeur de ce champ est recalculé à
-chaque retransmission\footnote {Cela est nécessaire car le TTL est décrementé
+chaque retransmission\footnote {Cela est nécessaire car le TTL est décrémenté
 à chaque retransmission et un changement de l'en-tête amène à une valeur différente
 dans la somme de contrôle}: si la somme de contrôle ne correspond pas avec celle 
-présente dans l'en-tête du paquet, celui-ci est detruit.
+présente dans l'en-tête du paquet, celui-ci est détruit.
 
 
 \item [adresse source et adresse destination]
@@ -183,20 +183,20 @@ dans un réseau en particulier).} de la machine qui a envoyé le paquet
 (à laquelle il faudra donc éventuellement répondre).  Dans certains cas,
  cette adresse ne correspond pas à celle de la machine qui a envoyé
 le paquet, c'est par exemple ce qui se passe dans une requête, {\it ARP probe}
-%TODO to correct: 0.0.0.0 symbolyse la machine actuelle%
+%TODO to correct: 0.0.0.0 symbolise la machine actuelle%
 lorsque la valeur de l'adresse de la machine source est 0.0.0.0 (ce qui représente
 une adresse indéfinie\footnote {La signification de l'adresse 0.0.0.0
-est liée à la façon dont elle est utilisée. En general elle indique {\it aucune
+est liée à la façon dont elle est utilisée. En général elle indique {\it aucune
 adresse en particulier}. 
 
 Dans la plupart des cas, cette adresse est utilisée
 pour indiquer une de ces valeurs: l'adresse de la machine courante (c'est
 l'adresse de loopback), n'importe quelle adresse ou le réseau (c'est le cas de la
-route par défault dans une table de routage), une adresse indéfinie ou bien une
-combinaison des possibilitées précédentes (c'est le cas d'une requête {\it ARP
+route par défaut dans une table de routage), une adresse indéfinie ou bien une
+combinaison des possibilités précédentes (c'est le cas d'une requête {\it ARP
 probe} ou bien d'une requête {\it DHCP Discovery} ou {\it DHCP Request}, où
  l'adresse source 0.0.0.0 indique une adresse indéfinie mais aussi l'adresse
-de la machine actuelle, qui par ailleur n'est pas encore defini...).}
+de la machine actuelle, qui par ailleurs n'est pas encore défini...).}
 ) car elle n'a pas encore déterminée son adresse IP. 
 
 L'adresse de destination d'un paquet IPv4 identifie la machine vers
@@ -206,7 +206,7 @@ valeurs peuvent être utilisée par exemple pour identifier plusieurs machines
 (adresses multicast), toutes les machines d'un réseau (adresse de broadcast) ou
 la machine actuelle (adresse de loopback).
 
-Une description plus detaillée des mécanismes liées aux adresses IPv4 est
+Une description plus détaillée des mécanismes liées aux adresses IPv4 est
 proposée dans le chapitre  
 %TODO mettre chapitre% 
 de ce rapport.
@@ -222,8 +222,8 @@ la taille minimale (20 octets), l'en-tête contient des options.
 40 octets au maximum.
 
 Ce champ a été conçu pour étendre les possibilités d'IPv4 en ajoutant des fonctions
-supplémentaires.  Aujord'hui il y a quelques dizaines d'options qui ont été
-specifiées\cite{url-optsIPv4} (si on considère également les options experimentales)
+supplémentaires.  Aujourd'hui il y a quelques dizaines d'options qui ont été
+spécifiées\cite{url-optsIPv4} (si on considère également les options expérimentales)
 mais peut d'entre elles sont réellement utilisées. Parmi les options les plus connues
 on retrouve par exemple des ajouts utiles à l'administration et au debuggage
 d'un réseau, comme {\it Record route} qui permet d'enregistrer les adresses
@@ -243,7 +243,7 @@ le champ IHL indique la longueur de l'en-tête IPv4 en blocs de 32 bits
 \item [Padding] 
 Le padding ne contient que des zéros et est utilisé quand la fin de l'en-tête
 n'est pas aligné sur 32 bits (4 octets). Bien entendu, ce champ est optionnel:
-en effet, il est seulement necessaire lorsque l'en-tête IPv4 termine avec
+en effet, il est seulement nécessaire lorsque l'en-tête IPv4 termine avec
 une option dont la limite n'est pas alignée sur 32 bits. Un en-tête d'un paquet IPv4 
 de 20 octets (donc sans aucune option) n'a besoin d'aucun Padding car il est aligné sur
 4 octets (20 étant un multiple de 4).
