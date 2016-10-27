@@ -8,7 +8,7 @@ Il est très utilisé étant donné que les hôte connaissent souvent les adress
 IP de leur destinataire, mais rarement l'adresse de niveau 2 de ce destinataire
 ou de la passerelle à contacter pour joindre le destinataire.
 
-\subsubsection{Cache ARP} Le cache ARP ou table ARP est une table sotcké en
+\subsubsection{Cache ARP} Le cache ARP ou table ARP est une table stocké en
 local par un hôte et qui ressence les associations entre adresse IP et adresse
 MAC.  Ces associations peuvent être soit de type statique, donc écrite "en dur"
 par l'administrateur, ou dynamique, donc issue d'échange de trame ARP, et qui
@@ -23,21 +23,21 @@ de vie.
 
 
 \subsubsection{Fonctionnement} Prenons l'exemple où A veux envoyer un message à
-B. A connait l'adresse IP de B. Donc A va préparer son paquet qu'il va envoyer
+B. A connaît l'adresse IP de B. Donc A va préparer son paquet qu'il va envoyer
 à B, avec son adresse IP en source et l'adresse IP de B en destination. La
-paquet passe dans la couche liaison, il va être enpaqueté dans une trame de
+paquet passe dans la couche liaison, il va être empaqueté dans une trame de
 niveau 2. Cette trame aura comme adresse source l'adresse de niveau 2 de A,
-mais à ce moment il ne peux pas completé l'adresse destination de la trame: en
-effet, il ne connait l'adresse de niveau 2 du destinataire. La paquet reste
+mais à ce moment il ne peux pas complété l'adresse destination de la trame: en
+effet, il ne connaît l'adresse de niveau 2 du destinataire. La paquet reste
 bloqué en couche 2 et ne peux pas être envoyé au destinataire. Comment obtenir
-l'adresse de niveau 2 du destinaire?  Le protocole ARP est capable de faire
+l'adresse de niveau 2 du destinataire?  Le protocole ARP est capable de faire
 cette translation.
 
 Pour faire cela l'hôte A va tout d'abord regarder dans sa table ARP si il n'a
 pas une entrée pour l'adresse IP à laquelle il souhaite envoyer son paquet. Si
-il tourve une correpondance, il va utiliser l'adresse MAC stocker en
+il trouve une correspondance, il va utiliser l'adresse MAC stocker en
 correspondance avec l'adresse IP recherché.  Si il ne trouve pas de
-correspondance il va emmetre une trame ARPREQUEST pour tenter de contacter le
+correspondance il va emmètre une trame ARPREQUEST pour tenter de contacter le
 possesseur de l'adresse IP qu'il souhaite contacter. Il va mettre dans cette
 trame (en plus de l'entête de niveau 2) un entête ARP. Celui-ci contient
 plusieurs informations:
@@ -51,8 +51,8 @@ qu'il veut contacter. Etant qu'il cherche à avoir l'adresse physique de l'hôte
 B, il ne peut pas indiquer d'adresse MAC dans le champ d'adresse physique
 destinataire. Ce champ est donc rempli avec la valeur 0.  Sachant que l'hôte A
 n'a pas l'adresse physique du destinataire, il va envoyer sa trame en broadcast
-pour espérer atteindre l'hôte B sans connaitre son adresse MAC.  Une fois que
-l'hôte B reçoit la requète ARP, il va analyser son entête et remplir sa table
+pour espérer atteindre l'hôte B sans connaître son adresse MAC.  Une fois que
+l'hôte B reçoit la requête ARP, il va analyser son entête et remplir sa table
 ARP avec l'adresse IP de l'hôte A et l'adresse physique de A. Cela permet de
 créer une correspondance entre l'adresse IP et MAC de A, pour non seulement
 pouvoir répondre à sa requête ARP, et pour pouvoir contacter A dans le futur
@@ -80,14 +80,14 @@ l'utilisation de manière unique d'une adresse IP. Il fut décrit dans le RFC 52
 
 Pour commencer, ACD intervient au moment où une interface reçoit une adresse IP
 (soit par DHCP, soit par une configuration manuelle,...). Il faut à ce moment vérifier si
-l'adresse proposer n'est pas déjà utlisé par un autre hôte sur le réseau.
-L'hôte va alors émettre une requète ARP en broadcast en remplissant l'entête
+l'adresse proposer n'est pas déjà utilisé par un autre hôte sur le réseau.
+L'hôte va alors émettre une requête ARP en broadcast en remplissant l'entête
 ARP avec son adresse MAC dans le champ d'adresse physique source et 0.0.0.0
 dans l'adresse IP source (car il n'a pas encore d'adresse IP attribuer, et pour
 éviter de corrompre les table ARP des autre hôte). Le champ adresse IP
 destinataire est complété avec l'adresse que l'on souhaite acquérir. On ne peut
 pas remplir le champ d'adresse physique destinataire étant donné qu'on ne sait
-pas si il y a des hôte avec cette adresse déjà configuré.  Une requète ARP
+pas si il y a des hôte avec cette adresse déjà configuré.  Une requête ARP
 contenant 0.0.0.0 comme adresse IP source est appelé ARP probe car elle sert à
 "sonder" si un autre hôte utilise déjà l'adresse que l'on passe dans le
 l'adresse IP destinataire.
@@ -109,7 +109,7 @@ pour plusieurs interfaces. Pour éviter ce problème l'hôte doit surveiller les
 ARP probe qui passe à son interfaces. Si il en reçoit un avec comme adresse
 destination la même adresse qu'il souhaite acquérir mais avec une adresse
 physique différente de la sienne, cela veux qu'un autre hôte souhaite utiliser
-la même adress que lui. Dans ce cas l'adresse ne peut pas être utilisé de manière sûr.
+la même adresse que lui. Dans ce cas l'adresse ne peut pas être utilisé de manière sûr.
 
 Si après les 2 secondes d'attente du dernier ARP probe, l'hôte n'a pas reçu d'ARP probe,
 ou d'ARP request/reply indiquant un conflit d'adresse, alors l'hôte peut considérer que
@@ -152,8 +152,8 @@ ou un serveur) alors l'hôte va défendre son adresse indéfiniment. //TODO comp
 \subsection{ICMP} ICMP (Internet Control Message Protocol) est un protocole de
 niveau 3 faisant partie intégrante du protocole IPv4. Il fut initialement
 décrit dans le RFC 792\cite{url-RFC-ICMP}.
-Il permet de transmettre des informations de controle et d'erreur. Les messages
-ICMP sont empaquetés dans des paquets IP, ils diposent donc d'un entête de
+Il permet de transmettre des informations de contrôle et d'erreur. Les messages
+ICMP sont empaquetés dans des paquets IP, ils disposent donc d'un entête de
 paquet IP. Cet entête est le même que pour tout les autres entêtes de paquet
 d'IPv4. Deux champs sont intéressant dans le cas d'un paquet ICMP, les champs
 Protocol et Type of service. Le champ Protocol est mis à à la valeur 1 pour
@@ -167,11 +167,11 @@ dire que le paquet contient un message ICMP, et le champ ToS est mis à 0
 
 Le premier champ est celui de type. Il permet, premièrement, de donner le type
 du paquet et de l'information à transmettre, et deuxièmement de préciser la
-nature des champs qui vont suivres. En effet, comme vu plus haut, les messages
+nature des champs qui vont suivre. En effet, comme vu plus haut, les messages
 contiennent des champs différents selon le type du message ICMP.
 Le deuxième champ est le code. Il permet de subdiviser le type en donnant des détails plus
 précis. Enfin le troisième champ est la somme de contrôle
-(checksum)//TODO(plage de controle).  Commençons avec les messages qui
+(checksum)//TODO(plage de contrôle).  Commençons avec les messages qui
 possèdent l'ensemble de champs le plus simple.
 
 \includegraphics[width=15cm]{./pics/header1.eps}
@@ -206,28 +206,28 @@ communiquer.
 le MTU (Maximum Transmission Unit) et que le flag DF à été mis dans l'entête IP.
 En règle général, si un paquet est plus grand que le MTU, il doit être fragmenté par le
 routeur pour être transmis en plusieurs paquets plus petit. Mais comme le flag DF (Do not
-Fragment), le paquet ne peux être fragmenté. Le routeur emet donc un paquet ICMP de code 4.
+Fragment), le paquet ne peux être fragmenté. Le routeur émet donc un paquet ICMP de code 4.
 
 //TODO quel autre code?
 
 
 
 \subsubsection{Message de type 4: Source Quench Message}
-//TODO PLus utulisé, est ce qu'on en parle?
+//TODO PLus utilisé, est ce qu'on en parle?
 
 \subsubsection{Message de type 11: Time Exceeded}
-Ces messages sont envoyés lorsque le TTL d'un paquet à atteind 0. Une autre
+Ces messages sont envoyés lorsque le TTL d'un paquet à atteint 0. Une autre
 utilisation des ces messages est lorsque que le temps de ré-assemblage des
-fragments d'un paquet est dépassé. Ces deux cas sont distingé par le code. Ces
+fragments d'un paquet est dépassé. Ces deux cas sont distingué par le code. Ces
 messages ont pour destinataire l'hôte qui à envoyé le paquet qui à provoqué
 l'erreur.//TODO(vérifier).
 
 \paragraph{Code 0:}
 Le code 0 est utilisé pour indiquer que le TTL du paquet posant problème est arrivé à 0.
 Lorsque le TTL d'un paquet arrive à 0, celui-ci est supprimer et un message
-ICMP de type 11 et de code 0 est envoyer par le routeur qui à détécté le
+ICMP de type 11 et de code 0 est envoyer par le routeur qui à détecté le
 problème. Cela permet principalement d'éviter qu'un paquet sans dans une boucle
-et qu'il soit rélayé à l'infini.
+et qu'il soit relayé à l'infini.
 
 \paragraph{Code 1:} Le code 1 est quant à lui utilisé pour indiquer que l'hôte n'a pas
 réussi à réassembler les fragments du paquet IP original dans la limite de temps prévue
@@ -247,9 +247,9 @@ reçu, il va le transmettre vers sa destination.
 \includegraphics[width=15cm]{./pics/header2.eps}
 
 Le champ Gateway Internet Address contient la l'adresse du routeur auquel il
-faut faire transiter le traffique directement pour avoir un chemin de routage
+faut faire transiter le trafique directement pour avoir un chemin de routage
 plus court.  Le champ Internet Header contient toujours l'entête du message
-ayant porvoqué l'envoie du message ICMP plus les 64 bits suivant l'entête. Cela
+ayant provoqué l'envoie du message ICMP plus les 64 bits suivant l'entête. Cela
 permet à (aux) hôte(s) de pouvoir modifier leur table de routage en fonction la
 destination que cherchait à atteindre le paquet.
 
@@ -279,7 +279,7 @@ l'adresse destination des echo reply est l'adresse source des echo request. Ces
 deux messages peuvent être envoyés et reçus aussi bien par un hôte que par un
 routeur. Ce sont notamment les message envoyés par la commande {\it ping} qui
 permettent de vérifier si l'on peux communiquer avec un hôte ou un routeur.  Les
-champs Identifier et Sequence Number aide l'émetteur de l'echo request à
+champs Identifier et Séquence Number aide l'émetteur de l'echo request à
 associer les echos request qu'il à envoyés avec les echos reply qu'il à reçus.
 //TODO(qui a t-il dans data?)
 
@@ -287,13 +287,13 @@ associer les echos request qu'il à envoyés avec les echos reply qu'il à reçu
 Le protocole IGMP est un autre protocole faisant partit intégrante d'IPv4. Il permet en effet aux hôtes
 de communiquer aux routeur mutlicast leur abonnement à des groupes multicast.
 IGMPv2 et IGMPv3 sont les versions les plus utilisées actuellement. Elles sont
-respectivement décritent dans le RFC 2236 et RFC 3376.
+respectivement décrient dans le RFC 2236 et RFC 3376.
 Les messages IGMP sont divisées en trois groupe:
 \begin{itemize}
-\item Membership Query: Les requètes d'adhésion: servant aux routeurs pour faire
+\item Membership Query: Les requêtes d'adhésion: servant aux routeurs pour faire
 une demande aux hôtes des groupes auxquels ils abonnés.
 \item Membership Report: Les rapports d'hôte sur leurs abonnements.
-\item Leave Group: Message annoncant l'arrêt d'un abonnement d'un hôte.
+\item Leave Group: Message annonçant l'arrêt d'un abonnement d'un hôte.
 \end{itemize}
 Tout ces messages sont envoyés avec un TTL de 1, pour éviter que ceci ne passent
 d'un réseau à un autre.
@@ -313,10 +313,10 @@ groupes qui seraient envoyé au même moment.
 Lorsque le timer d'un des abonnements arrive à 0, alors l'hôte émet, en multicast au
 groupe en question, un Membership Report.
 Si l'hôte reçoit un Membership Report et que le timer du groupe concerné par le
-message reçus n'a pas encore atteind 0, alors l'hôte va arrêter le timer. En effet le
-routeur sera aux courant de l'existance du groupe car il a reçu le même rapport que
+message reçus n'a pas encore atteint 0, alors l'hôte va arrêter le timer. En effet le
+routeur sera aux courant de l'existence du groupe car il a reçu le même rapport que
 l'hôte.
-Le protocole IGMP est conçu pour que le routeur sache à quels grouep multicast sont
+Le protocole IGMP est conçu pour que le routeur sache à quels groupe multicast sont
 abonner les hôte sur les réseaux auxquels il est relié. Cependant le protocole n'a pas
 du tout été conçu dans l'optique de fournir la liste des hôtes avec leurs abonnements.
 C'est pour cela qu'une fois que le routeur est au courant de l'existence d'un groupe,
@@ -327,8 +327,8 @@ présent sur le réseau auquel il est connecté. Il va à ce moment initialiser 
 à 135 secondes (valeur par défaut).
 Si il reçoit d'autre Membership Report pour un groupe existant alors le timer est
 remis à sa valeur initiale.
-Lorsqu'un hôte rejoint un nouveau groupe, il va emmettre un Unsolicited Membership Report
-pour s'annoncer dans le groupe, et ainsi informer le routeur de l'éxistence de ce groupe
+Lorsqu'un hôte rejoint un nouveau groupe, il va emmètre un Unsolicited Membership Report
+pour s'annoncer dans le groupe, et ainsi informer le routeur de l'existence de ce groupe
 ou de la remise à la valeur initiale du timer.
 
 Le dernier cas de figure est cas où un hôte veut se désabonner d'un groupe. Si l'hôte
@@ -353,22 +353,22 @@ régulièrement des Membership Query général pour qu'il maintiennent à jour s
 groupe présent sur le réseau, sinon ceux-ci serait oublier une fois le timer arrivé à expiration.
 
 \subsection{DHCP}
-Le protocole DHCP (Dynamic Host Configuration Protocol) sert à l'autoconfiguration
-des interfaces. Plus précisement, il  permet d'attribuer une adresse IP à une
+Le protocole DHCP (Dynamic Host Configuration Protocol) sert à l'auto-configuration
+des interfaces. Plus précisément, il  permet d'attribuer une adresse IP à une
 interface et de lui faire parvenir d'autres information essentielle pour le
 fonctionnement de l'interface sur le réseau. La version initiale de DHCP fut décrit
-dans le RFC 1531\cite{url-RFC-DHCP1}, mais cette version fut rendue obselète par un autre
-RFC, lui même rendue obselète par le RFC 2131\cite{url-RFC-DHCP2} qui est la dernière version non
-obselète.Voyons comment une interface peut ce configurer aurpès d'un serveur DHCP.
+dans le RFC 1531\cite{url-RFC-DHCP1}, mais cette version fut rendue obsolète par un autre
+RFC, lui même rendue obsolète par le RFC 2131\cite{url-RFC-DHCP2} qui est la dernière version non
+obsolète. Voyons comment une interface peut ce configurer auprès d'un serveur DHCP.
 
 \includegraphics[width=6cm]{./pics/timeline_dhcp.eps}
 
 Lorsqu'une interface, qui n'a pas d'adresse IP, souhaite en recevoir une, elle
-va emettre un message DHCPDISCOVER en broadcast sur son réseau. Des agents DHCP
+va émettre un message DHCPDISCOVER en broadcast sur son réseau. Des agents DHCP
 peuvent faire passer
 ce message DHCP sur un autre réseau si le serveur DHCP (qui distribue les
 adresses) ne se trouve pas sur le même réseau que l'hôte qui fait la demande.
-L'hote va utiliser comme adresse IP 0.0.0.0.
+L'hôte va utiliser comme adresse IP 0.0.0.0.
 
 Etant donnée que le message est envoyé en broadcast, tout les hôtes sur le
 réseau vont recevoir le message, et en particulier le ou les serveurs DHCP qui
@@ -390,17 +390,17 @@ déclinaison de l'offre.
 
 \item si c'est le serveur retenu, il va sortir l'adresse attribué l'hôte de la
 plage d'adresse libre pour ne plus l'attribuer à un autre hôte. Il va ensuite
-émmetre un message DHCPACK contenant la configuration effective de l'hôte avec
-notemment: l'adresse IP, le masque de sous-réseau, la durée du bail, l'adresse
+émmettre un message DHCPACK contenant la configuration effective de l'hôte avec
+notamment: l'adresse IP, le masque de sous-réseau, la durée du bail, l'adresse
 de la passerelle par défaut et l'adresse du serveur DNS.  Si pour quelque
 raisons le serveur n'est pas capable d'attribuer l'adresse proposé dans l'offre
-(par exemple si l'adresse à été attribuer entre temps), le serveur emet un
+(par exemple si l'adresse à été attribuer entre temps), le serveur émet un
 DHCPNAK pour avertir l'hôte que l'adresse n'est plus disponible. L'hôte devra
 alors recommencer la procédure pour obtenir une adresse IP.
 \end{itemize}
 
 Enfin si le serveur ne reçoit pas de message DHCPREQUEST, la procédure
-s'arrêtrra à ce moment et l'adresse n'étant pas encore attribuer à l'hôte elle
+s'arrêtera à ce moment et l'adresse n'étant pas encore attribuer à l'hôte elle
 reste disponible pour être attribuer à d'autre hôte.  Arrive la dernière étape.
 Si le client reçois un message DHCPACK, il peux prendre en compte la
 configuration (adresse IP, masque de sous-réseau, DNS, passerelle par défaut et
@@ -416,21 +416,21 @@ configuration.
 Si jamais l'adresse proposé par le serveur est unique sur le réseau, la
 configuration est terminé et l'hôte peut utiliser l'adresse (durant la durée du
 bail de celle-ci).  Dernier cas possible, si jamais le l'hôte ne reçoit pas de
-DHCPACK ou de DHCPNAK, il va réemettre le message DHCPREQUEST pour esperer
+DHCPACK ou de DHCPNAK, il va réémettre le message DHCPREQUEST pour espérer
 recevoir une réponse du serveur.
 
 //TODO algo de retransmission TODO fonctionnement agent relais dhcp client peut
-//renoncer à son bail identification des message faisant partit d'un meme
-//echange avec client identifier, server identifier TODO fonctionnement bail
+//renoncer à son bail identification des message faisant partit d'un même
+//échange avec client identifier, server identifier TODO fonctionnement bail
 
 L'hôte est donc configuré et peut utiliser son adresse. Cependant, il ne peut
 l'utiliser que durant la durée de son bail. Une fois le bail expiré, l'hôte ne
 peux plus utiliser son adresse. Lorsque l'hôte à reçu le message DHCPACK du
-serveur, celui-ci lui a transsmis la durée du bail. De cette durée, l'hôte va
+serveur, celui-ci lui a transmis la durée du bail. De cette durée, l'hôte va
 en extraire deux temps noté T1 et T2. T1 correspond à la moitié de la durée du
 bail et T2 à 0.875 la durée du bail. Ces temps sont exprimé de manière relatif
 étant donnée que les horloges du serveur et de l'hôte ne sont pas
-synchronisées.  Une fois que l'hôte à atteind le temps T1, il va chercher à
+synchronisées.  Une fois que l'hôte à atteint le temps T1, il va chercher à
 contacter le serveur qui lui à attribué sa configuration avec un message
 DHCPREQUEST pour étendre la durée de son bail. Ce message est émis de manière
 unicast. A ce moment l'hôte est entré en état RENEWING. Si l'hôte reçoit un
@@ -438,41 +438,41 @@ message DHCPACK du serveur lui accordant un prolongement de la durée de son
 bail, alors il va sommer le temps qu'il avait insérer dans le DHCPREQUEST avec
 la durée accordé par le serveur et qui se trouve dans le message DHCPACK.
 L'hôte retourne dans l'état BOUND. Cependant l'hôte n'est pas obligé d'attendre
-T1 pour pouvoir étendre son bail.  Si jamais l'hôte ne reçoit pas de reponse
+T1 pour pouvoir étendre son bail.  Si jamais l'hôte ne reçoit pas de réponse
 DHCPACK avant l'arrivé de T2, il passe en état REBINDING. A ce moment il va
 émettre un DHCPREQUEST en broadcast pour espérer pourvoir étendre son bail
-auprès de n'importe quel serveur DHCP. Pour parer aux eventuels cas de perte de
+auprès de n'importe quel serveur DHCP. Pour parer aux éventuels cas de perte de
 DHCPREQUEST, l'hôte va renvoyer un message une fois la moitié de la durée entre
 T1 et T2 passé, en état RENEWING; et une fois la moitié de la durée entre T2 et
 la fin du baille , en état REBINDING(et avec un minimum de temps de 60
 secondes).  Si malgré tout, la durée du bail venait à expirer, alors l'hôte ne
-possèderait plus de configuration réseau et ne pourrait plus communiquer avec
+posséderait plus de configuration réseau et ne pourrait plus communiquer avec
 d'autre hôtes. Il rentre alors en état INIT; il doit alors recommencer la
 procédure pour obtenir une adresse configuration.
 
 Cependant,dans ce cas comme dans d'autre, l'hôte peut ré-utiliser une
-configuration précédement utilisée. Cela permet de raccourcir la négociation
+configuration précédemment utilisée. Cela permet de raccourcir la négociation
 entre l'hôte et le serveur DHCP. L'hôte va directement commencé la négociation
 en faisant un DHCPREQUEST en broadcast et contenant la configuration qu'il
 souhaite ré-utiliser. Le serveur concerné par l'attribution antérieur de la
 configuration va donc accepter la demande de l'hôte à l'aide d'un DHCPACK ou la
 refuser, si la demande n'est pas correct ou si l'adresse est utilisé par un
 autre hôte, à l'aide d'un DHCPNAK.  Cette négociation se fait de manière
-similaire qu'un négocation complète, elle a juste été raccourci en enlevant
+similaire qu'un négociation complète, elle a juste été raccourci en enlevant
 quelque étape non indispensable.
 
 \includegraphics[width=6cm]{./pics/timeline_dhcp_reuse_add.eps}
 
 \subsection{PMTU discovery}
 Le protocole PMTU discovery (Path MTU discovery) décrit dans le RFC 1191\cite{url-RFC-PMTU}, permet de trouver le plus petit MTU d'un chemin entre l'émetteur et le récepteur. Cela permet d'éviter la fragmentation des paquet IP ce qui permet entre autre de soulagé la charge des routeurs.
-L'hôte souhaitant connaitre le plus petit MTU pour un chemin vers autre hôte va envoyer un paquet avec un certain MTU et en plaçant le bit DF de l'entête sur DF, pour éviter la fragmentation du paquet. Ainsi si le MTU est trop grand à un moment donné du chemin, le routeur ne pourra pas fragmenter le paquet mais ne pourra non plus pas transmettre le paquet en l'état. Il va alors détruire le paquet, et émettre un message ICMP de type 3 et de code 4 à la source, signalant que la destination n'est pas joignable, et que cela est à un paquet nécessitant une fragmentation. Mais la fragmentation est interdite pour ce paquet. Le MTU est donc trop élevé. Le message ICMP contient le MTU qu'il faut passé le routeur.
+L'hôte souhaitant connaître le plus petit MTU pour un chemin vers autre hôte va envoyer un paquet avec un certain MTU et en plaçant le bit DF de l'entête sur DF, pour éviter la fragmentation du paquet. Ainsi si le MTU est trop grand à un moment donné du chemin, le routeur ne pourra pas fragmenter le paquet mais ne pourra non plus pas transmettre le paquet en l'état. Il va alors détruire le paquet, et émettre un message ICMP de type 3 et de code 4 à la source, signalant que la destination n'est pas joignable, et que cela est à un paquet nécessitant une fragmentation. Mais la fragmentation est interdite pour ce paquet. Le MTU est donc trop élevé. Le message ICMP contient le MTU qu'il faut passé le routeur.
 L'émetteur va alors créer un nouveau paquet avec le nouveau MTU. Il fera cela autant de fois que cela est nécessaire pour déterminer le MTU du chemin.
 
 \subsection{DNS}
 Le protocole DNS (Domain Name System) permet de faire de la résolution d'adresse.
 Cela permet grâce à des échange entre un ou plusieurs serveur DNS de faire la traduction
 de nom de domaine, notamment en adresse IP. Pour simplifier, le nom de domaine, facilement
-retenable pour un être humain va être traduit en adresse IP pour être utilisé par l'ordinateur.
+retenu par un être humain va être traduit en adresse IP pour être utilisé par l'ordinateur.
 Nous n'aborderons pas plus le fonctionnement de DNS car s'est un protocole de couche application
 et qu'il n'est pas essentielle au fonctionnement d'IPv4. Cependant il reste essentielle dans
 l'utilisation d'Internet, aujourd'hui, par des êtres humains.
