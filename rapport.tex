@@ -3,6 +3,7 @@
 \usepackage[french]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{emptypage}
+\usepackage{amsmath}
 
 % Utilisation d'url
 \usepackage{url}
@@ -38,62 +39,13 @@
 
 \input{sections/introduction}
 \input{sections/histoire}
-
-
-% ------------------------------------------------
-
-La technique de classe d'adressage IP ( classful network ) est une méthode
-utilisée de 1981 à 1993 pour allouer des adresses IPV4. Il a été défini en 1981
-qu'une adresse IP est divisée en deux parties: une partie qui sert à
-identifier le réseau et une partie qui sert à identifier une interface sur ce
-réseau. Dans cette méthode une adresse IP est divisée en 5 plages d'adresses
-IP et sont appelées classes. Ils sont organisés comme dans le tableau
-ci-dessous:
-
-\includegraphics{./pics/tableau.eps}
-
-
-Chaque classe a un certain nombre d'octets servant à identifier le réseau. Une
-adresse IP de classe A à un identificateur de réseau sur 1 seul octet. Une
-adresse IP de classe B sur 2 octet et une de classe C sur 3 octets. Les
-adresses IP de classe D et E correspondent à des adresses IP particulières.
-Les réseaux des différentes classes utilisent un certain nombre d'octets pour
-identifier le réseau. Ils ont donc un nombre différent d'octets restants qu'ils
-peuvent donner à des interfaces.  Pour déterminer à quelle classe appartient
-une adresse IP il suffit de regarder les premiers bits de l'adresse.  Afin
-d'avoir un niveau supplémentaire, grâce auquel on gagne en flexibilité et en
-efficacité dans l'attribution d'adresse à l'intérieur d'une classe, on a
-introduit le concept de sous-réseau. Celui-ci introduit un nouveau numéro entre
-le numéro de réseau et le numéro d'hôte. Grâce aux sous-réseaux on peut par
-exemple diviser une adresse de classe B en 256 sous-réseaux pouvant chacun
-avoir 256 interfaces connectées.  On utilise un masque de sous-réseau pour
-obtenir la partie réseau de l'adresse IP. Le masque de sous-réseau est obtenu
-en mettant tous les bits de la partie réseau à 1 et tous les bits de la partie
-interface à 0. Lorsque deux adresses IP appartiennent au même sous-réseau,
-elles ont en commun les bits identifiants ce sous-réseau. Pour déterminer si 2
-interfaces appartiennent au même sous-réseau, on les compare donc d'abord au
-masque de sous-réseau puis on les compare entre elles.
-Cependant, ce système d'adressage a un grand inconvénient. En effet, il
-n'existe que 4 classes différentes et donc 4 types de réseaux de taille
-différentes. Cela conduit souvent à de grand gaspillage d'adresse. Par exemple,
-lorsqu'une entreprise souhaite une adresse IP. Si celle-ci possède 2000
-interfaces, une adresse de classe C (2\^8hôtes possibles) ne sera pas
-suffisante. Une adresse de classe B sera par contre largement trop grande (2\^16
-hôtes possibles). C'est à cause de ce problème de gaspillage et du manque
-d'adresses IP que l'on est passé au Classless InterDomain Routing (CIDR).
-
-% ------------------------------------------------
-
-
 \input{sections/concepts-et-utilisation}
-
 \input{sections/suiteprot}
-
 \input{sections/passageIPv6}
-
 \input{sections/conclusion}
 
 
+\newpage
 \addcontentsline{toc}{section}{Références}
 \bibliographystyle{plain}
 \bibliography{rapport}
