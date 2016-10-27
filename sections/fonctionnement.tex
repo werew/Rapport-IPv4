@@ -122,9 +122,70 @@ meme la totalite d'une reseau.
 
 
 
-%TODO portee d'un adresse: broadcast, multicast, anycast unicast%
-
 \paragraph{Adresses publiques et adresses prive}
+L'expansion exponentielle de Internet a pose, presque depuis le debut, des
+souci de penurie d'adresses. Plusieur mesures ont ete pris pour limiter la
+portee de ce probleme, malgre ca le stock d'adresses IPv4 non reservee
+c'est malheurexment vu epuisse deja depuis le 2011.
+
+Un des disposition les plus connues et efficaces a ete la creation du concept
+d'adresses prive. Le RFC 1918 introduit la notion d'adresse prive: un adresse
+appartenant a cet categorie est un identifiant unique dans une reseau (ou sous
+reseau) mais il ne comporte aucun contraint d'unicite dans l'echelle globale
+(Internet). L'idee derrier la conception des adresses prive etait cella de
+avoir des identifiantes qui peuveant etre utilise lorsque une machine n'a pas
+pas besoin de comuniquer avec des hosts au dela de son reseau.
+
+A ce titre des plages d'adresses ont ete reserve pour cet usage:
+
+\begin{itemize}
+\item Un bloc d'adresses appartenant a la classe A: \textbf{10.0.0.0/8}
+\item 16 blocs d'adresses appartenanet a la classe B: \textbf{172.16.0.0/12}
+\item 256 blocs d'adresses appartenanet a la classe C: \textbf{192.168.0.0/16}
+\end{itemize}
+
+\smallbreak
+Le concept d'adresse prive s'oppose a celui de adresse publique: ce dernier est 
+un adresse unique dans le globe et en consequence attaignable par n'importe
+quel host dans Internet.
+
+Aujourd'hui des systemes comme celui de la NAT ({\it Network Address
+Translation}) permet a des machines ayant des adresses IP prive de communiquer
+de maniere trasparent avec des host au dehors de leur reseau. Cet systeme est
+largement utilise dans les reseau domestiques pour permettre aux machines au
+sein de celles ci d'etre directament connecte a Internet. On parlera plus en
+detail du NAT dans la section %TODO \ref{} %.
+\smallbreak
+
+
+ 
+L'augment des difficultes relatives a la procedure de reservation des adresses
+publiques au sein des organisme responsables des allocations\cite{url-RFC-1918}
+(tels que le IANA) ont contribue a promouvoir l'utilise d'adresses prive plutot
+que des adresses publiques lorqu'il etait possible.
+L'utilisation des adresse prive a pour consequence la preservation des plages
+d'adresses IP publiques, ce qui constitue un advantage certain: l'utilisation
+des adresses prive permet de eviter le gaspillage de adress publique la ou ils
+ne sont pas necessaires.
+
+
+
+
+
+
+
+
+
+
+
+
+
+comme on verra 
+
+
+Les adresses IP pouvent etre classifie ulteriorement selon
+leur portee ({\it address scope}).  En effet certaines adresses sont reserve 
+
 
 %Note: private --> 10.0.0.0/8, 172.16.0.0/12 192.168.0.0/16
 
@@ -138,7 +199,6 @@ problématique bien particulière. Le RFC3330 est un des premiers documents à
 rassembler les classification des adresses IPv4 selon leur rôles et significations.
 
 %TODO lien%
-
 
 \begin{description}
 \item[0.0.0.0/8]
@@ -241,21 +301,6 @@ de type {\it anycast}.
 
 
 ------------------------------------------
-Alors on vient de voir que les adresses IP privées sont utilisable uniquement
-sur des réseaux locaux, tandis qu’il y a des adresses IP qui ne sont utilisées
-uniquement que sur internet donc nous pouvons en déduir que c’est les adresses
-IP publiques non utilisable dans un réseau local. Les routeurs (par exemple:
-votre box) ont une adresse IP publique du côté d’internet, ce qui permet de
-rendre votre box visible sur internet (elle répondra certainement au ping). De
-plus, au moment de vos connexion sur un site web vous utilisez l’adresse
-publique du serveur web. De ce fait une adresse IP publique est unique dans le
-monde, ce qui n’est pas le cas dans le systèmes d’adressage des adresses IP
-privées qui doivent être unique seulement dans un même réseau local mais pas au
-niveau planétaire étant donné que ces adresses ne peuvent pas être routées sur
-internet. Une adresse IP publique est soit acheté ou fournie par la FAI.  Les
-IP publiques représentent toutes les adresses IP des classes A, B et C qui ne
-font pas partie de la plage d’adresses privées de ces classes ou des exceptions
-de la classe A (voir Adresse non utilisé ci-dessus).
 
 
 \subsubsection{Les classes d’adresses}
