@@ -37,7 +37,7 @@ Pour faire cela l'hôte A va tout d'abord regarder dans sa table ARP si il n'a
 pas une entrée pour l'adresse IP à laquelle il souhaite envoyer son paquet. Si
 il trouve une correspondance, il va utiliser l'adresse MAC stocker en
 correspondance avec l'adresse IP recherché.  Si il ne trouve pas de
-correspondance il va emmètre une trame ARPREQUEST pour tenter de contacter le
+correspondance il va émmetre une trame ARPREQUEST pour tenter de contacter le
 possesseur de l'adresse IP qu'il souhaite contacter. Il va mettre dans cette
 trame (en plus de l'entête de niveau 2) un entête ARP. Celui-ci contient
 plusieurs informations:
@@ -300,7 +300,7 @@ l'adresse destination des echo reply est l'adresse source des echo request. Ces
 deux messages peuvent être envoyés et reçus aussi bien par un hôte que par un
 routeur. Ce sont notamment les message envoyés par la commande {\it ping} qui
 permettent de vérifier si l'on peux communiquer avec un hôte ou un routeur.  Les
-champs Identifier et Séquence Number aide l'émetteur de l'echo request à
+champs Identifier et Sequence Number aide l'émetteur de l'echo request à
 associer les echos request qu'il à envoyés avec les echos reply qu'il à reçus.
 //TODO(qui a t-il dans data?)
 
