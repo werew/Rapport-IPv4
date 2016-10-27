@@ -18,8 +18,8 @@ des adresses.
 Comme chaque nombre représente un octet, les valeurs de celui-ci sont comprises entre 0 et 255.
 
 \vspace{1cm}
-Exemple: adresse à valeur décimale: 212.217.0.1 => correspond sous sa forme
-binaire à: 11010100.11011001.00000000.00000001
+Par exemple l'adresse 212.217.0.1 correspond sous sa forme binaire à:
+{\it 11010100.11011001.00000000.00000001}
 \vspace{1cm}
 
 \subsubsection{Notion de NET ID et HOST ID}
@@ -49,8 +49,14 @@ En conséquence plus le nombre de bit à 1 dans le masque est grand, plus le NET
 \label{fig:exmask}
 \end{figure}
 
-//TODO exemple
-//TODO exemple invalide
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=7cm]{./pics/maskipv4inv.eps}
+\caption{Example de masque invalide.}
+\label{fig:exmaskin}
+\end{figure}
+
 
 \subsubsection{Classes d'adresse IP}
 La technique de classe d'adressage IP ( classful network ) est une méthode
