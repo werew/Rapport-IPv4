@@ -167,7 +167,7 @@ dire que le paquet contient un message ICMP, et le champ ToS est mis à 0
 \begin{figure}
 \centering
 \includegraphics[width=15cm]{./pics/header.eps}
-\caption{TODO}
+\caption{Champs de l'entête communs à tous les types de message ICMP}
 \label{fig:headicmp}
 \end{figure}
 
@@ -177,13 +177,13 @@ nature des champs qui vont suivre. En effet, comme vu plus haut, les messages
 contiennent des champs différents selon le type du message ICMP.
 Le deuxième champ est le code. Il permet de subdiviser le type en donnant des détails plus
 précis. Enfin le troisième champ est la somme de contrôle
-(checksum)//TODO(plage de contrôle).  Commençons avec les messages qui
+(checksum).  Commençons avec les messages qui
 possèdent l'ensemble de champs le plus simple.
 
 \begin{figure}
 \centering
 \includegraphics[width=15cm]{./pics/header1.eps}
-\caption{TODO}
+\caption{Entête des messages de type 3, 4 et 11}
 \label{fig:head1icmp}
 \end{figure}
 
@@ -259,7 +259,7 @@ reçu, il va le transmettre vers sa destination.
 \begin{figure}
 \centering
 \includegraphics[width=15cm]{./pics/header2.eps}
-\caption{TODO}
+\caption{Entête des messages de type 5}
 \label{fig:head2icmp}
 \end{figure}
 Le champ Gateway Internet Address contient la l'adresse du routeur auquel il
@@ -286,7 +286,7 @@ du paquet(//TODO(préciser)).
 \begin{figure}
 \centering
 \includegraphics[width=15cm]{./pics/header3.eps}
-\caption{TODO}
+\caption{Entête des messages de type 0 et 8}
 \label{fig:head3icmp}
 \end{figure}
 
@@ -385,7 +385,7 @@ obsolète. Voyons comment une interface peut ce configurer auprès d'un serveur 
 \begin{figure}
 \centering
 \includegraphics[width=6cm]{./pics/timeline_dhcp.eps}
-\caption{TODO}
+\caption{Déroulement de la négociation DHCP}
 \label{fig:timelinedhcp}
 \end{figure}
 
@@ -490,7 +490,7 @@ quelque étape non indispensable.
 \begin{figure}
 \centering
 \includegraphics[width=6cm]{./pics/timeline_dhcp_reuse_add.eps}
-\caption{TODO}
+\caption{Déroulement de la négociation DHCP pour la réutilisation d'une adresse}
 \label{fig:timelinedhcpreuseadd}
 \end{figure}
 
