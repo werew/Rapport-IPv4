@@ -104,18 +104,18 @@ slash.
 
 
 \subsubsection{Types d'adresses}
-La variete des exigence en matiere de reseaux a donne lieu a une progressive
-classification des adresses selon des roles bien precis.  En effet pas toutes
-les adresses IPv4 ont la meme signification: a certain adresses (ou plages
-d'adresses) ont ete attribue par convention des fonctions particuliers.
+La variété des exigences en matière de réseaux a donnée lieu à une classification progressive 
+des adresses selon des rôles bien precis. En effet, pas toutes
+les adresses IPv4 ont la même signification: à certaines adresses (ou plages
+d'adresses) ont été attribué par convention des fonctions particulières.
 
-L'assignation d'un usage speciale a une adresse IP deculait de l'emergence
+L'usage spéciale d'une adresse IP découlait de l'émergence
 %TODO (apparition??) 
-d'une nouvelle necessite dans le domaine des reseaux; c'est pour
-ca que jusq'avant les annes 2002, l'attribution des roles speciaux des adresses
-IPv4 ete distribue dans divers document, dont chaqun a propos d'une
-problematique en particuliere. Le RFC3330 est un des premiers document a
-rassembler les classification des adresses IPv4 selon leur role et signification.
+d'un nouveau besoin dans le domaine des réseaux; c'est pour
+ça que jusqu'à 2002, l'attribution des rôles spéciaux des adresses
+IPv4 était présentés dans divers document, qui présentaient, et répondaient à chaque fois à une
+problématique bien particulière. Le RFC3330 est un des premiers documents à
+rassembler les classification des adresses IPv4 selon leur rôles et significations.
 
 %TODO lien%
 
@@ -123,98 +123,96 @@ rassembler les classification des adresses IPv4 selon leur role et signification
 
 \begin{description}
 \item[0.0.0.0/8]
-Cette plage d'adresses indique la machine courante dans la reseau courante.
-Les adresses dans cette plage sont notement utilise dans certain protocoles de
-configuration comme adresses source, lorsque une machine n'a pas encore etabli
-son adresse effective.
+Cette plage d'adresses indique la machine courante dans le réseau courant.
+Les adresses dans cette plage sont notamment utilisées dans certains protocoles de
+configuration comme adresse source, lorsqu'une machine n'a pas encore d'adresse effective.
 %RFC 1122 %
 
 \item[127.0.0.0/8]
-Un adresse appartenent a cet bloque est denommes adresse de {\it loopback}.  Un
-paquet envoye vers un tel adresse returne directement l'expediteur, sans sortir
-du contexte de la machine emettrice. Parmi les adresses de cette plage,
-127.0.0.1 est celui utilise le plus frequent\footnote{Comme le indique
-le RFC 1122, certaines implementations de l'adresse de {\it loopback} se
-limitent a utiliser le bloque 127.0.0.1/32, ce qui se traduit en utiliser juste
-l'adresse 127.0.0.1 .}: dans plusieurs contextes cet adresses est referencee par
-l'alias "{\it localhost}".\footnote{La correpondence entre le nom {\it localhost} et
-l'adresse 127.0.0.1 est generalement mise en place par le systeme d'exploitation.
-Dans les systemes de type UNIX une entree reliant ces deux entites est generalement
-present dans le fichier "/etc/hosts".}
-Un adresse de {\it loopback} n'a pas de sens au dehors
-d'un host, pour cette raison normalement il ne devrait pas apparaitre dans la
-reseau a aucun moment.
+Une adresse appartenant a ce bloc est denommées adresse de {\it loopback}.  Un
+paquet envoyé vers une telle adresse retourne directement chez l'expéditeur, sans sortir
+du contexte de la machine émettrice. Parmi les adresses de cette plage,
+127.0.0.1 est celle utilisée le plus fréquemment\footnote{Comme l'indique
+le RFC 1122, certaines implémentations de l'adresse de {\it loopback} se
+limitent à utiliser le bloc 127.0.0.1/32, ce qui se traduit par l'unique utilisation de
+l'adresse 127.0.0.1 }: dans plusieurs contextes cet adresses est réferencée par
+l'alias "{\it localhost}".\footnote{La correspondance entre le nom {\it localhost} et
+l'adresse 127.0.0.1 est généralement mise en place par le système d'exploitation.
+Dans les systèmes de type UNIX une entrée reliant ces deux entitées est généralement
+présente dans le fichier "/etc/hosts".}
+Une adresse de {\it loopback} n'a pas de sens en dehors
+d'un host, et c'est pour cela qu'elle ne devrait apparaître à aucun moment dans le réseau.
 
 %RFC 1122 %
 
 \item[169.254.0.0/16]
-Cet plage d'adresses a ete designe comme contenant les adresses qu'on appelle
-de {\it lien local}.  Les adresses dit de {\it lien local} sont utilise lorsque
-une machine n'a aucun moyen d'obtenir un adresse IP (par example par le biais
+Cet plage d'adresses a été désignée comme contenant les adresses qu'on appelle
+de {\it lien local}.  Les adresses dit de {\it lien local} sont utilisée lorsque
+une machine n'a aucun moyen d'obtenir une adresse IP (par example par le biais
 d'un serveur DHCP ou simplement avec une configuration manuelle).  L'obtention
-d'un adresse de {\it lien local} c'est fait de facon automatique a travers un
-processus de autoconfiguration souvent appelle avec l'acronyme APIPA ({\it
-Automatic Private Internet Protocol Addressing}) ou avec le nom IPv4LL.  Le
+d'une adresse de {\it lien local} est faite de façon automatique à travers un
+processus d'autoconfiguration souvent appellé par l'acronyme APIPA ({\it
+Automatic Private Internet Protocol Addressing}) ou par le nom IPv4LL.  Le
 fonctionnement du processus APIPA (decrit dans le RFC 3927) est assez complexe
-dans ses detailes et entraine l'utilisation de certaines fonctionnalites du
+ et entraîne l'utilisation de certaines fonctionnalitées du
 protocole ARP (qu'on traitera plus en detail dans la section %TODO \ref{sec:suiteproc} % )
-.Il peut etre syntetizee dans ses grandes lignes par la demarche suivante:
+. Son focntionnement peut être synthétisé dans ses grandes lignes par la démarche suivante:
 
 \begin{description}
 \item[Selection de l'adresse]
-La machine choisit aleatoirement
-    \footnote{Il est conseille de utiliser l'adresse MAC de l'interface en question
-    pour generer l'adresse de {\it lien local} pour qu'il ait une plus forte chance
-    qu'il soit unique dans le reseau.} 
-un adresse appartenant a la plage 169.254.0.0/16
+La machine choisit aléatoirement
+    \footnote{Il est conseillé d'utiliser l'adresse MAC de l'interface en question
+    pour générer l'adresse de {\it lien local} pour qu'il y ait une plus forte chance
+    qu'elle soit unique dans le reseau.} 
+une adresse appartenant à la plage 169.254.0.0/16
 
 \item[Sondage sur l'adresse]
-Une fois selectionne un adresse, il faut s'assurer que le meme adresse ne soit
-pas deja utilise par d'autres machines dans la reseau. Dans ce but la machine
-pose la question a toutes les autres machine de le reseau au moyen d'un ou plusieurs messages
-en brodcast et attend une reponse pendant un certain intervalle de temp\footnote{
-Des precautions sont prises pour eviter les conflits genere par plusieurs
-machines qui effectuant simultanement cette action pour le meme adresse,
-notament: des intervals de temps aleatoires entre l'envoi des messages, la mise
-en place d'un ecoute active des autres messages pendat le temp de l'enquete.}
-Le manque de reponse indique que l'adresse est bien unique. Si l'adresse n'est
-pas unique il faudrait en choisir un outre.
+Une fois qu'on a selectionné une adresse, il faut s'assurer que la même adresse ne soit
+pas deja utilisée par d'autres machines sur le réseau. Dans ce but la machine
+pose la question à toutes les autres machines du réseau au moyen d'un ou plusieurs messages
+en brodcast, et attend une réponse pendant un certain intervalle de temps\footnote{
+Des précautions sont prises pour éviter les conflits générés par plusieurs
+machines qui effectuent simultanément cette action pour le même adresse,
+notamment: des intervalles de temps aléatoires entre l'envoie des messages, la mise
+en place d'une écoute active des autres messages pendant le temps de l'enquete.}
+Le manque de réponse indique que l'adresse est bien unique. Si l'adresse n'est
+pas unique il faut en choisir une autre.
 
 \item[Annonciation de l'adresse]
-A ce poit la machine peut comunniquer aux autres machines l'adresse qu'il
-vient de reserver.
+A ce point la machine peut communiquer aux autres machines l'adresse qu'elle
+vient de réserver.
 
 \end{description}
 
 
 
-Cet processus est base sur le concept de {\it Zeroconf}: il permet la mise en
-place d'un reseau IPv4 sans aucune configuration. Ce type de systeme,
-C'est aussi grace a ce gendre de systemes, que on 
-pourrait syntetiser par le devise %TODO slogan??  
+Ce processus est basé sur le concept de {\it Zeroconf}: il permet la mise en
+place d'un reseau IPv4 sans aucune configuration. Ce type de système,
+C'est aussi grâce a ce genre de systèmes, qu'on 
+pourrait synthétiser par la devise %TODO slogan??  
 "plug and play", que le concept de Networking (et avec lui Internet) a pu se
-diffuser assez rapidement: grace a APIPA une reseau IPv4 peut etre facilement
-mise an place sans le besoin de aucune connaissances techniques.\\
+diffuser assez rapidement: grâce à APIPA un réseau IPv4 peut être facilement
+mis en place sans le besoin d'aucune connaissance technique.\\
 
-La plage d'adresses 169.254.0.0/16, designe une plage d'adresses prive: les
-adresses de type {\it lien local} ne sont donc pas attaignables au dehors de
-leur reseau de definition. 
-Cet plage d'adresses pose  par contre des limites par rapport aux autres
-plages d'adresses prive car, a difference des autres, il ne peut pas etre
-divise en sous reseux\footnote{Ce qui est assez logique si on considere que
-le processus d'obtention d'un adresse de {\it lien local} (APIPA) utilise
-les liens "physiques" entres les machines pour communiquer, et il ne peut
-pas considerer aucune notion de sous-reseau.}
-: en effet un packet destine a un adresse de {\it lien local} ne doit pas etre
-retrasmis par un host intermediaire.\footnote{Dans ls paquets destine
-a un adresse de {\it lien local} le champ TTL est de norme mis a 1
-pour empecher des forwarding.}
+La plage d'adresses 169.254.0.0/16, désigne une plage d'adresse privée: les
+adresses de type {\it lien local} ne sont donc pas atteignables en dehors de
+leur réseau de definition. 
+Cette plage d'adresses pose par contre des limites par rapport aux autres
+plages d'adresses privée car, à la différence des autres, elle ne peut pas être
+divisée en sous réseaux\footnote{Ce qui est assez logique si on considère que
+le processus d'obtention d'une adresse de {\it lien local} (APIPA) utilise
+les liens "physiques" entre les machines pour communiquer, et il ne peut
+ considérer aucune notion de sous-reseau.}
+: en effet un paquet destiné à une adresse de {\it lien local} ne doit pas être
+retrasmise par un hôte intermédiaire.\footnote{Dans le paquet destiné
+a une adresse de {\it lien local} le champ TTL est usuellement mis a 1
+pour empêcher des forwarding.}
 
 \item[192.88.99.0/24]
-Les adresses appartenant a cet bloque designant des routeurs 
-fournissant un service du type {\it 6to4}. Cet type de service
-permet de relier des reseau IPv4 avec des reseau IPv6.
-Les adresses dans cette place sont traite comme etant des adresses
+Les adresses appartenant à ce bloc désignent des routeurs 
+fournissants un service de type {\it 6to4}. Ce type de service
+permet de relier des réseaux IPv4 avec des réseaux IPv6.
+Les adresses dans cette plage sont traitées comme étant des adresses
 de type {\it anycast}.
 
 %Note: private --> 10.0.0.0/8, 172.16.0.0/12
