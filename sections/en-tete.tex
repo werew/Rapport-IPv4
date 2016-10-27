@@ -170,7 +170,7 @@ dans la somme de contrôle}: si la somme de contrôle ne correspond pas avec cel
 présente dans l'en-tête du paquet, celui-ci est détruit.
 
 
-\item [adresse source et adresse destination]
+\item [Adresse source et adresse destination]
 Les adresses de chaque paquet IPv4 (soit l'adresse source et l'adresse de
 destination du paquet) sont représentés sous forme d'une suite de 32 bits.
 
@@ -183,7 +183,6 @@ dans un réseau en particulier).} de la machine qui a envoyé le paquet
 (à laquelle il faudra donc éventuellement répondre).  Dans certains cas,
  cette adresse ne correspond pas à celle de la machine qui a envoyé
 le paquet, c'est par exemple ce qui se passe dans une requête, {\it ARP probe}
-%TODO to correct: 0.0.0.0 symbolise la machine actuelle%
 lorsque la valeur de l'adresse de la machine source est 0.0.0.0 (ce qui représente
 une adresse indéfinie\footnote {La signification de l'adresse 0.0.0.0
 est liée à la façon dont elle est utilisée. En général elle indique {\it aucune
@@ -207,9 +206,7 @@ valeurs peuvent être utilisée par exemple pour identifier plusieurs machines
 la machine actuelle (adresse de loopback).
 
 Une description plus détaillée des mécanismes liées aux adresses IPv4 est
-proposée dans le chapitre  
-%TODO mettre chapitre% 
-de ce rapport.
+proposée dans la section \ref{sec:addripv4} de ce rapport.
 
 
 \item [Options] 
