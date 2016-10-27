@@ -11,7 +11,7 @@ Une adresse IP sert à identifier une machine (et plus précisément une des int
 dans un réseau particulier.
 Comme nous le verrons plus tard cet identifiant unique permet de désigner à la fois un
 réseau et une machine précise au sein de ce réseau.
-Une adresse est codé sur 32 bits ce qui permet de coder 2\^32 soit 4294967296 adresses différentes.
+Une adresse est codé sur 32 bits ce qui permet de coder $2^{32}$ soit 4294967296 adresses différentes.
 Par convention on peut représenter une adresse IPv4 comme une suite de 4 nombres décimaux séparés par des points,
 chacun traduisant un octet. Cette représentation a contribué à simplifier l'utilisation et la manipulation
 des adresses.
@@ -168,24 +168,24 @@ particulière qui a été faite avec certaines adresses.
 
 
 \paragraph{Mode de diffusion}
-Dans le cadre des transmissions, en plus de communiquer entre deux interfaces, il est 
-parfois nécessaire qu'un message soit reçu par un groupe de machines ou que 
-même la totalité du réseau reçoivent ce message.
-
-On a défini pour cela plusieurs types de diffusions associés à certaines adresses particulières.
-
-Le type de diffusion le plus utilisé est la diffusion en unicast. Dans ce mode,
-l'adresse IP désigne une machine de manière unique. L'adresse IP appartient
-à une seule machine et sert à l'identifier sur un réseau.  C'est le type
-d'adresse que nous avons abordé jusqu'à présent.  Mais il peut être intéressant
-de pouvoir contacter plusieurs machines en même temps. On pourrait bien sûr
+Dans le cadre des transmissions, en plus de communiquer entre deux interfaces,
+il est parfois nécessaire qu'un message soit reçu par un groupe de machines ou
+que même la totalité du réseau reçoivent ce message.  On a défini pour cela
+plusieurs types de diffusions associés à certaines adresses particulières.
+Le type de diffusion le plus utilisé est la diffusion en \textbf{unicast}. Dans ce mode,
+l'adresse IP désigne une machine de manière unique. \textbf{L'adresse IP est
+associé à une seule machine et sert à l'identifier sur un réseau}.  C'est le
+type d'adresse que nous avons abordé jusqu'à présent. 
+Dans certaines cas il peut être
+intéressant de pouvoir contacter plusieurs machines en même temps. On pourrait bien sûr
 envoyer des paquets en unicast à chaque machine que l'on souhaite contacter,
 mais cela serait fastidieux et inonderait le réseau inutilement. Une solution plus
 pratique est d'avoir une adresse qui désigne plusieurs machines à la fois. Cela
 permet d'envoyer un seul paquet qui est remis à plusieurs machines. Il
 existe pour faire cela plusieurs types de diffusion.
-\begin{itemize}
-\item Le broadcast: Ce mode de diffusion permet d'envoyer un paquet unique tout en 
+
+\begin{description}
+\item[Broadcast:] Ce mode de diffusion permet d'envoyer un paquet unique tout en 
 joignant toutes les machines sur un réseau. Lorsque les machines reçoivent ce
 paquet, elles s'aperçoivent que l'adresse de destination du paquet est l'adresse de
 broadcast et elles vont alors traiter le paquet. L'adresse de broadcast d'un réseau
@@ -199,46 +199,51 @@ configuration volontaire) les routeurs ne laissent pas passer les messages de
 broadcast d'un réseau à un autre; excepté quelques cas spéciaux comme DHCP où un
 serveur peut s'adresser à plusieurs réseaux, et où ses messages de broadcast
 peuvent être relayés par les routeurs (appelés DHCP agents).
-\item Multicast: Ce mode de diffusion permet d'envoyer un paquet à destination
-de plusieurs machines. L'adresse IP multicast sera donc vu comme l'adresse d'un groupe
-mutlicast, qui désigne donc plusieurs machines. Pour qu'une machine fasse partie d'un
-groupe multicast, il faut qu'elle s'abonne à ce groupe: cela veut dire que si elle reçoit
-un paquet avec comme adresse de destination l'adresse du groupe multicast, elle va traiter
-le paquet.
-Bien entendu les membres d'un même groupe ne sont pas obligés d'être sur le même réseau. Dans ce
-cas les machines doivent indiquer à leur routeur qu'il existe un ou plusieurs groupe multicast et celui-ci deviendra alors un routeur multicast 
- Le protocole IGMP va entrer en jeu pour faire cet échange.
-Cette indication a été rendu obligatoire dans le but de ne pas faire circuler tous les paquets a destination de groupes multicast.
- Il n'est en effet pas nécessaire de relayer tous les paquets de tous les groupes
-multicast sur le réseau, si celui-ci ne contient aucun abonné au groupe.
-Le faite d'avertir le routeur qu'il y a des machines abonnées à un groupe dans le réseau permet aussi à celui-ci
-d'établir un lien avec l'émetteur. Mais ceci fait partie du routage des paquets par le routeur.
-Il existe une plage d'adresse qui est réservée pour les adresses IP multicast. Lorsqu'on veut contacter
-plusieurs machines, une adresse dans cette plage peut être utilisée.
-Elle s'étend de l'adresse 224.0.0.0 à l'adresse 239.255.255.255 et a pour masque 240.0.0.0 . Cela laisse donc 2\^28 adresses
-multicast différentes.
-Au sein de cette plage d'adresse il existe une catégorisation:
-//TODO
-\begin{itemize}
-\item
-\end{itemize}
-Ce mode permet de limiter le nombre de paquets envoyés pour joindre plusieurs machines et il est très utilisé dans le cas
-de diffusions en streaming ou de vidéoconférences, où il faut faire parvenir une même information à plusieurs participants.
 
-\item Anycast: Une adresse anycast, tout comme les adresse multicast, identifient plusieurs machines. La différence avec multicast
-est qu'en mode de diffusion anycast, la paquet ne va pas être remit à tous les membre du groupe, mais seulement à un seul (le premier qui le réceptionne).
-Le choix de la destination et le routage à adopter se base sur plusieurs critères telles que la "distance" avec la machine, la disponibilité,
-la charge, ... . Cela permet d'avoir des systèmes toujours disponible même en cas de forte charge, en repartissant celle-ci sur
-plusieurs machines.
-\end{itemize}
+\item[Multicast:] Ce mode de diffusion permet d'envoyer un paquet à destination
+de plusieurs machines. L'adresse IP multicast sera donc vu comme l'adresse d'un
+groupe mutlicast, qui désigne donc plusieurs machines. Pour qu'une machine
+fasse partie d'un groupe multicast, il faut qu'elle s'abonne à ce groupe: cela
+veut dire que si elle reçoit un paquet avec comme adresse de destination
+l'adresse du groupe multicast, elle va traiter le paquet.  Bien entendu les
+membres d'un même groupe ne sont pas obligés d'être sur le même réseau. Dans ce
+cas les machines doivent indiquer à leur routeur qu'il existe un ou plusieurs
+groupe multicast et celui-ci deviendra alors un routeur multicast Le protocole
+IGMP va entrer en jeu pour faire cet échange.  Cette indication a été rendu
+obligatoire dans le but de ne pas faire circuler tous les paquets a destination
+de groupes multicast.  Il n'est en effet pas nécessaire de relayer tous les
+paquets de tous les groupes multicast sur le réseau, si celui-ci ne contient
+aucun abonné au groupe.  Le faite d'avertir le routeur qu'il y a des machines
+abonnées à un groupe dans le réseau permet aussi à celui-ci d'établir un lien
+avec l'émetteur. Mais ceci fait partie du routage des paquets par le routeur.
+Il existe une plage d'adresse qui est réservée pour les adresses IP multicast.
+Lorsqu'on veut contacter plusieurs machines, une adresse dans cette plage peut
+être utilisée.  Elle s'étend de l'adresse 224.0.0.0 à l'adresse 239.255.255.255
+et a pour masque 240.0.0.0 . Cela laisse donc $2^{28}$ adresses multicast
+différentes.
+Ce mode permet de limiter le nombre de paquets envoyés pour joindre plusieurs
+machines et il est très utilisé dans le cas de diffusions en streaming ou de
+vidéoconférences, où il faut faire parvenir une même information à plusieurs
+participants.
+
+\item[Anycast:] Une adresse anycast, tout comme les adresse multicast,
+identifient plusieurs machines. La différence avec multicast est qu'en mode de
+diffusion anycast, la paquet ne va pas être remit à tous les membre du groupe,
+mais seulement à un seul (le premier qui le réceptionne).  Le choix de la
+destination et le routage à adopter se base sur plusieurs critères telles que
+la "distance" avec la machine, la disponibilité, la charge, ... . Cela permet
+d'avoir des systèmes toujours disponible même en cas de forte charge, en
+repartissant celle-ci sur plusieurs machines.
+
+\end{description}
 
 
 
 \paragraph{Adresses publiques et adresses prive}
-L'expansion exponentielle d'Internet a posé, seulement quelques années après sa création, des
-soucis de pénurie d'adresses. Plusieurs mesures ont été prises pour limiter la
-portée de ce problème. Malgré ça, le stock d'adresses IPv4 non réservée
-est malheureusement épuisé depuis le 2011.
+L'expansion exponentielle d'Internet a posé, seulement quelques années après sa
+création, des soucis de pénurie d'adresses. Plusieurs mesures ont été prises
+pour limiter la portée de ce problème. Malgré ça, le stock d'adresses IPv4 non
+réservée est malheureusement épuisé depuis le 2011.
 
 Une des dispositions les plus connues et efficaces a été la création du concept
 d'adresses privées. Le RFC 1918 introduit la notion d'adresses privées: une adresse
@@ -266,9 +271,8 @@ Translation}) permettent à des machines ayant des adresses IP privée de commun
 de manière transparente avec des hôtes en dehors de leur réseau. Ce système est
 largement utilisé dans les réseaux domestiques pour permettre aux machines au
 sein de ceux-ci d'être directement connecté à Internet. On parlera plus en
-détail du NAT dans la section %TODO \ref{} %.
+détail du NAT dans la section \ref{sec:nat}.
 \smallbreak
-
 
  
 L'augmentation des difficultés relatives à la procédure de réservation des adresses
@@ -282,15 +286,12 @@ ne sont pas nécessaires.
 
 
 \paragraph{Adresses speciales}
-L'usage spéciale d'une adresse IP découlait de l'émergence
-%TODO (apparition??) 
-d'un nouveau besoin dans le domaine des réseaux; c'est pour
-ça que jusqu'à 2002, l'attribution des rôles spéciaux des adresses
-IPv4 était présentés dans divers document, qui présentaient, et répondaient à chaque fois à une
-problématique bien particulière. Le RFC3330 est un des premiers documents à
-rassembler les classification des adresses IPv4 selon leur rôles et significations.
-
-%TODO lien%
+L'usage spéciale d'une adresse IP découlait de l'apparition d'un nouveau besoin
+dans le domaine des réseaux; c'est pour ça que jusqu'à 2002, l'attribution des
+rôles spéciaux des adresses IPv4 était présentés dans divers document, qui
+présentaient, et répondaient à chaque fois à une problématique bien
+particulière. Le RFC3330 est un des premiers documents à rassembler les
+classification des adresses IPv4 selon leur rôles et significations:
 
 \begin{description}
 \item[0.0.0.0/8]
@@ -311,9 +312,8 @@ l'alias "{\it localhost}".\footnote{La correspondance entre le nom {\it localhos
 l'adresse 127.0.0.1 est généralement mise en place par le système d'exploitation.
 Dans les systèmes de type UNIX une entrée reliant ces deux entités est généralement
 présente dans le fichier "/etc/hosts".}
-Une adresse de {\it loopback} n'a pas de sens en dehors
-d'une interface même, et c'est pour cela qu'elle ne devrait apparaître à aucun moment dans le réseau.
-
+Une adresse de {\it loopback} n'a pas de sens en dehors d'une interface même,
+et c'est pour cela qu'elle ne devrait apparaître à aucun moment dans le réseau.
 %RFC 1122 %
 
 \item[169.254.0.0/16]
@@ -326,8 +326,9 @@ processus d'auto-configuration souvent appelé par l'acronyme APIPA ({\it
 Automatic Private Internet Protocol Addressing}) ou par le nom IPv4LL.  Le
 fonctionnement du processus APIPA (décrit dans le RFC 3927) est assez complexe
  et entraîne l'utilisation de certaines fonctionnalités du
-protocole ARP (qu'on traitera plus en détail dans la section %TODO \ref{sec:suiteproc} % )
-. Son fonctionnement peut être synthétisé dans ses grandes lignes par la démarche suivante:
+protocole ARP (qu'on traitera plus en détail dans la section
+\ref{sec:suiteproc}. Son fonctionnement peut être synthétisé dans ses grandes
+lignes par la démarche suivante:
 
 \begin{description}
 \item[Sélection de l'adresse]
@@ -358,12 +359,11 @@ vient de réserver.
 
 
 Ce processus est basé sur le concept de {\it Zeroconf}: il permet la mise en
-place d'un réseau IPv4 sans aucune configuration. Ce type de système,
-C'est aussi grâce a ce genre de systèmes, qu'on 
-pourrait synthétiser par la devise %TODO slogan??  
-"plug and play", que le concept de Networking (et avec lui Internet) a pu se
-diffuser assez rapidement: grâce à APIPA un réseau IPv4 peut être facilement
-mis en place sans le besoin d'aucune connaissance technique.\\
+place d'un réseau IPv4 sans aucune configuration. Ce type de système, C'est
+aussi grâce a ce genre de systèmes, qu'on pourrait synthétiser par la
+dénomination "plug and play", que le concept de Networking (et avec lui
+Internet) a pu se diffuser assez rapidement: grâce à APIPA un réseau IPv4 peut
+être facilement mis en place sans le besoin d'aucune connaissance technique.\\
 
 La plage d'adresses 169.254.0.0/16, désigne une plage d'adresse privée: les
 adresses de type {\it lien local} ne sont donc pas atteignables en dehors de
