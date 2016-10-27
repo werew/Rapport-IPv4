@@ -6,3 +6,80 @@ donc maintenant des réseaux constitués d'une ou plusieurs machine, mais ces
 réseaux sont indépendant et totalement hermétique les uns les autres. Il
 pourrait être intéressant de pourvoir faire communiquer ces réseaux entre eux.
 C'est le but du routage que de faire passer des paquets d'un réseau à un autre.
+
+\subsection{Principe du routage}
+
+\subsubsection{Materiel}
+Le routage est une action qui va être délégué à une machine servant à établir
+un lien entre deux ou plusieurs réseaux.  Le materiel qui va s'occuper de faire
+cela est appelé un routeur: cela peut être n'importe quel ordinateur configuré
+pour faire du routage, ou dans la plupart des cas une machine "dédié", celle-ci
+étant conçu pour le routage et ayant des caractéristiques adaptee a cette tache
+(nombre des interfaces réseaux, consommation réduite, accélération matérielle, ... ).
+
+Comme un routeur se charge de faire de liason entre différents réseaux, il doit
+forcément avoir deux ou plusieurs interfaces réseaux: au moins une pour chaque
+reseau qui doit lier.
+
+\subsubsection{Table de routage}
+Afin que le routeur puisse envoyer un paquet vers sa destination, il faut qu'il
+sache vers quelle direction transmettre le paquet pour qu'il soit sur le bon
+réseau. Il faut pour cela qu'il ait une table regroupant les associations entre
+les réseaux et la direction vers laquelle ils se trouvent: cette table est
+appelée table de routage.  Cette table de routage peux être rempli de plusieurs
+manières: soit manuellement par l'administrateur réseau (le réseau est donc
+figé et n'est pas tolérent aux pannes), soit dynamiquement à l'aide de
+protocole de routage (RIP, OSPF, BGP, IS-IS,...) qui vont modifier en temps
+réel la table de routage pour s'adapter au changement du réseau et être
+tolérent aux pannes.
+
+Lorsque des hôtes d'un réseau ont besoins de contacter un autre réseau pour le
+biais d'un routeur, ils vont également utiliser une table de routage.  En
+effet, lorsqu'un hôte veut envoyer un paquet vers un autre réseau, il faut
+qu'il ai l'adresse du routeur auquel envoyer sont paquet pour que celui-ci le
+transmette en direction du bon réseau.
+
+\subsubsection{Forwarding}
+
+Lorsqu'un routeur reçoit un paquet qui ne lui ai pas déstiné il va utiliser
+l'entré de sa table la plus précise pour joindre le réseau de destination.
+
+Pour faire cela il essaye de déterminer quel NET ID de sa table de routage
+correspond le plus à l'adresse destination.  Une fois trouvé, il va transmettre
+le paquet vers la direction associé à celui-ci.
+Cette direction peux être:
+\begin{itemize}
+\item Soit être une interface: dans ce cas le réseau en question se trouve
+directement derrière cette interface. Il faut donc envoyer le paquet
+directement à son destinataire.
+\item Soit une adresse IP: qui désigne l'adresse du prochain routeur auquel il
+faut envoyer le paquet et qui va s'occuper à son tour de diriger le paquet vers
+sa destination.
+\end{itemize}
+
+\subsection{Routage en IPv4}
+\subsubsection{Agrégation CIDR}
+L'adressage avec masque CIDR à permis de réduire la taille de la table de
+routage en agrégant plusieurs entrées en une seul; ce qui était impossible avec
+l'utilisation de classes d'adresses.  En effet, avec des classes d'adresses, le
+masque étant fixé et les classes ne se chevochant pas, il n'était donc pas
+possible de créer une hierarchie dans entre les réseaux.  Ainsi il n'est pas
+possible d'agréger plusieurs réseaux en une seule entrée dans la table de
+routage.
+
+L'adressage avec un masque CIDR permet d'être totalement libre dans le choix du
+masque. Ceci permet de créer une hierarchie dans entre les réseaux. De ce fait,
+un routeur n'est pas obligé de créer une entrée pour chaque réseaux dans la
+table de routage mais, quand il est possible, il créera seulement une entrée
+comme étant l'agrégation des réseaux sous-jacent représenté par l'entrée.
+
+\subsubsection{Adresses spéciales}
+
+Comme nous l'avons vu plus haut, certaines adresses sont utilisé pour des
+tâches particulières. Cela peut induir un traitement particulier lors du routage
+d'un paquet.  C'est la cas par exemple des adresses de {\it lien local} qui ne
+peuvent jamais traverser un routeur pour joindre un réseau différent. En effet
+les adresses de lien local sont propre à un réseau.
+Un autre cas ou les adresses sont limitées, est le cas des adresses de broadcast.
+En temps normal, les routeurs bloques les paquets émis en broadcast, de sorte qu'il ne se propage pas en dehors du réseau d'origine. Il est facile d'imaginer les problèmes que causerai un paquet émis en broadcast sur Internet. Une exception étant les paquets DHCP émis en broadcast et qui traverse les routeurs par le biais des agents DHCP.
+Un dernier cas particulier sont les adresses privées: le routage des paquets ayant une adresse privée en destination n'a pas de sens en dehors d'un réseau privé. Les adresse privées peuvent passer les routeurs et avoir du sens du moment qu'elle reste dans un réseau privé.
