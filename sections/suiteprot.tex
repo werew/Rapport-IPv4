@@ -163,7 +163,13 @@ dire que le paquet contient un message ICMP, et le champ ToS est mis à 0
 //fonction du type de message à passer. Cependant les trois premier champs sont
 //toujours les mêmes.
 
+
+\begin{figure}
+\centering
 \includegraphics[width=15cm]{./pics/header.eps}
+\caption{TODO}
+\label{fig:headicmp}
+\end{figure}
 
 Le premier champ est celui de type. Il permet, premièrement, de donner le type
 du paquet et de l'information à transmettre, et deuxièmement de préciser la
@@ -174,7 +180,12 @@ précis. Enfin le troisième champ est la somme de contrôle
 (checksum)//TODO(plage de controle).  Commençons avec les messages qui
 possèdent l'ensemble de champs le plus simple.
 
+\begin{figure}
+\centering
 \includegraphics[width=15cm]{./pics/header1.eps}
+\caption{TODO}
+\label{fig:head1icmp}
+\end{figure}
 
 Les messages qui utilisent cette organisation sont les messages de type 3, 4
 et 11.
@@ -244,8 +255,13 @@ avoir pour effet de modifier la table de routage interne à l'émetteur (et/ou
 des hôtes connecté au réseau). Concernant le paquet que le premier routeur à
 reçu, il va le transmettre vers sa destination.
 
-\includegraphics[width=15cm]{./pics/header2.eps}
 
+\begin{figure}
+\centering
+\includegraphics[width=15cm]{./pics/header2.eps}
+\caption{TODO}
+\label{fig:head2icmp}
+\end{figure}
 Le champ Gateway Internet Address contient la l'adresse du routeur auquel il
 faut faire transiter le traffique directement pour avoir un chemin de routage
 plus court.  Le champ Internet Header contient toujours l'entête du message
@@ -267,7 +283,12 @@ du paquet et aux services(//TODO(préciser)).
 \paragraph{Code 3} Ce code indique que la redirection est adresser à l'émetteur
 du paquet(//TODO(préciser)).
 
+\begin{figure}
+\centering
 \includegraphics[width=15cm]{./pics/header3.eps}
+\caption{TODO}
+\label{fig:head3icmp}
+\end{figure}
 
 \subsubsection{Message de type 8 et 0: Echo Request et Reply} Les messages de type 8 et 0 servent à
 faire des envoies et des renvoies d'information. Ils utilisent pour cela
@@ -361,7 +382,12 @@ dans le RFC 1531\cite{url-RFC-DHCP1}, mais cette version fut rendue obselète pa
 RFC, lui même rendue obselète par le RFC 2131\cite{url-RFC-DHCP2} qui est la dernière version non
 obselète.Voyons comment une interface peut ce configurer aurpès d'un serveur DHCP.
 
+\begin{figure}
+\centering
 \includegraphics[width=6cm]{./pics/timeline_dhcp.eps}
+\caption{TODO}
+\label{fig:timelinedhcp}
+\end{figure}
 
 Lorsqu'une interface, qui n'a pas d'adresse IP, souhaite en recevoir une, elle
 va emettre un message DHCPDISCOVER en broadcast sur son réseau. Des agents DHCP
@@ -461,7 +487,12 @@ autre hôte, à l'aide d'un DHCPNAK.  Cette négociation se fait de manière
 similaire qu'un négocation complète, elle a juste été raccourci en enlevant
 quelque étape non indispensable.
 
+\begin{figure}
+\centering
 \includegraphics[width=6cm]{./pics/timeline_dhcp_reuse_add.eps}
+\caption{TODO}
+\label{fig:timelinedhcpreuseadd}
+\end{figure}
 
 \subsection{PMTU discovery}
 Le protocole PMTU discovery (Path MTU discovery) décrit dans le RFC 1191\cite{url-RFC-PMTU}, permet de trouver le plus petit MTU d'un chemin entre l'émetteur et le récepteur. Cela permet d'éviter la fragmentation des paquet IP ce qui permet entre autre de soulagé la charge des routeurs.
