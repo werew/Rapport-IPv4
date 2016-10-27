@@ -130,9 +130,70 @@ Un adresse de {\it loopback} n'a pas de sens au dehors
 d'un host, pour cette raison normalement il ne devrait pas apparaitre dans la
 reseau a aucun moment.
 
-
-
 %RFC 1122 %
+
+\item[169.254.0.0/16]
+Cet plage d'adresses a ete designe comme contenant les adresses qu'on appelle
+de {\it lien local}.  Les adresses dit de {\it lien local} sont utilise lorsque
+une machine n'a aucun moyen d'obtenir un adresse IP (par example par le biais
+d'un serveur DHCP ou simplement avec une configuration manuelle).  L'obtention
+d'un adresse de {\it lien local} c'est fait de facon automatique a travers un
+processus de autoconfiguration souvent appelle avec l'acronyme APIPA ({\it
+Automatic Private Internet Protocol Addressing}) ou avec le nom IPv4LL.  Le
+fonctionnement du processus APIPA (decrit dans le RFC 3927) est assez complexe
+dans ses detailes et entraine l'utilisation de certaines fonctionnalites du
+protocole ARP (qu'on traitera plus en detail dans la section %TODO \ref{sec:suiteproc} % )
+.Il peut etre syntetizee dans ses grandes lignes par la demarche suivante:
+
+\begin{description}
+\item[Selection de l'adresse]
+La machine choisit aleatoirement
+    \footnote{Il est conseille de utiliser l'adresse MAC de l'interface en question
+    pour generer l'adresse de {\it lien local} pour qu'il ait une plus forte chance
+    qu'il soit unique dans le reseau.} 
+un adresse appartenant a la plage 169.254.0.0/16
+
+\item[Sondage sur l'adresse]
+Une fois selectionne un adresse, il faut s'assurer que le meme adresse ne soit
+pas deja utilise par d'autres machines dans la reseau. Dans ce but la machine
+pose la question a toutes les autres machine de le reseau au moyen d'un ou plusieurs messages
+en brodcast et attend une reponse pendant un certain intervalle de temp\footnote{
+Des precautions sont prises pour eviter les conflits genere par plusieurs
+machines qui effectuant simultanement cette action pour le meme adresse,
+notament: des intervals de temps aleatoires entre l'envoi des messages, la mise
+en place d'un ecoute active des autres messages pendat le temp de l'enquete.}
+Le manque de reponse indique que l'adresse est bien unique. Si l'adresse n'est
+pas unique il faudrait en choisir un outre.
+
+\item[Annonciation de l'adresse]
+A ce poit la machine peut comunniquer aux autres machines l'adresse qu'il
+vient de reserver.
+
+\end{description}
+
+
+
+Cet processus est base sur le concept de {\it Zeroconf}: il permet la mise en
+place d'un reseau IPv4 sans aucune configuration. Ce type de systeme,
+C'est aussi grace a ce gendre de systemes, que on 
+pourrait syntetiser par le devise %TODO slogan??  
+"plug and play", que le concept de Networking (et avec lui Internet) a pu se
+diffuser assez rapidement: grace a APIPA une reseau IPv4 peut etre facilement
+mise an place sans le besoin de aucune connaissances techniques.\\
+
+La plage d'adresses 169.254.0.0/16, designe une plage d'adresses prive: les
+adresses de type {\it lien local} ne sont donc pas attaignables au dehors de
+leur reseau de definition. 
+Cet plage d'adresses pose  par contre des limites par rapport aux autres
+plages d'adresses prive car, a difference des autres, il ne peut pas etre
+divise en sous reseux\footnote{Ce qui est assez logique si on considere que
+le processus d'obtention d'un adresse de {\it lien local} (APIPA) utilise
+les liens "physiques" entres les machines pour communiquer, et il ne peut
+pas considerer aucune notion de sous-reseau.}
+: en effet un packet destine a un adresse de {\it lien local} ne doit pas etre
+retrasmis par un host intermediaire.\footnote{Dans ls paquets destine
+a un adresse de {\it lien local} le champ TTL est de norme mis a 1
+pour empecher des forwarding.}
 
 %Note: private --> 10.0.0.0/8
 
