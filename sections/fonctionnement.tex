@@ -76,7 +76,11 @@ de ses adresses. Par exemple si un réseau contient 500 machines, il ne peux pas
 utiliser d'adresse de classe A étant donné que celle-ci ne permettent d'avoir
 que des réseaux de 254 machines maximum. Il va donc falloir utiliser des
 adresses de classe B minimum, car elles permettent d'adresser 65534 machines au
-sein d'un réseau. Nous pouvons donc utiliser 500 adresses sur les 65534
+sein d'un réseau\footnote{
+De ce fait on remarque que la distribution de l’espace d’adressage entre
+classes n'est pas homogene: la classe A a possede le 50\% de l’espace
+d'adressage reserve aux classes, la classe B le 25\% , 12,5\% la classe C et
+6,25\% le classes D et E.}. Nous pouvons donc utiliser 500 adresses sur les 65534
 disponible, mais le reste sera "perdu".  Ce système était simpliste mais
 n'était pas utilisable sur le long terme car il "gâche" des adresses en
 n'utilisant pas tout son espace d'adressage.
@@ -343,63 +347,5 @@ de type {\it anycast}.
 
 
 \end{description}
-
-
-
-
-------------------------------------------
-
-
-\subsubsection{Les classes d’adresses}
-Au début de la création de IPV4, maintes groupes d’adresses ont été définis
-pour faciliter le routage (ou cheminement) des paquets. Structurée en 5 classes
-(A,B,C,D,E) selon la valeur du première octet.
-
-%TODO images classes %
-%TODO tableau recapitulatif %
-
-De ce fait on remarque une distribution de l’espace d’adressage selon laquelle
-la classe A possède 50\% l’espace et soit 25\% pour la classe B, 12,5\% classe
-C et 6,25\% pour D \& E. on peut en-déduire une mauvaise répartition de cette
-espace d’adressage. 
-
-%--------------------------------------
-Les classes A, B et C ont chacune une correspondance de plage
-d’adresses IP privées à l’intérieur de la plage globale qui a été définie par
-la RFC 1918. Mais l’utilisation  de celui-ci pour inter-connecter des réseau
-géants (entreprise) avec des espaces adressage qui se chevauche peut causer des
-problèmes. Une adresse IP privées est librement paramétrée par l’administrateur
-du réseau local.
-Les adresses privées de la classe A: 10.0.0.0 à 10.255.255.255\\
-Les adresses privées de la classe B: 172.16.0.0 à 172.31.255.255\\
-Les adresses privées de la classe C: 192.168.1.0 à 192.168.255.255\\
-
-
-\textbf{Remarque:}
-De ce fait on distingue deux adresses particulières, parmi toutes celles possibles,
-qui ne doivent jamais être attribuées à des machines:
-
-     les bits Host-ID sont à 0 : adresse attribue qu’à un réseau.
-Exemple: 192.168.10.0 / 255.255.255.0 = 192.168.10.00000000
-
-    les bits Host-ID sont à 1 : c’est un adresse de  diffusion (broadcast),
-Exemple: 172.27.255.255 / 255.255.0.0 = 172.27.1111111.11111111
-
-Donc nous pouvons en déduire que parmi toutes les adresses assignables, ces
-dernières sont des adresses interdites.
-
-
-
-\subsubsection{Adresses non utilisées}
-il existe des adresses non utilisable comme adresse IP pour une machine:\\
-Les adresses réseaux: correspond aux adresses qui ont tous les bits de
-leur partie hostid à zéro(0);\\
-les adresses de diffusion (broadcast): correspond aux adresses qui ont
-tous les bits de leur partie hostid à un(1)\\
-0.0.0.0: utilisée par différents services (table de routage, DHCP) et possède
-souvent une signification particulières. \\
-127.X.X.X: désigne l’ordinateur lui-même ou dite adresse de bouclage
-(lookback), 127.0.0.1 pour le localhost\\
-> à 223.255.255.255: pour le multicast et la recherche.\\
 
 
