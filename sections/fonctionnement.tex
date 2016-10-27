@@ -115,14 +115,74 @@ concept d'adresse publique et adresse prive, enfin on parlera des fonctions
 speciales qui ont ete assigne a certaines adresses.
 
 
-\paragraph{Types de diffusion}
-Dans le cadre des trasmission en plus de communiquer avec une seule machine, on
-a par fois la necessite que un message soit recu par un groupe de machines ou
-meme la totalite d'une reseau.
+\paragraph{Mode de diffusion}
+Dans le cadre des transmissions, en plus de communiquer avec une seule machine, on
+a par fois la nécessité qu'un message soit reçu par un groupe de machines ou
+même la totalité d'un réseau.
+
+On a pour cela défini plusieurs types de diffusion associés à certaines adresses particluières.
+
+Le type de diffusion le plus utilisé est la diffusion en unicast. Avec ce mode,
+l'adresse IP va désigner une machine de manière unique. L'adresse IP appartient
+à une seul machine et sert à l'identifier sur un réseau.  C'est le type
+d'adresse que nous avons abordé jusqu'à présent.  Mais il peut être intéressant
+de pouvoir contacter un plusieurs machines à en même. On pourrait bien sur
+envoyer des paquet en unicast à chaque machine que l'on souhaite contacter,
+mais cela serait fastidieux et inonderai le réseau pour rien. Une solution plus
+pratique d'avoir une adresse qui désigne plusieurs machine à la fois. Cela
+permettrai d'envoyer un seul paquet qui serait remis à plusieurs machines. Il
+existe pour faire cela plusieurs type de diffusion.
+\begin{itemize}
+\item Le broadcast: Ce mode de diffusion d'envoyer un paquet unique qui permet
+de joindre toutes les machines sur un réseau. Lorsque les machines reçoive ce
+paquet et s'apperçoive que l'adresse déstnation du paquet est l'adresse de
+broadcast, alors elle va traiter le paquet. L'adresse de broadcast d'un réseau
+est défini comme la plus "haute" adresse du réseau: cela se traduit par la mise
+à 1 de tout les bits de la partie HOST ID. Cette adresse ne peux donc pas être
+attribué à une machine en temps qu'adresse unicast.  Le broadcast est utilisé
+par des protocoles tel que ARP et DHCP.  Nous pouvons remarqué qu'avec cette
+définition, nous pouvons envoyer un message de broadcast à n'importe quel
+réseau, incluant notre réseau mais aussi les autres. En réalité (sauf
+configuration volontaire) les routeurs ne laisse pas passé les messages de
+broadcast d'un réseau à un autre; excepté quelque cas spéciaux comme DHCP où un
+serveur peut adresser plusieurs réseaux, et où ses messages de broadcast
+peuvent être ralyer par des routeurs (des DHCP agents).
+\item Multicast: Ce mode de diffusion permet d'envoyer un paquet qui sera à destination
+de plusieurs machines. L'adresse IP multicast sera donc vu comme l'adresse d'un groupe
+mutlicast, qui désigne donc plusieurs machines. Pour qu'une machine fasse partie d'un
+groupe multicast, il faut qu'elle s'abonne à ce groupe: cela veux dire que si elle reçoit
+un paquet avec comme adresse de destination l'adresse du groupe multicast, elle va traiter
+le paquet.
+Bien entendu les membres d'un même groupe ne sont pas obligés d'être sur le même réseau. Dans ce
+cas les machines doivent leur routeur, qui deviendra un routeur mutlicast, que certaines machines sur
+le réseau font partie d'un ou plusieurs groupe. Le protocole IGMP va entrer en jeu pour faire cet échange.
+Cela est fait dans le but que le routeur ralye uniquement les paquets qui sont à destination des groupes
+multicast  présent dans son réseau. Il n'est en effet pas nécessaire de relayer tous les paquets de tout les groupes
+multicast dans le réseau, si celui-ci ne contient aucun abonné au groupe.
+Le faite d'avertir le routeur qu'il y a des machines abonné à un groupe dans le réseau permet aussi à celui-ci
+de créer une route depuis l'émetteur vers son réseau qui contient des abonnés au groupe. Mais ceci fait partie du
+routage des paquets par le routeur.
+Il existe une plage d'adresse qui est réservé pour les adresses IP multicast. Lorsqu'il y a un besoin de contacter
+plusieurs machines simplement, une adresse peut être utilisé depuis cette plage.
+Elle s'étend de l'adresse 224.0.0.0 à l'adresse 239.255.255.255 et à pour masque 240.0.0.0 . Cela laisse donc 2\^28 adresses
+multicast différente.
+Au sein de cette plage d'adresse il existe une catégorisation:
+//TODO
+\begin{itemize}
+\item
+\end{itemize}
+Ce mode permet de limiter le nombre de paquet envoyé pour joindre plusieurs machine et il est très utilisé dans le cas
+de diffusion en streaming ou de videoconférence, où il faut faire pervenir une même information à plusieurs autres
+participants.
+\item Anycast: Une adresse anycast, tout comme les adresse multicast, identifie plusieurs machines. La diférence avec multicast
+est qu'en mode de diffusion anycast, la paquet ne va pas être remis à tous les membre du groupe, mais seulement à un seul du groupe.
+Le choix de la destination et le routage à adopté se base sur plusieurs critères telle que la "distance" avec la machine, la disponiblité,
+la charge, ... . Cela permet d'avoir des systèmes toujours disponible même en cas de forte charge, en repartissant celle-ci sur
+plusieurs machines.
+\end{itemize}
 
 
 
-%TODO portee d'un adresse: broadcast, multicast, anycast unicast%
 
 \paragraph{Adresses publiques et adresses prive}
 
