@@ -21,7 +21,7 @@ adresses permettant la création de réseaux avec un nombre d'interfaces pouvant
 se connecter largement au-dessus de ce qui était nécessaire.
 
 Cela ne s'est pas arrangé en ouvrant internet aux grands publiques étant donné
-que les adresses étaient répartits en classe, et comme nous l'avons vu plus
+que les adresses étaient réparties en classe, et comme nous l'avons vu plus
 haut, cela à aussi ammené à un gaspillage des adresses.  Cependant, avec la
 croissance du nombre d'utilisateurs et d'équipements connectés, la plage
 d'adresses IPv4 non attribuées a diminué progressivement. C'est en février 2011
@@ -39,9 +39,9 @@ obligatoire des technologies dont certaines étaient auparavant utilisées dans
 IPv4. 
 
 \paragraph{Performances}
-Dans IPv4, ce sont les routeurs et autre équipements
-intermédiaires a se charger de la fragmentation des paquets quand il ets
-necessaire. Cela peut amener à des diminutions de performances lorsqu'un
+Dans IPv4, ce sont les routeurs et autres équipements
+intermédiaires qui vont se charger de la fragmentation des paquets quand cela est
+nécessaire. Cela peut amener à des diminutions de performances lorsqu'un
 routeur doit fragmenter beaucoup de paquets ou lorsque sa puissance de calcul
 est limitée. De plus, sous IPv4, les routeurs vérifient l'intégrité des paquets lors du
 transit, ce qui nécessite des ressources pour vérifier à chaque fois le
@@ -61,20 +61,20 @@ techniques ont été proposées:
 \begin{itemize}
 \item La première a été le changement de technique d'adressage. On est passé de
 la technique des classes d'adresses IP à la technique \textbf{Classless
-Inter-Domain Routing CIDR}. Ceci a permit une meilleure efficacité dans la
-distribution des adresses IP grâce à la création de réseau de tailles
+Inter-Domain Routing CIDR}. Ceci a permis une meilleure efficacité dans la
+distribution des adresses IP grâce à la création de réseau de taille
 intermédiaire. En effet, aves les classes on ne disposait que de réseau de 3
 tailles différentes et l'on utilisait souvent une classe permettant de contenir
 des réseaux bien plus grand que nécessaire.
 
-\item Les politiques d'assignement d'adresses ont également été rendues plus
-stricte afin de mieux tenir compte des besoin réels des demandeurs d'adresses
+\item Les politiques d'assignement d'adresses ont également été rendus plus
+stricte afin de mieux tenir compte des besoins réels des demandeurs d'adresses
 IP.
 
-\item Des blocs autrefois réservés comme 14.0.0.0 ont également été distribués.
+\item Des blocs autrefois réservé comme 14.0.0.0 ont également été distribué.
 
 \item Sur base de volontarisme, des blocs autrefois attribués généreusement ont
-été récupérées, ainsi que des adresses IP non utilisées.
+été récupéré, ainsi que des adresses IP non utilisées.
 
 \item Finalement, il a été remarqué qu'il n'était pas nécessaire que chaque
 interface ai sa propre adresse IP publique. Le protocole NAT a alors été
@@ -212,23 +212,23 @@ routeur n'a aucune possibilité de savoir si le transfert est terminé.
 \smallbreak 
 Dans le cadre d'une connexion TCP entre A et B, des messages de fin de
 session sont envoyés par A et B lors de la fin du transfert. Lorsque la
-transmission est finit, A envoie un message FIN à B qui lui répond par un
+transmission est fini, A envoie un message FIN à B qui lui répond par un
 message ACK et vice versa. Mais ces messages ne sont pas utilisables pour
 reconnaître la fin de connexion car lors de la réception de ce message il est
 toujours possible qu'un paquet doit être retransmit. 
 \smallbreak
 Ainsi, on utilise un compteur de temps qui est associé à chaque paire adresse
-publique/adresse privée. Lorsqu'il n'y a pas de trafique entre une adresse
+publique/adresse privée. Lorsqu'il n'y a pas de trafic entre une adresse
 privée et l'extérieur durant une durée fixée, le port qui lui est associée peut
-être réutilisé pour une autre adresse privée.
+être réutilisée pour une autre adresse privée.
 
 \paragraph{Redirection de port(Port forwarding)}
 
 Le fonctionnement du NAT dynamique pose cependant un gros problème. Lorsqu'un
 hôte extérieur veut envoyer un paquet à un hôte derrière un NAT pour
 initialiser une conversation, il ne dispose d'aucune autre information que
-l'adresse IP publique. Si il envoie alors un paquet à cette adresse, le routeur
-qui le réceptionnera ne saura pas quoi en faire car l'hôte se trouvant sur le
+l'adresse IP publique. Si il envoie un paquet à cette adresse, le routeur
+qui le réceptionne ne sera pas quoi en faire car l'hôte se trouvant sur le
 réseau derrière le NAT n'a pas envoyé de paquet vers l'hôte extérieur, et donc
 le NAT ne sait pas à quel hôte le paquet est destiné et le paquet sera donc
 perdu. Il n'est donc pas possible, pour une machine externe au réseau local,
@@ -253,7 +253,7 @@ l'extérieur il faut paramétrer le NAT de façon à ce qu'il redirige les paque
 arrivant sur son port 80 vers le serveur A.
 
 \paragraph{NAT statique} En parallèle des NAT dynamique il existe les NAT
-statique dont leur table n'évolue pas dynamiquement au cours du temps; en effet
+statiques dont leur table n'évolue pas dynamiquement au cours du temps; en effet
 elle doit être rempli manuellement.  Le NAT statique permet l'attribution
 manuelle d'une adresse IP externe à une adresse IP privée. Grâce à cette
 méthode une interface sur un réseau privé peut avoir une IP publique à elle
@@ -261,10 +261,10 @@ seule.  La traduction d'adresses restera dans la table jusqu'à ce qu'elle soit
 supprimée. 
 
 \paragraph{NAT et sécurité}
-Même si ça n'a pas été le but de la traduction d'adresses, un des effets
+Même si ça n'a pas été le but de la traduction d'adresse, un des effets
 secondaires du NAT a été d'apporter une certaine forme de sécurité.  Avec un
 NAT il est uniquement possible d'atteindre les hôtes depuis l'extérieur
-seulement lorsqu'une connexion a été initialisé avec ce port spécifique ou si
+seulement lorsqu'une connexion a été initialisée avec ce port spécifique ou si
 le NAT a été configuré pour faire du port forwarding sur cette hôte.  Cependant
 le NAT n'a pas du tout été conçu pour apporter de la sécurité, il est donc
 inadapaté d'utiliser un NAT comme moyen de protection\footnote{
@@ -273,14 +273,14 @@ et qui ne le fera pas moins bien qu'un NAT.}.
 
 \subsection{Améliorations apportées par IPv6}
 
-Cependant même avec toutes ces solutions, la pénuris d'adresse reste un vrai
+Cependant même avec toutes ces solutions, la pénurie d'adresse reste un vrai
 problème. Il a donc fallu trouver une solution plus radicale pour résoudre ces
 difficulté, ces problème venant des choix et de la conception même d'IPv4.  La
-solution imaginé fut l'abandon de l'utilisation d'IPv4 qui était mal adapté à
+solution imaginée fut l'abandon de l'utilisation d'IPv4 qui était mal adaptée à
 l'utilisation d'Internet aujourd'hui, et la création de son succésseur, IPv6,
-qui dans sa définition de base résolvait le problème de pénurie.
+qui dans sa définition de base résout le problème de pénurie.
 \smallbreak
-De nombreuses améliorations ont été apportées par IPv6, qui est une refont
+De nombreuses améliorations ont été apportées par IPv6, qui est une refonte
 d'IPv4, afin de répondre à des besoins existants. Le fonctionnement d'IPv6
 reste cependant très similaire à celui d'IPv4 et les protocoles TCP et UDP sont
 quasiment inchangés.  l'IPv6 a été finalisée en 1998 et a été publiée dans la
@@ -290,8 +290,7 @@ prenait internet était donc déjà claire.
 \subsubsection{Espaces d'adressage}
 Dans l'IPv6, les adresses sont codées sur 128 bits, soit 16 octets. Cela permet
 d'avoir environ quatre milliards de fois plus d'adresse qu'en IPv4. Tous les
-soucis d'espace d'adressage sont donc levés. Il n'est donc plus nécessaire
-d'utiliser des technologies comme les traductions d'adresses (NAT) afin
+soucis d'espace d'adressage sont donc levés. Il n'est donc plus nécessaired'utiliser des technologies comme les traductions d'adresses (NAT) afin
 d'économiser des adresses publiques. Le fonctionnement en est donc rendu plus
 simple car chaque interface peut avoir une IP publique et il n'y a pas de
 problème pour atteindre une interface sur le réseau.
@@ -300,7 +299,7 @@ problème pour atteindre une interface sur le réseau.
 Comme dit précédemment, même s'il existait des protocoles de sécurité pour
 IPv4, ces derniers ne faisaient pas partie intégrante du protocole.  Dans IPv6,
 des mesures de sécurités ont été directement intégrées au protocole.  Par
-exemple, le chiffrement et la vérification de l'intégrité utilisés dans les
+exemple, le chiffrement et la vérification de l'intégrité utilisé dans les
 réseaux privés (VPN, Virtual Private Network) est une composante standard pour
 IPv6 alors qu'elle était facultative pour IPv4. 
 \smallbreak
@@ -310,13 +309,13 @@ celui qu'il prétend être. Ainsi, la redirection de trafic est rendue plus
 difficile.
 \subsubsection{Performances}
 Le système de routage des paquets IPv6 permet de se passer de certaines
-mechanismes particularment lourdes de IPv4. En effet, les paquets IPv6 ne
+mécanismes particulièrement lourds d'IPv4. En effet, les paquets IPv6 ne
 sont plus fragmentés par les routeurs mais par l'interface qui envoie le
 paquet. Lorsqu'une interface veut envoyer un paquet, elle envoie d'abord un
 message ICMPv6 pour déterminer le MTU qui est la taille des paquets qui seront
 envoyés.
 \smallbreak
-Le nombre d'adresses dipsonibles dans IPv6 va permettre l'élimination de
+Le nombre d'adresses dipsonibles dans IPv6 va permettre de
 supprimer un niveau intermédiaire tel que le NAT et les problèmes liés à
 celui-ci comme l'accessibilité d'une interface en dehors du réseau.
 \smallbreak
