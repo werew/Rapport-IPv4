@@ -245,15 +245,15 @@ messages ont pour destinataire l'hôte qui à envoyé le paquet qui à provoqué
 l'erreur.//TODO(vérifier).
 
 \paragraph{Code 0:}
-Le code 0 est utilisé pour indiquer que le TTL du paquet posant problème est arrivé à 0.
-Lorsque le TTL d'un paquet arrive à 0, celui-ci est supprimé et un message
-ICMP de type 11 et de code 0 est envoyé par le routeur qui à détecté le
-problème. Cela permet principalement d'éviter qu'un paquet entre dans une boucle
-et qu'il soit relayé à l'infini.
+Le code 0 est utilisé pour indiquer que le TTL du paquet posant problème est
+arrivé à 0.  Lorsque le TTL d'un paquet arrive à 0, celui-ci est supprimé et un
+message ICMP de type 11 et de code 0 est envoyé par le routeur qui à détecté le
+problème. Cela permet principalement d'éviter qu'un paquet entre dans une
+boucle et qu'il soit relayé à l'infini.
 
-\paragraph{Code 1:} Le code 1 est quant à lui utilisé pour indiquer que l'hôte n'a pas
-réussi à réassembler les fragments du paquet IP original dans la limite de temps prévue
-à cet effet.
+\paragraph{Code 1:} Le code 1 est quant à lui utilisé pour indiquer que l'hôte
+n'a pas réussi à réassembler les fragments du paquet IP original dans la limite
+de temps prévue à cet effet.
 
 
 \vspace{1cm}
@@ -312,86 +312,99 @@ pour cela l'entête ci-dessus. Les messages de type 8 font des envoies
 d'informations, appelé echo request. Tandis que les messages de type 0 sont
 envoyés en réponse aux echo request et renvoient les informations reçus de
 ceux-ci; ils sont appelés echo reply. Etant donnée que les echo reply sont des
-réponses aux echo request, l'adresse IP destination des echo reply est l'adresse IP
-source des echo request. Ces deux messages peuvent être envoyés et reçus aussi
-bien par un hôte que par un routeur. Ce sont notamment les messages envoyés par
-la commande {\it ping} qui permettent de vérifier si l'on peux communiquer avec
-un hôte ou un routeur.  Les champs Identifier et Sequence Number aide
-l'émetteur de l'echo request à associer les echos request qu'il à envoyés avec
-les echos reply qu'il à reçus.
+réponses aux echo request, l'adresse IP destination des echo reply est
+l'adresse IP source des echo request. Ces deux messages peuvent être envoyés et
+reçus aussi bien par un hôte que par un routeur. Ce sont notamment les messages
+envoyés par la commande {\it ping} qui permettent de vérifier si l'on peux
+communiquer avec un hôte ou un routeur.  Les champs Identifier et Sequence
+Number aide l'émetteur de l'echo request à associer les echos request qu'il à
+envoyés avec les echos reply qu'il à reçus.
 
 \vspace{1cm}
 Il y a bien d'autre types et code défini par ICMP, cependant ils sont plus
 spécifiques ou devenu obsolètes.
 
+
+%----------------------------------------------------------------------------------
+
 \subsection{IGMP}
 Le protocole IGMP est un autre protocole faisant partit intégrante d'IPv4. Il
 permet en effet aux hôtes de communiquer aux routeur mutlicast leur abonnement
 à des groupes multicast.  IGMPv2 et IGMPv3 sont les versions les plus utilisées
-actuellement. Elles sont respectivement décrient dans le RFC 2236 et RFC 3376.
-Les messages IGMP sont divisées en trois groupe:
+actuellement. Elles sont respectivement décrient dans le RFC
+2236\cite{url-RFC-IGMP2} et RFC 3376\cite{url-RFC-IGMP3}.  Les messages IGMP
+sont divisées en trois groupe:
 \begin{itemize}
-\item Membership Query: Les requêtes d'adhésion: servant aux routeurs pour faire
-une demande aux hôtes des groupes auxquels ils abonnés.
+\item Membership Query: Les requêtes d'adhésion: servant aux routeurs pour
+faire une demande aux hôtes des groupes auxquels ils sont abonnés.
 \item Membership Report: Les rapports d'hôte sur leurs abonnements.
 \item Leave Group: Message annonçant l'arrêt d'un abonnement d'un hôte.
 \end{itemize}
-Tout ces messages sont envoyés avec un TTL de 1, pour éviter que ceci ne passent
-d'un réseau à un autre.
+Tout ces messages sont envoyés avec un TTL de 1, pour éviter que ceci ne
+passent d'un réseau à un autre.
 
-IGMP va donc permettre aux routeurs d'apprendre les groupes d'abonnements des hôtes qui
-sont sur le réseau ou les réseaux du routeur.
-Le routeur dispose d'une liste des groupes multicast auxquels les hôte d'un réseau sont connectés,
-et ceci pour tout les réseaux auxquels il est connecté.
-Pour commencer, le routeur va envoyer à l'adresse 224.0.0.1, 2 Membership Query général
-(par défaut) à 30 secondes d'intervalles (par défaut).
+IGMP va donc permettre aux routeurs d'apprendre les groupes d'abonnements des
+hôtes qui sont sur le ou les réseaux du routeur. Le routeur dispose d'une liste
+des groupes multicast auxquels les hôtes d'un réseau sont connectés, et ceci
+pour tout les réseaux auxquels il est connecté.  Pour commencer, le routeur va
+envoyer à l'adresse 224.0.0.1, deux (par défaut) Membership Query général à 30
+secondes d'intervalles (par défaut).
 
-Lorsqu'un hôte reçoit un Membership Query, il va initialiser un timer pour chaque
-groupe multicast auxquels il appartient. Ces timers sont initialiser avec un temps
-aléatoire dont la borne supérieur est spécifié dans le Membership Query. Ce système
-de timers permet de ne pas saturer le réseau avec touts les message IGMP de tout les
-groupes qui seraient envoyé au même moment.
-Lorsque le timer d'un des abonnements arrive à 0, alors l'hôte émet, en multicast au
-groupe en question, un Membership Report.
-Si l'hôte reçoit un Membership Report et que le timer du groupe concerné par le
-message reçus n'a pas encore atteint 0, alors l'hôte va arrêter le timer. En effet le
-routeur sera aux courant de l'existence du groupe car il a reçu le même rapport que
-l'hôte.
-Le protocole IGMP est conçu pour que le routeur sache à quels groupe multicast sont
-abonner les hôte sur les réseaux auxquels il est relié. Cependant le protocole n'a pas
-du tout été conçu dans l'optique de fournir la liste des hôtes avec leurs abonnements.
-C'est pour cela qu'une fois que le routeur est au courant de l'existence d'un groupe,
-les autre hôtes faisant partit de ce groupe n'envoie pas de rapport pour ce groupe.
+Lorsqu'un hôte reçoit un Membership Query, il va initialiser un timer pour
+chaque groupe multicast auxquels il appartient. Ces timers sont initialisés
+avec un temps aléatoire dont la borne supérieur est spécifié dans le Membership
+Query. Ce système de timers permet de ne pas saturer le réseau avec touts les
+message IGMP de tout les groupes qui seraient envoyé au même moment.  Lorsque
+le timer d'un des abonnements arrive à 0, alors l'hôte émet, en multicast au
+groupe en question, un Membership Report.  Si l'hôte reçoit un Membership
+Report et que le timer du groupe concerné par le message reçus n'a pas encore
+atteint 0, alors l'hôte va arrêter le timer. En effet le routeur sera aux
+courant de l'existence du groupe car il aura reçu le même rapport que l'hôte.
 
-Lorsque le routeur reçoit un Membership Report il va ajouter le groupe à sa liste de groupe
-présent sur le réseau auquel il est connecté. Il va à ce moment initialiser un timer
-à 135 secondes (valeur par défaut).
-Si il reçoit d'autre Membership Report pour un groupe existant alors le timer est
-remis à sa valeur initiale.
-Lorsqu'un hôte rejoint un nouveau groupe, il va emmètre un Unsolicited Membership Report
-pour s'annoncer dans le groupe, et ainsi informer le routeur de l'existence de ce groupe
-ou de la remise à la valeur initiale du timer.
+Le protocole IGMP est conçu pour que le routeur sache à quels groupe multicast
+sont abonnés les hôte sur les réseaux auxquels il est relié. Cependant le
+protocole n'a pas du tout été conçu dans l'optique de fournir la liste des
+hôtes avec leurs abonnements.  C'est pour cela qu'une fois que le routeur est
+au courant de l'existence d'un groupe, les autre hôtes faisant partie de ce
+groupe n'envoie pas de rapport pour ce groupe.
 
-Le dernier cas de figure est cas où un hôte veut se désabonner d'un groupe. Si l'hôte
-est le dernier de son groupe alors il va envoyer un Leave Group à l'adresse 224.0.0.2.
-Si il n'est pas le dernier, il peux simplement ne rien faire et se désabonner du groupe,
-il ne sera pas plus concerné par les messages à destination du groupe. Etant donné qu'il
-y a d'autres membres dans le groupe ceci s'occuperont de "maintenir le groupe en vie".
-En revanche si l'hôte ne sais pas si il est le dernier hôte dans le groupe rien ne l'empêche
-d'envoyer un Leave Group.
+Lorsque le routeur reçoit un Membership Report il va ajouter le groupe à sa
+liste de groupe présent sur le réseau auquel il est connecté. Il va à ce moment
+initialiser un timer à 135 secondes (valeur par défaut).  Si il reçoit d'autre
+Membership Report pour un groupe existant alors le timer est remis à sa valeur
+initiale (de 135 secondes).  Lorsqu'un hôte rejoint un nouveau groupe, il va
+émmetre un Unsolicited Membership Report pour s'annoncer dans le groupe, et
+ainsi informer le routeur de l'existence de ce groupe ou de la remise à la
+valeur initiale du timer.
 
-Lorsque le routeur reçoit un Leave Group, il sais qu'un membre à quitté le groupe. Ce qui
-l'intéresse est de savoir si il y a encore des membres dans le groupe en question ou
-si s'est le dernier membre qui vient de quitter le groupe. Il va pour cela envoyer deux
-Membership Query spécifiquement au groupe en question. Si aucune réponse n'est reçut en
-réponse le groupe est considéré comme n'ayant plus de membre et il est oublier du routeur.
-Si jamais les hôte n'annonçait pas leur retrait du groupe (comme cela à été évoqué plus haut)
-et qu'il n'y avait plus d'hôte faisant partit du groupe, alors le groupe serait considéré
-sans membre et oublier lorsque le timer du routeur arriverai à 0 pour le groupe en question.
+Le dernier cas de figure est lorsqu' un hôte veut se désabonner d'un groupe: il
+va donc arrêter de traiter les messages à destination du groupe multicast. Si
+l'hôte est le dernier de son groupe alors il va envoyer un Leave Group à
+l'adresse 224.0.0.2.  Si il n'est pas le dernier, il peux simplement ne rien
+faire et se désabonner du groupe, il ne sera plus concerné par les messages à
+destination du groupe. Etant donné qu'il y a d'autres membres dans le groupe
+ceci s'occuperont de "maintenir le groupe en vie".  En revanche si l'hôte ne
+sais pas si il est le dernier hôte dans le groupe rien ne l'empêche d'envoyer
+un Leave Group.
 
-Le dernier point pour que tout cela fonctionnent, est qu'il faut que le routeur envoie
-régulièrement des Membership Query général pour qu'il maintiennent à jour sa table des
-groupe présent sur le réseau, sinon ceux-ci serait oublier une fois le timer arrivé à expiration.
+Lorsque le routeur reçoit un Leave Group, il sais qu'un membre à quitté le
+groupe. Ce qui l'intéresse est de savoir si il y a encore des membres dans le
+groupe en question ou si s'est le dernier membre qui vient de quitter le
+groupe. Il va pour cela envoyer deux Membership Query spécifiquement au groupe
+en question. Si aucune réponse n'est reçut le groupe est considéré comme
+n'ayant plus de membre et il est oublier du routeur.  Si jamais les hôte
+n'annonçait pas leur retrait du groupe (comme cela à été évoqué plus haut) et
+qu'il n'y avait plus d'hôte faisant partit du groupe, alors le groupe serait
+considéré sans membre et oublié lorsque le timer du routeur arriverait à 0 pour
+le groupe en question.
+
+Le dernier point pour que tout cela fonctionnent, est qu'il faut que le routeur
+envoie régulièrement des Membership Query général pour qu'il maintiennent à
+jour sa table des groupe présent sur le réseau, sinon ceux-ci serait oublier
+une fois le timer arrivé à expiration.
+
+%----------------------------------------------------------------------------------------
+
 
 \subsection{DHCP}
 Le protocole DHCP (Dynamic Host Configuration Protocol) sert à l'auto-configuration
