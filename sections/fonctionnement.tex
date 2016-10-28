@@ -12,20 +12,20 @@ Une adresse IP sert à identifier une machine (et plus précisément une des int
 dans un réseau particulier.
 Comme nous le verrons plus tard cet identifiant unique permet de désigner à la fois un
 réseau et une machine précise au sein de ce réseau.
-Une adresse est codé sur 32 bits ce qui permet de coder $2^{32}$ soit 4294967296 adresses différentes.
+Une adresse est codé sur 32 bits ce qui permet de disposer de $2^{32}$ soit 4294967296 adresses différentes.
 Par convention on peut représenter une adresse IPv4 comme une suite de 4 nombres décimaux séparés par des points,
 chacun traduisant un octet. Cette représentation a contribué à simplifier l'utilisation et la manipulation
 des adresses.
 Comme chaque nombre représente un octet, les valeurs de celui-ci sont comprises entre 0 et 255.
-Par exemple l'adresse 212.217.0.1 correspond sous sa forme binaire à:
+Par exemple l'adresse 212.217.0.1 sous sa forme binaire est:
  11010100.11011001.00000000.00000001 .
 
 \subsubsection{Notion de NET ID et HOST ID}
 Une adresse IPv4, en tant qu'identifiant d'une machine dans un réseau, contient
 deux informations: une première partie qui identifie le réseau appelé NET ID
-(les bits de poids fort), une seconde qui identifie l’hôte appeler host-ID (les
+(les bits de poids fort), une seconde qui identifie l’hôte appeler HOST ID (les
 bits de poids faible).  Les machines qui se trouvent donc sur le même réseau
-partage le même NET ID pour leur adresse.  
+partage donc le même NET ID.  
 \smallbreak
 La longueur de ces deux parties est
 variable: la taille du HOST ID dépend de la taille du NET ID. Pour représenter
@@ -36,13 +36,12 @@ la longueur de ces différentes parties on a introduit la notion de masque
 Le masque sert à représenter la scission entre le NET ID et le HOST ID.
 Il est codé sur 32 bits et adopte la même représentation qu'une adresse IP, à savoir
 4 nombres décimaux séparé par des points.
-La position des bits à 1 dans le masque corresponde à la position des bits définissant le NET ID dans l'adresse IP.
-Pour obtenir les bits du NET ID il suffit de faire un ET logique entre l'adresse et son masque. Tous les autres bits (donc les bits à 0)
-feront donc partie du HOST ID.
+La position des bits à 1 dans le masque correspond à la position des bits définissant le NET ID dans l'adresse IP.
+Pour obtenir les bits du NET ID il suffit de faire un ET logique entre l'adresse et son masque. Tous les autres bits (donc les bits à 0) du masque donneront la position des bits de l'adresse IP faisant parties du HOST ID.
 Les bits à 1 sont contiguës et commencent au bit de poids fort: le nombre de bit à 1 dans le masque, donne
 le nombre de bit faisant partie du NET ID en partant du bit de poids fort dans l'adresse.
 \smallbreak
-En conséquence plus le nombre de bit à 1 dans le masque est grand, plus le NET ID sera grand, et plus le HOST ID sera petit, car il restera moins de bit pour définir le HOST ID (la somme des deux devant évidemment faire 32 bits).
+En conséquence plus le nombre de bit à 1 dans le masque est grand, plus le NET ID sera grand, et plus le HOST ID sera petit, car il restera moins de bit pour définir le HOST ID (la somme des deux devant évidemment faire 32 bits), et donc moins on pourra adresser de machines.
 
 \begin{figure}[h]
 \centering
@@ -97,7 +96,7 @@ A partir de ce tableau nous pouvons voir qu'il suffit de regarder les 4 bits de
 poids fort pour déduire à quelle classe appartient une adresse.  Par exemple si
 une machine à pour adresse 152.123.87.45 on sait en regardant les 4 premiers
 bits que cette adresse fait partie de la classe B (car l'adresse commence par
-10). De là, la machine n'a pas besoin de masque en plus car elle sait que le
+10 en base 2). De là, la machine n'a pas besoin de masque en plus car elle sait que le
 masque correspondant un adresse de classe B est 255.255.0.0 .
 
 Chaque classe à un certain nombre d'octets servants à identifier le réseau. Une
@@ -110,7 +109,7 @@ variable en fonction de la classe, et tout cela sans avoir besoin de
 communiquer ou de paramétrer un masque; celui-ci étant normalisé pour chaque
 classe.  
 
-Cependant il a un gros inconvénient, étant donné que les masques sont
+Cependant il y a un gros inconvénient, étant donné que les masques sont
 figés, un réseau peut ne pas utiliser une partie plus ou moins importante
 de ses adresses. Par exemple si un réseau contient 500 machines, il ne peut pas
 utiliser d'adresse de classe A étant donné que celles-ci ne permettent d'avoir
@@ -137,20 +136,20 @@ sous-réseaux pouvant chacun avoir 256 interfaces connectées.
 \subsubsection{CIDR}
 
 Aujourd'hui le système le plus utilisé est CIDR (Classless Inter-Domain
-Routing) remplace le système de classe d'adresse. CIDR permet de créer des
-masque beaucoup plus fin, étant donné qu'on n'est plus limité à des masque de
+Routing) et remplace le système de classe d'adresse. CIDR permet de créer des
+masques beaucoup plus fin, étant donné qu'on n'est plus limité à des masque de
 réseau fixe, on peut ajuster le masque pour avoir le nombre de machine
 adressable dans un réseau le plus proche possible du nombre de machine que l'on
-souhaite adressé.  Cela permet de limiter les pertes en adresse inutilisé, si
+souhaite adressé.  Cela permet de limiter les pertes en adresses inutilisés, si
 la plage est correctement découpée.  On peut donc créer des masques à la
-séparation entre le NET ID et le HOST ID se trouve n'importe où, même en plein
+séparation entre le NET ID et le HOST ID se situant n'importe où, même en plein
 milieu des octets (ce qui était impossible avec les classes d'adresse), ce qui
 apporte une plus grande flexibilité.  Cela permet aussi de créer une hiérarchie
 dans une plage d'adresse réseau qui serait découper en plusieurs réseaux
 "fils", et cela permet notamment, avec cette hiérarchie, de réduire la table de
-routage des routeur.  De là est né une nouvelle notation des masques: on écrit
+routage des routeurs.  De là est né une nouvelle notation des masques: on écrit
 le nombre de bit à 1 dans le masque à la suite de l'adresse IP et séparé par un
-slash.
+slash. On appelle cette notation, la notation CIDR.
 
 
 \begin{figure}[h]
@@ -164,7 +163,7 @@ slash.
 \subsubsection{Types d'adresses}
 La variété des exigences en matière de réseaux a donnée lieu à une
 classification progressive des adresses selon des rôles bien précis. En effet,
-pas toutes les adresses IPv4 ont la même signification: à certaines adresses
+toutes les adresses IPv4 n'ont pas la même signification: à certaines adresses
 (ou plages d'adresses) ont été attribué par convention des fonctions ou des
 caractéristiques particulières.  Dans la suite de cette partie nous analyserons les
 adresses IP sous trois aspects différents: nous classifierons d'abord les adresses selon
@@ -177,15 +176,15 @@ particulière qui a été faite avec certaines adresses.
 \paragraph{Mode de diffusion}
 Dans le cadre des transmissions, en plus de communiquer entre deux interfaces,
 il est parfois nécessaire qu'un message soit reçu par un groupe de machines ou
-que même la totalité du réseau reçoivent ce message.  On a défini pour cela
+même par la totalité du réseau.  On a défini pour cela
 plusieurs types de diffusions associés à certaines adresses particulières.
 
 \smallbreak
-Le type de diffusion le plus utilisé est la diffusion en \textbf{unicast}. Dans ce mode,
+Le mode de diffusion le plus utilisé est la diffusion en \textbf{unicast}. Dans ce mode,
 l'adresse IP désigne une machine de manière unique. \textbf{L'adresse IP est
 associé à une seule machine et sert à l'identifier sur un réseau}.  C'est le
 type d'adresse que nous avons abordé jusqu'à présent. 
-Dans certaines cas il peut être
+Dans certains cas il peut être
 intéressant de pouvoir contacter plusieurs machines en même temps. On pourrait bien sûr
 envoyer des paquets en unicast à chaque machine que l'on souhaite contacter,
 mais cela serait fastidieux et inonderait le réseau inutilement. Une solution plus
@@ -197,7 +196,7 @@ existe pour faire cela plusieurs types de diffusion.
 \item[Broadcast:] Ce mode de diffusion permet d'envoyer un paquet unique tout en 
 joignant toutes les machines sur un réseau. Lorsque les machines reçoivent ce
 paquet, elles s'aperçoivent que l'adresse de destination du paquet est l'adresse de
-broadcast et elles vont alors traiter le paquet. L'adresse de broadcast d'un réseau
+broadcast, elles vont alors traiter le paquet. L'adresse de broadcast d'un réseau
 est défini comme la plus "haute" adresse du réseau: cela se traduit par la mise
 à 1 de tous les bits de la partie HOST ID. Cette adresse ne peut donc pas être
 attribuée à une machine en tant qu'adresse unicast.  Le broadcast est utilisé
@@ -206,7 +205,7 @@ définition, nous pouvons envoyer un message de broadcast à n'importe quel
 réseau, incluant le notre. En réalité (sauf
 configuration volontaire) les routeurs ne laissent pas passer les messages de
 broadcast d'un réseau à un autre; excepté quelques cas spéciaux comme DHCP où un
-serveur peut s'adresser à plusieurs réseaux, et où ses messages de broadcast
+serveur peut adresser à plusieurs réseaux, et où ses messages de broadcast
 peuvent être relayés par les routeurs (appelés DHCP agents).
 
 \item[Multicast:] Ce mode de diffusion permet d'envoyer un paquet à destination
@@ -237,11 +236,11 @@ participants.
 
 \item[Anycast:] Une adresse anycast, tout comme les adresse multicast,
 identifient plusieurs machines. La différence avec multicast est qu'en mode de
-diffusion anycast, la paquet ne va pas être remit à tous les membre du groupe,
-mais seulement à un seul (le premier qui le réceptionne).  Le choix de la
+diffusion anycast, le paquet ne va pas être remit à tous les membre du groupe,
+mais seulement à un seul (un parmi tous les membres).  Le choix de la
 destination et le routage à adopter se base sur plusieurs critères telles que
 la "distance" avec la machine, la disponibilité, la charge, ... . Cela permet
-d'avoir des systèmes toujours disponible même en cas de forte charge, en
+d'avoir des systèmes tolèrant aux pannes et toujours disponible même en cas de forte charge, en
 repartissant celle-ci sur plusieurs machines.
 
 \end{description}
@@ -252,15 +251,15 @@ repartissant celle-ci sur plusieurs machines.
 L'expansion exponentielle d'Internet a posé, seulement quelques années après sa
 création, des soucis de pénurie d'adresses. Plusieurs mesures ont été prises
 pour limiter la portée de ce problème. Malgré ça, le stock d'adresses IPv4 non
-réservée est malheureusement épuisé depuis le 2011.
+réservée est malheureusement épuisé depuis 2011.
 
 \smallbreak
 Une des dispositions les plus connues et efficaces a été la création du concept
-d'adresses privées. Le RFC 1918 introduit la notion d'adresses privées: une adresse
+d'adresses privées. Le RFC 1918\cite{url-RFC-1918} introduit la notion d'adresses privées: une adresse
 appartenant à cet catégorie est un identifiant unique dans un réseau (ou sous
 réseau) mais il ne comporte aucune contrainte d'unicité dans l'échelle globale
-(Internet). L'idée derrière la conception des adresses privées était celle d'
-avoir des identifiants qui peuvent être utilisés lorsque une machine n'a pas
+(Internet). L'idée derrière la conception des adresses privées était 
+d'avoir des identifiants qui peuvent être utilisés lorsqu'une machine n'a pas
 pas besoin de communiquer avec des interfaces au-delà de son réseau.
 
 A ce titre des plages d'adresses ont été réservées pour cet usage:
@@ -272,11 +271,11 @@ A ce titre des plages d'adresses ont été réservées pour cet usage:
 \end{itemize}
 
 \smallbreak
-Le concept d'adresses privées s'oppose à celui d'adresses publiques: ce dernier est 
+Le concept d'adresses privées s'oppose à celui d'adresses publiques: cette dernière est 
 une adresse unique sur Internet et est en conséquence atteignable par n'importe
 quel hôte sur Internet.
 
-Aujourd'hui des systèmes comme celui de la NAT ({\it Network Address
+Aujourd'hui des systèmes comme celui du NAT ({\it Network Address
 Translation}) permettent à des machines ayant des adresses IP privée de communiquer
 de manière transparente avec des hôtes en dehors de leur réseau. Ce système est
 largement utilisé dans les réseaux domestiques pour permettre aux machines au
@@ -285,22 +284,24 @@ détail du NAT dans la section \ref{sec:nat}.
 \smallbreak
 
  
-L'augmentation des difficultés relatives à la procédure de réservation des adresses
-publiques au sein des organisme responsables des allocations\cite{url-RFC-1918}
-(tels que le IANA) ont contribués a promouvoir l'utilisation des adresses privées à la place
- des adresses publiques lorsque cela est possible.
-L'utilisation des adresse privées a pour conséquence la préservation des plages
-d'adresses IP publiques, ce qui constitue un avantage certain: l'utilisation
-des adresses privées permet d'éviter le gaspillage des adresses publique là ou elles
-ne sont pas nécessaires.
+L'augmentation des difficultés relatives à la procédure de réservation des
+adresses publiques au sein des organisme responsables des
+allocations\cite{url-RFC-1918} (tels que le IANA) ont contribués à promouvoir
+l'utilisation des adresses privées à la place des adresses publiques lorsque
+cela est possible.  L'utilisation des adresse privées a pour conséquence la
+préservation des plages d'adresses IP publiques (dans la mesure où des hôtes
+situés sur des réseaux différents peuvent utiliser la même adresse privé sans
+que cela pose de problème), ce qui constitue un avantage certain: l'utilisation
+des adresses privées permet d'éviter le gaspillage des adresses publique là ou
+elles ne sont pas nécessaires.
 
 
 \paragraph{Adresses speciales}
 L'usage spéciale d'une adresse IP découlait de l'apparition d'un nouveau besoin
-dans le domaine des réseaux; c'est pour ça que jusqu'à 2002, l'attribution des
+dans le domaine des réseaux; c'est pour cela que jusqu'à 2002, l'attribution des
 rôles spéciaux des adresses IPv4 était présentés dans divers document, qui
 présentaient, et répondaient à chaque fois à une problématique bien
-particulière. Le RFC3330 est un des premiers documents à rassembler les
+particulière. Le RFC3330 est un des premiers documents à rassembler la
 classification des adresses IPv4 selon leur rôles et significations:
 
 \begin{description}
@@ -311,7 +312,7 @@ configuration comme adresse source, lorsqu'une machine n'a pas encore d'adresse 
 %RFC 1122 %
 
 \item[127.0.0.0/8]
-Une adresse appartenant a ce bloc est dénommée adresse de {\it loopback}.  Un
+Une adresse appartenant à ce bloc est dénommée adresse de {\it loopback}.  Un
 paquet envoyé vers une telle adresse retourne directement chez l'expéditeur, sans sortir
 du contexte de la machine émettrice. Parmi les adresses de cette plage,
 127.0.0.1 est celle utilisée le plus fréquemment\footnote{Comme l'indique
@@ -322,12 +323,12 @@ l'alias "{\it localhost}".\footnote{La correspondance entre le nom {\it localhos
 l'adresse 127.0.0.1 est généralement mise en place par le système d'exploitation.
 Dans les systèmes de type UNIX une entrée reliant ces deux entités est généralement
 présente dans le fichier "/etc/hosts".}
-Une adresse de {\it loopback} n'a pas de sens en dehors d'une interface même,
+Une adresse de {\it loopback} n'a pas de sens en dehors d'une interface,
 et c'est pour cela qu'elle ne devrait apparaître à aucun moment dans le réseau.
 %RFC 1122 %
 
 \item[169.254.0.0/16]
-Cet plage d'adresses a été désignée comme contenant les adresses qu'on appelle
+Cette plage d'adresses a été désignée comme contenant les adresses qu'on appelle
 de {\it lien local}.  Les adresses dites de {\it lien local} sont utilisée lorsqu'une 
 machine n'a aucun moyen d'obtenir une adresse IP (par exemple par le biais
 d'un serveur DHCP ou simplement avec une configuration manuelle).  L'obtention
@@ -337,7 +338,7 @@ Automatic Private Internet Protocol Addressing}) ou par le nom IPv4LL.  Le
 fonctionnement du processus APIPA (décrit dans le RFC 3927) est assez complexe
  et entraîne l'utilisation de certaines fonctionnalités du
 protocole ARP (qu'on traitera plus en détail dans la section
-\ref{sec:suiteproc}. Son fonctionnement peut être synthétisé dans ses grandes
+\ref{sec:suiteprot}. Son fonctionnement peut être synthétisé dans ses grandes
 lignes par la démarche suivante:
 
 \begin{description}
