@@ -1,21 +1,15 @@
 \section{Passage de IPv4 à IPv6}
+\label{sec:passage-IP4-IP6}
 
-\subsection{Raison du passage de IPv4 à IPv6}
-%\subsubsection{Problème posé par IPv4}
-
-
-//Pénrurie, adressage privé/publique compliqué
-% Il se trouve que apparement il y a des problemes de
-% penurie d'adresses meme dans certaines reseau prive`
-% http://blog.erratasec.com/2013/12/dod-address-space-its-not-conspiracy.html#.WAf_d7Wf21F
-
-\subsection{Problèmes posés par IPv4}
+\subsection{Difficultés résultantes d'IPv4}
 L'IPv4 a été développé dans les années 70-début des années 80, donc il y a 30-40 ans.
 Lors de son développement personne n'a cru qu'internet serait un jour utilisé comme il l'est 
 aujourd'hui. N'ayant pas été développé pour l'utilisation que nous en faisons, l'IPv4 présente 
 plusieurs problèmes auxquels ont été trouvé des solutions définitives ou provisoires.
 
-\subsubsection{Épuisement des adresses IPv4}
+\subsubsection{Problèmes}
+
+\paragraph{Épuisement des adresses IPv4}
 
 Personne n'aurait imaginé il y a 40 ans qu'il y aurait un jour autant d'interfaces qui se connectent à 
 Internet. On pensait que seul les militaires et les scientifiques utiliseront 
@@ -31,12 +25,12 @@ Numbers Authority) est arrivée à épuisement. En plus de cela la répartition 
 La zone américaine est très favorisée (environ 74\%) par rapport à l'Europe (environ 17\%) et l'Asie (environ 9\%).
 
 
-\subsection{Sécurité}
+\paragraph{Sécurité}
 Même s'il existe beaucoup de protocoles pour assurer la sécurité sous IPv4, il y en a 
-beaucoup qui ne sont pas standardissé. L'IPv6 a standardisé et rendu obligatoire des 
+beaucoup qui ne sont pas standardisé. L'IPv6 a standardisé et rendu obligatoire des 
 technologies dont certaines étaient auparavant utilisées dans IPv4. 
 
-\subsection{Performances}
+\paragraph{Performances}
 Sous IPv4, la taille des paquets est petite. De plus, chaque routeur ne supporte pas la même taille
 de paquet. Il arrive donc fréquemment que les paquets doivent être fragmentés. Dans Ipv4, ce sont les 
 routeurs et autre équipements intermédiaires qui font ce travail. Cela peut amener à
@@ -53,7 +47,7 @@ l'utilisation du NAT ou d'un changement de connexion 4G à une connexion, souven
 \\
 
 
-\subsection{Solutions pour l'épuisement des adresses IPv4}
+\subsubsection{Solutions apportées}
 
 Afin de résoudre ce problème, plusieurs techniques ont été proposées:
 \begin{itemize}
@@ -80,7 +74,7 @@ plus loin.
 \end{itemize}
 
 
-\subsubsection{CIDR(Classless Inter-Domain Routing)}
+\paragraph{CIDR(Classless Inter-Domain Routing)}
 Nous avons vu le fonctionnement du CIDR dans la partie fonctionnement. Pour rappel, le
 CIDR a été développé en 1993 dans le but de diminuer la taille des tables de routage. Pour 
 cela le concept de classe d'adresse a été abandonné et a été remplacé par une agrégation de 
@@ -90,13 +84,13 @@ dire qu'il est maintenant possible de donner des plages d'adresse ayant des pré
 de 0 à 31. Il est donc possible de créer 31 sortes de réseaux de taille différente. Il y a 
 donc, d'une part, moins de gaspillage d'adresse IP, et d'autre part, il y en a plus qui sont disponibles.
 
-\subsubsection{Traduction d'adresse réseau (Network Adress Translation}
+\paragraph{Traduction d'adresse réseau (Network Adress Translation)}
 \label{sec:nat}
 Comme vu au-dessus, au fur et à mesure que l'IPv4 s'est répandu, il y a eu un manque
 d'espace d'adressage. Afin de limiter le nombre d'adresse IP publiques nécessaires
 à un réseau, le NAT a été développé.
 
-\subsubsection{Fonctionnement du NAT dynamique (Network Adress Translation)}
+\paragraph{Fonctionnement du NAT dynamique (Network Adress Translation)}
 Le NAT est une technique utilisée au niveau du routeur. Le principe du NAT est
 que le routeur fait correspondre à une adresse IP une autre adresse IP en
 changeant l'adresse IP dans les headers des paquets IP. Cette technique permet
@@ -106,7 +100,7 @@ intranet ou encore un réseau domestique. Dans ce réseau, toutes les interfaces
 - même le routeur - auront une adresse privée. Le routeur dispose en plus de
 cela de une ou plusieurs adresses publiques avec lesquelles il est connecté à
 internet. Une adresse privée est une adresse qui est utilisée à l'intérieur
-d'un réseau local. Dans un réseau local, les adresses utlisées sont locales et donc
+d'un réseau local. Dans un réseau local, les adresses utilisées sont locales et donc
 indépendantes de tout réseau externe. Cela veut dire qu'elles n'ont aucune
 signification en dehors du réseau local et qu'elles ne sont donc utilisées qu'à
 l'intérieur de celui-ci. Les adresses privées peuvent être choisies parmi les
@@ -138,16 +132,37 @@ Le port source est le port 10277 et le port destination est le port 80. Le
 routeur, qui est une box, a l'adresse IP  82.240.25.50.
 
 L'interface A envoie le paquet:
-\includegraphics{./pics/PaquetAR.eps}
+\begin{figure}[h]
+\centering
+\includegraphics[width=12cm]{./pics/PaquetAR.eps}
+\caption{Paquet envoyé par A}
+\label{fig:paquetAR}
+\end{figure}
 
 La box effectue un changement de l'adresse et envoie le paquet:
-\includegraphics{./pics/PaquetRB.eps}
+\begin{figure}[h]
+\centering
+\includegraphics[width=12cm]{./pics/PaquetRB.eps}
+\caption{Paquet envoyé par la box}
+\label{fig:paquetRB}
+\end{figure}
+
 L'interface B répondra en envoyant le paquet:
-\includegraphics{./pics/PaquetBR.eps}
+\begin{figure}[h]
+\centering
+\includegraphics[width=12cm]{./pics/PaquetBR.eps}
+\caption{Paquet envoyé par B}
+\label{fig:paquetBR}
+\end{figure}
 \smallbreak
 Finalement, la table NAT ressemblera à ceci:
 
-\includegraphics{./pics/TableNAT1.eps}
+\begin{figure}[h]
+\centering
+\includegraphics[width=12cm]{./pics/TableNAT1.eps}
+\caption{Table NAT de la box}
+\label{fig:NAT1}
+\end{figure}
 
 Lorsque la box reçoit ce paquet, elle voit que le port de destination est le
 port 10277. Elle cherche ensuite le port correspondant dans sa table NAT.
@@ -169,7 +184,13 @@ On y ajoute une interface C, sur le même réseau que A et qui veut également
 envoyer un paquet TCP à la même adresse avec le même port source. L'IP de C
 sera 192.168.1.2.
 On obtient la table:
-\includegraphics{./pics/TableNAT2.eps}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=10cm]{./pics/TableNAT2.eps}
+\caption{Table NAT de la box}
+\label{fig:NAT2}
+\end{figure}
 
 Enfin, pour éviter de saturer les ports utilisés il est nécessaire de recycler
  ceux qui ne sont plus utilisés. Lorsqu'on utilise un protocole comme UDP le
@@ -184,7 +205,7 @@ associé à chaque paire adresse publique/adresse privée. Lorsqu'il n'y a pas d
 trafic entre une adresse privée et l'extérieur durant une durée fixée, le port
 qui lui est associée peut être réutilisé pour une autre adresse privée.
 
-\subsubsection{Différents types de NAT}
+\paragraph{Différents types de NAT}
 
 Il existe différents types de NAT:
 \begin{itemize}
@@ -199,7 +220,7 @@ serveurs.
 \end{itemize}
 
 
-\subsubsection{Redirection de port(Port forwarding)}
+\paragraph{Redirection de port(Port forwarding)}
 
 Le NAT dynamique apporte cependant un grand problème. Lorsqu'une interface
 extérieur veut se connecter à une interface dans le réseau, elle ne dispose
@@ -227,7 +248,7 @@ dans le schéma ci-dessous:
 Il est possible de faire du port forwarding sur plusieurs port et vers des
 interfaces différentes simultanément.
 
-\subsubsection{NAT statique}
+\paragraph{NAT statique}
 Le NAT statique est l'attribution d'une adresse IP externe à une adresse IP 
 privée. Grâce à cette méthode une interface sur un réseau privé peut avoir une
 IP publique à elle seule. Pour faire une traduction d'adresse statique il faut la configurer
@@ -236,7 +257,7 @@ la table jusqu'à ce qu'elle soit supprimée. La traduction d'adresse statique
 est le plus souvent utilisée pour interconnecter deux réseaux avec des
 adressages différents.
 
-\subsubsection{NAT et sécurité}
+\paragraph{NAT et sécurité}
 
 Même si ça n'a pas été le but de la traduction d'adresses, un des effets
 secondaires du NAT a été d'apporter de la sécurité. En effet, auparavant, une
@@ -249,9 +270,9 @@ spécifique ou si le routeur cible a configuré l'interface cible comme interfac
 par défaut pour ce port.
 
 
-Cependant même toutes ces sollutions n'ont pas suffit pour +++
+Cependant même toutes ces solutions n'ont pas suffit pour +++
 
-\subsection{Améliorations apportés par IPv6}
+\subsection{Améliorations apportées par IPv6}
 
 De nombreuses améliorations ont été apportées par IPv6, qui est une refont d'IPv4, afin de répondre à des besoins existants. Le fonctionnement de l'IPv6 reste cependant très similaire à celui d'IPv4 et 
 les protocoles TCP et UDP sont quasiment inchangés.
@@ -280,12 +301,12 @@ Enfin, une sécurité est intégrée dans l'IPv6. Cette sécurité est IPsec. Ce
 dans IPv4 et a été rendue obligatoire en IPv6.
 \subsubsection{Performances}
 
-Le systéme de routage est beaucoup plus efficace. En effet, les paquets IPv6 ne sont plus
+Le système de routage est beaucoup plus efficace. En effet, les paquets IPv6 ne sont plus
 fragmentés par les routeurs mais par l'interface qui envoie le paquet. Lorsqu'une interface
 veut envoyer un paquet, elle envoie d'abord un message ICMPv6 pour déterminer le MTU qui est 
 la taille des paquets qui seront envoyés.
 \\
-L'élimination du NAT permet de supprimer un niveau intermédaire et les problèmes liées à celui-ci
+L'élimination du NAT permet de supprimer un niveau intermédiaire et les problèmes liés à celui-ci
  comme l'accessibilité d'une interface en dehors du réseau.
 \\	
 L'amélioration de la structure d'en-tête permet d'alléger le traitement. La
