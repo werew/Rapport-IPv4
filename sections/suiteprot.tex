@@ -178,8 +178,8 @@ ICMP sont empaquetés dans des paquets IP, ils disposent donc d'un entête de
 paquet IP. Cet entête est le même que pour tout les autres entêtes de paquet
 d'IPv4. Deux champs sont intéressant dans le cas d'un paquet ICMP, les champs
 Protocol et Type of service. Le champ Protocol est mis à à la valeur 1 pour
-dire que le paquet contient un message ICMP, et le champ ToS est mis à 0
-//TODO(pourquoi 0?)//.  Après le header du paquet IPv4, commence la partie data
+dire que le paquet contient un message ICMP, et le champ ToS est mis à 0.
+Après le header du paquet IPv4, commence la partie data
 qui contient le message ICMP. Ce message contient des champs différent en
 fonction du type de message à passer. Cependant les trois premier champs sont
 toujours les mêmes.
@@ -250,7 +250,7 @@ Ce message est envoyé lorsque le TTL d'un paquet à atteint 0. Une autre
 utilisation des ces messages est lorsque que le temps de ré-assemblage des
 fragments d'un paquet est dépassé. Ces deux cas sont distingué par le code. Ces
 messages ont pour destinataire l'hôte qui à envoyé le paquet qui à provoqué
-l'erreur.%TODO(vérifier).
+l'erreur.
 
 \paragraph{Code 0:}
 Le code 0 est utilisé pour indiquer que le TTL du paquet posant problème est
