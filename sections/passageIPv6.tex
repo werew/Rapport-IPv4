@@ -39,24 +39,19 @@ obligatoire des technologies dont certaines étaient auparavant utilisées dans
 IPv4. 
 
 \paragraph{Performances}
-Sous IPv4, la taille des paquets est petite, cela induit qu'un paquet ne peut
-pas transmettre beaucoup de donnée utile. De plus, chaque routeur ne supporte
-pas la même taille de paquet. Il arrive donc fréquemment que les paquets
-doivent être fragmentés. Dans Ipv4, ce sont les routeurs et autre équipements
-intermédiaires qui font ce travail. Cela peut amener à des diminutions de
-performances lorsqu'un routeur doit fragmenter beaucoup de paquets ou lorsque
-sa puissance de calcul est limitée. 
-\\
-De plus, sous IPv4, les routeurs vérifient l'intégrité des paquets lors du
+Dans IPv4, ce sont les routeurs et autre équipements
+intermédiaires a se charger de la fragmentation des paquets quand il ets
+necessaire. Cela peut amener à des diminutions de performances lorsqu'un
+routeur doit fragmenter beaucoup de paquets ou lorsque sa puissance de calcul
+est limitée. De plus, sous IPv4, les routeurs vérifient l'intégrité des paquets lors du
 transit, ce qui nécessite des ressources pour vérifier à chaque fois le
-checksum, qui change à chaque saut à cause de la décrémentation de Time To
-Live.
-\\
+checksum, qui change à chaque saut à cause de la décrémentation de {\it Time To
+Live}.
+\smallbreak
 Il existe également un défaut de performances pour les équipements mobiles
 comme les téléphones portables. Ceux-ci changent en effet souvent de réseau et
 ils changent, à cause de l'utilisation du NAT ou d'un changement de connexion
 4G à une connexion, souvent d'adresse IP. 
-\\
 
 
 \subsubsection{Solutions apportées au problème d'adresse}
@@ -106,8 +101,7 @@ plus finement).
 \label{sec:nat}
 Comme vu au-dessus, au fur et à mesure que l'IPv4 s'est répandu, il y a eu un manque
 d'espace d'adressage. Afin de limiter le nombre d'adresse IP publiques nécessaires
-à un réseau, le NAT a été développé. Le principe du NAT est
-que le routeur fait correspondre à une adresse IP une autre adresse IP
+à un réseau, le NAT a été développé.
 
 \paragraph{Fonctionnement du NAT dynamique}
 Le NAT est une technique utilisée au niveau du routeur. En changeant l'adresse
@@ -121,8 +115,8 @@ Internet. Une adresse privée est une adresse qui est utilisée à l'intérieur
 d'un réseau local. Dans un réseau local, les adresses utilisées sont locales et
 donc indépendantes de tout réseau externe. Cela veut dire qu'elles n'ont aucune
 signification en dehors du réseau local et qu'elles ne sont donc utilisées qu'à
-l'intérieur de celui-ci. Les adresses privées peuvent être choisies parmi les
-suivantes: 10.0.0.0/8, 172.16.0.0/12 ou 192.168.0.0/16.
+l'intérieur de celui-ci. 
+
 \smallbreak
 Lorsqu'une interface envoie un paquet vers l'extérieur du réseau, le routeur
 effectue plusieurs changements. Il traduit d'abord l'adresse privée en adresse
@@ -130,26 +124,22 @@ publique et la met dans le champ adresse IP source de l'entête. Puis il change
 tous les checksums qui tiennent compte de l'adresse IP. Enfin, il garde en
 mémoire dans une table, appelée table NAT la correspondance entre adresse
 privée/adresse publique et le protocole utilisé.
-\newline
+\smallbreak
 Cela n'est cependant pas suffisant. En effet, lorsqu'un paquet arrivera de
-l'extérieur du réseau, et si toutes les interfaces utilisent la même adresse
+l'extérieur du réseau si toutes les interfaces utilisent la même adresse
 publique sans distinction supplémentaire, le routeur ne saura pas à quelle
-interface envoyer le paquet et il sera donc perdu.
-
+interface envoyer le paquet qui sera donc perdu.
+\smallbreak
 Une solution à ce problème existe pour les protocoles utilisant les ports comme
-TCP et UDP. Le routeur ajoute des informations supplémentaires dans la table
-qui sont le port source et destination d'où viennent le paquet. Les ports, qui
-sont implémentés dans la couche transport (couche 4), sont des sortes de
-"portes" qui permettent de communiquer avec un système d'exploitation et ainsi
-avoir plusieurs application, utilisant le réseau, qui tourne en même temps. Le
-numéro de port est un numéro choisit aléatoirement entre 1024 et 65535 pour le
-client. Les ports 0 à 1023 étant réservés pour les serveurs qui "écoutent" pour
-des connexions entrantes.
-\newline
+TCP et UDP. Le routeur ajoute des informations supplémentaires dans la table: 
+le port source et destination d'où viennent le paquet. 
+
+\smallbreak
 Pour illustrer le fonctionnement du NAT imaginons qu'une interface A dont l'IP
-est 192.168.0.1/16 veut envoyer un paquet TCP à l'interface B d'IP 217.70.184.38.
+est 192.168.0.1 veut envoyer un paquet TCP à l'interface B d'IP 217.70.184.38.
 Le port source est le port 10277 et le port destination est le port 80. Le
-routeur, qui est une box, a l'adresse IP  82.240.25.50 du coté Internet.
+routeur, qui est par example une box a usage domestique, a l'adresse IP
+82.240.25.50 du coté Internet.
 
 L'interface A envoie le paquet:
 \begin{figure}[h]
@@ -159,7 +149,7 @@ L'interface A envoie le paquet:
 \label{fig:paquetAR}
 \end{figure}
 
-La box effectue un changement de l'adresse et envoie le paquet:
+La box effectue un changement de l'adresse et retrasmet le paquet:
 \begin{figure}[h]
 \centering
 \includegraphics[width=12cm]{./pics/PaquetRB.eps}
@@ -190,22 +180,21 @@ Lorsque la box reçoit ce paquet, elle voit que le port de destination est le
 port 10277. Elle cherche ensuite le port correspondant dans sa table NAT.
 Lorsqu'elle le trouve elle effectue les changements nécessaire sur le paquet et
 transmet le paquet à l'interface A.
-\newline
+\smallbreak
 Mais même si cette solution fonctionne la plupart du temps, la probabilité est
 faible mais existe, que 2 interfaces envoient des paquets avec le même port
 source. Par exemple, lorsque 2 interfaces envoient des paquets à un serveur
 HTTP (port 80) et qu'elles utilisent toutes les deux comme port source 10277.
 Pour différencier les deux interfaces, qui vont utiliser la même adresse
 publique, le NAT change le port source dans un ou plusieurs paquets pour qu'il
-n'ai pas le même numéro de port une fois à l'extrérieur du réseau.  On obtient
-donc des tables de NAT comme dans l'exemple ci dessous.
-\newline
+n'ai pas le même numéro de port une fois à l'extrérieur du réseau.  
+\smallbreak
 On reprend le même exemple que précédemment. On a donc une interface A dont l'IP
 est 192.168.0.1/16 veut envoyer un paquet TCP à l'interface B d'IP 217.70.184.38.
 Le port source est le port 10277 et le port destination est le port 80. Le
 routeur à l'adresse IP  82.240.25.50 du coté Internet.
 On y ajoute une interface C, sur le même réseau que A et qui veut également
-envoyer un paquet TCP à la même adresse et le même port source que A. L'IP de C
+envoyer un paquet TCP à la même adresse en utilisant le même port source que A. L'IP de C
 sera 192.168.1.2/16 .
 On obtient la table:
 
@@ -218,42 +207,34 @@ On obtient la table:
 
 Enfin, pour éviter de saturer les ports utilisés il est nécessaire de recycler
  ceux qui ne sont plus utilisés. Lorsqu'on utilise un protocole comme UDP le
-routeur n'a aucune possibilité de savoir si le transfert est terminé. Lorsqu'on
-utilise une connexion TCP entre A et B, des messages de fin de session sont
-envoyés par A et B lors de la fin du transfert. Lorsque la transmission est
-finit, A envoie un message FIN à B qui lui répond par un message ACK et vice
-versa. Mais ces messages ne sont pas utilisables pour reconnaître la fin de
-connexion car lors de la réception de ce message il est toujours possible qu'un
-paquet doit être retransmit. Ainsi, on utilise un compteur de temps qui est
-associé à chaque paire adresse publique/adresse privée. Lorsqu'il n'y a pas de
-trafique entre une adresse privée et l'extérieur durant une durée fixée, le port
-qui lui est associée peut être réutilisé pour une autre adresse privée.
-
-\paragraph{Différents types de NAT dynamique}
-
-Il existe différents types de NAT:
-\begin{itemize}
-\item Le NAT dynamique PAT (Port Address Translation du port source). Ici les
-adresses publiques sont indifférentes. C'est le mécanisme de port forwarding qui est utilisé.
-\item Masquerading qui est un cas particulier de NAT dynamique PAT. Dans ce cas il n'y a que l'adresse IP du routeur, qui est utilisée comme adresse IP publique.
-\item NAT pool de source. Ici la première connexion privée prend la première
-adresse IP externe, la deuxième prend la deuxième ip externe, etc.
-\item NAT pool de destination. Elle permet de répartir la charge entre plusieurs
-serveurs.
-\end{itemize}
-
+routeur n'a aucune possibilité de savoir si le transfert est terminé. 
+\smallbreak 
+Dans le cadre d'une connexion TCP entre A et B, des messages de fin de
+session sont envoyés par A et B lors de la fin du transfert. Lorsque la
+transmission est finit, A envoie un message FIN à B qui lui répond par un
+message ACK et vice versa. Mais ces messages ne sont pas utilisables pour
+reconnaître la fin de connexion car lors de la réception de ce message il est
+toujours possible qu'un paquet doit être retransmit. 
+\smallbreak
+Ainsi, on utilise un compteur de temps qui est associé à chaque paire adresse
+publique/adresse privée. Lorsqu'il n'y a pas de trafique entre une adresse
+privée et l'extérieur durant une durée fixée, le port qui lui est associée peut
+être réutilisé pour une autre adresse privée.
 
 \paragraph{Redirection de port(Port forwarding)}
 
-Le fonctionnement du NAT dynamique pose cependant un gros problème. Lorsqu'un hôte
-extérieur veut envoyer un paquet à un hôte derrière un NAT pour initialiser une conversation, il ne dispose
-d'aucune autre information que l'adresse IP publique. Si il envoie alors un
-paquet à cette adresse, le routeur qui le réceptionnera ne saura pas quoi en
-faire car l'hôte se trouvant sur le réseau derrière le NAT n'a pas envoyé de paquet vers l'hôte extérieur, et donc le NAT ne sait pas à quel hôte le paquet est destiné et le paquet sera
-donc perdu. Il n'est donc pas possible, pour une machine externe au réseau local, d'initialiser
-une communication avec un hôte qui est sur un réseau qui se trouve derrière un NAT.
+Le fonctionnement du NAT dynamique pose cependant un gros problème. Lorsqu'un
+hôte extérieur veut envoyer un paquet à un hôte derrière un NAT pour
+initialiser une conversation, il ne dispose d'aucune autre information que
+l'adresse IP publique. Si il envoie alors un paquet à cette adresse, le routeur
+qui le réceptionnera ne saura pas quoi en faire car l'hôte se trouvant sur le
+réseau derrière le NAT n'a pas envoyé de paquet vers l'hôte extérieur, et donc
+le NAT ne sait pas à quel hôte le paquet est destiné et le paquet sera donc
+perdu. Il n'est donc pas possible, pour une machine externe au réseau local,
+d'initialiser une communication avec un hôte qui est sur un réseau qui se
+trouve derrière un NAT.
 
-On a réussi à pallier à ce problème grâce à la redirection de port (port
+On a réussi à pallier ce problème grâce à la redirection de port (port
 forwarding).  Le principe du port forwarding est de rediriger tout paquet qui
 arrive sur un port du routeur vers le port d'une interface locale.
 
@@ -264,46 +245,32 @@ arrive sur un port du routeur vers le port d'une interface locale.
 \label{fig:portfow}
 \end{figure}
 
-Dans le cas de notre problème on utilise le port forwarding lorsqu'il n'y a
-aucune entré de la table NAT qui n'a pu nous dire vers quelle hôte envoyer le
-paquet réçu de l'exterieur.  Le port forwarding permet donc d'avoir un choix
-"par défaut".
-
 Par exemple, prenons un routeur qui a comme IP externe 82.240.25.50 , et un
 serveur web A (écoutant sur le port 80) sur un réseau privé et utilisant une
-adresse privé: 192.168.1.1 . Comme c'est un serveur il y a de forte chance que
-les communication soit initialisé depuis l'extérieur: par les clients.  Pour
-qu'il soit joignable depuis l'extérieur il faut paramétrer le NAT de façon à ce
-qu'il redirige les paquets arrivant sur son port 80 vers le serveur A, si il
-n'a trouvé aucune entré dans la table NAT susceptible de nous indiquer vers
-quel hôte transférer le paquet.
-
-
-Il est possible de faire du port forwarding sur plusieurs port et vers des
-interfaces différentes simultanément.
+adresse privé: 192.168.1.1 . Pour que le serveur soit joignable depuis
+l'extérieur il faut paramétrer le NAT de façon à ce qu'il redirige les paquets
+arrivant sur son port 80 vers le serveur A.
 
 \paragraph{NAT statique} En parallèle des NAT dynamique il existe les NAT
 statique dont leur table n'évolue pas dynamiquement au cours du temps; en effet
-elle doit être rempli manuellement.
-Le NAT statique est l'attribution d'une adresse IP externe à une adresse IP
-privée. Grâce à cette méthode une interface sur un réseau privé peut avoir une
-IP publique à elle seule. Pour faire une traduction d'adresse de manière
-statique il faut la configurer manuellement dans la table du NAT. Cette
-traduction restera dans la table jusqu'à ce qu'elle soit supprimée. La
-traduction d'adresse de manière statique est le plus souvent utilisée pour
-interconnecter deux réseaux avec des adressages différents.
+elle doit être rempli manuellement.  Le NAT statique permet l'attribution
+manuelle d'une adresse IP externe à une adresse IP privée. Grâce à cette
+méthode une interface sur un réseau privé peut avoir une IP publique à elle
+seule.  La traduction d'adresses restera dans la table jusqu'à ce qu'elle soit
+supprimée. 
 
 \paragraph{NAT et sécurité}
-
 Même si ça n'a pas été le but de la traduction d'adresses, un des effets
 secondaires du NAT a été d'apporter une certaine forme de sécurité.  Avec un
 NAT il est uniquement possible d'atteindre les hôtes depuis l'extérieur
 seulement lorsqu'une connexion a été initialisé avec ce port spécifique ou si
-le NAT est configuré pour faire du port forwarding sur cette hôte.  Cependant
+le NAT a été configuré pour faire du port forwarding sur cette hôte.  Cependant
 le NAT n'a pas du tout été conçu pour apporter de la sécurité, il est donc
-inadapaté d'utiliser un NAT comme moyen de protection. La meilleur solution est
-d'utiliser un firewall qui à été conçu pour faire cela et qui ne le fera pas
-moins bien qu'un NAT.
+inadapaté d'utiliser un NAT comme moyen de protection\footnote{
+La meilleur solution consiste en effet à utiliser un firewall qui a été conçu pour faire cela
+et qui ne le fera pas moins bien qu'un NAT.}.
+
+\subsection{Améliorations apportées par IPv6}
 
 Cependant même avec toutes ces solutions, la pénuris d'adresse reste un vrai
 problème. Il a donc fallu trouver une solution plus radicale pour résoudre ces
@@ -311,44 +278,47 @@ difficulté, ces problème venant des choix et de la conception même d'IPv4.  L
 solution imaginé fut l'abandon de l'utilisation d'IPv4 qui était mal adapté à
 l'utilisation d'Internet aujourd'hui, et la création de son succésseur, IPv6,
 qui dans sa définition de base résolvait le problème de pénurie.
-
-\subsection{Améliorations apportées par IPv6}
-
-De nombreuses améliorations ont été apportées par IPv6, qui est une refont d'IPv4, afin de répondre à des besoins existants. Le fonctionnement de l'IPv6 reste cependant très similaire à celui d'IPv4 et 
-les protocoles TCP et UDP sont quasiment inchangés.
-l'IPv6 a été finalisée en 1998 et a été publiée dans la RFC2460. Lorsque l'IPv6 a été développée, 
-l'utilisation et la direction que prenait internet était donc déjà claire. 
+\smallbreak
+De nombreuses améliorations ont été apportées par IPv6, qui est une refont
+d'IPv4, afin de répondre à des besoins existants. Le fonctionnement d'IPv6
+reste cependant très similaire à celui d'IPv4 et les protocoles TCP et UDP sont
+quasiment inchangés.  l'IPv6 a été finalisée en 1998 et a été publiée dans la
+RFC2460. Lorsque l'IPv6 a été développée, l'utilisation et la direction que
+prenait internet était donc déjà claire. 
 
 \subsubsection{Espaces d'adressage}
-Dans l'IPv6, les adresses sont codées sur 128 bits, soit 16 octets. Cela permet d'avoir 
-environ quatre milliards de fois plus d'adresse qu'en IPv4. Tous les soucis d'espace d'adressage sont donc levés. Il n'est donc plus nécessaire d'utiliser des technologies comme les traductions d'adresses
-(NAT) afin d'économiser des adresses publiques. Le fonctionnement en est donc rendu plus simple car 
-chaque interface peut avoir une IP publique et il n'y a pas de problème pour atteindre une interface sur le réseau.
-\subsubsection{Sécurité}
-Comme dit précédemment, même s'il existait des protocoles de sécurité pour IPv4, 
-ces derniers ne faisaient pas partie intégrante du protocole.
-Dans IPv6, des mesures de sécurités ont été directement intégrées au protocole.
-Par exemple, le chiffrement et la vérification de l'intégrité utilisés dans les réseaux privés 
-(VPN, Virtual Private Network) est une composante standard pour IPv6 alors qu'elle était 
-facultative pour IPv4. Grâce à cet ajout, certaines attaques informatiques comme l'attaque de 
-l'homme du milieu, qui consiste à se faire passer pour quelqu'un d'autre et d'intercepter 
-le trafic, seront rendues plus difficiles.
-\\
-De plus, IPv6 apporte une résolution de noms plus sécurisée grâce au protocole Secure Neighbor
-Discovery (SEND) qui permet de confirmer qu'un hôte est bien celui qu'il prétend être. Ainsi, la redirection de trafic est rendue plus difficile.
-\\
-Enfin, une sécurité est intégrée dans l'IPv6. Cette sécurité est IPsec. Celle-ci était optionnelle 
-dans IPv4 et a été rendue obligatoire en IPv6.
-\subsubsection{Performances}
+Dans l'IPv6, les adresses sont codées sur 128 bits, soit 16 octets. Cela permet
+d'avoir environ quatre milliards de fois plus d'adresse qu'en IPv4. Tous les
+soucis d'espace d'adressage sont donc levés. Il n'est donc plus nécessaire
+d'utiliser des technologies comme les traductions d'adresses (NAT) afin
+d'économiser des adresses publiques. Le fonctionnement en est donc rendu plus
+simple car chaque interface peut avoir une IP publique et il n'y a pas de
+problème pour atteindre une interface sur le réseau.
 
-Le système de routage est beaucoup plus efficace. En effet, les paquets IPv6 ne sont plus
-fragmentés par les routeurs mais par l'interface qui envoie le paquet. Lorsqu'une interface
-veut envoyer un paquet, elle envoie d'abord un message ICMPv6 pour déterminer le MTU qui est 
-la taille des paquets qui seront envoyés.
-\\
-L'élimination du NAT permet de supprimer un niveau intermédiaire et les problèmes liés à celui-ci
- comme l'accessibilité d'une interface en dehors du réseau.
-\\	
-L'amélioration de la structure d'en-tête permet d'alléger le traitement. La
-plupart des champs dans l'en-tête IPv4 étaient facultatifs et utilisés
-fréquemment. IPv6 élimine ces champs (les options sont traitées différemment).
+\subsubsection{Sécurité}
+Comme dit précédemment, même s'il existait des protocoles de sécurité pour
+IPv4, ces derniers ne faisaient pas partie intégrante du protocole.  Dans IPv6,
+des mesures de sécurités ont été directement intégrées au protocole.  Par
+exemple, le chiffrement et la vérification de l'intégrité utilisés dans les
+réseaux privés (VPN, Virtual Private Network) est une composante standard pour
+IPv6 alors qu'elle était facultative pour IPv4. 
+\smallbreak
+De plus, IPv6 apporte une résolution de noms plus sécurisée grâce au protocole
+Secure Neighbor Discovery (SEND) qui permet de confirmer qu'un hôte est bien
+celui qu'il prétend être. Ainsi, la redirection de trafic est rendue plus
+difficile.
+\subsubsection{Performances}
+Le système de routage des paquets IPv6 permet de se passer de certaines
+mechanismes particularment lourdes de IPv4. En effet, les paquets IPv6 ne
+sont plus fragmentés par les routeurs mais par l'interface qui envoie le
+paquet. Lorsqu'une interface veut envoyer un paquet, elle envoie d'abord un
+message ICMPv6 pour déterminer le MTU qui est la taille des paquets qui seront
+envoyés.
+\smallbreak
+Le nombre d'adresses dipsonibles dans IPv6 va permettre l'élimination de
+supprimer un niveau intermédiaire tel que le NAT et les problèmes liés à
+celui-ci comme l'accessibilité d'une interface en dehors du réseau.
+\smallbreak
+L'amélioration de la structure d'en-tête permet d'alléger le traitement. Divers
+champs dans l'en-tête IPv4 étaient facultatifs: IPv6 élimine ces champs (les
+options sont traitées différemment).
