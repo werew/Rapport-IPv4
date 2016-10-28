@@ -1,4 +1,5 @@
 \section{Passage de IPv4 à IPv6}
+\label{sec:passage-IP4-IP6}
 
 \subsection{Difficultés résultantes d'IPv4}
 L'IPv4 a été développé dans les années 70-début des années 80, donc il y a 30-40 ans.
@@ -131,16 +132,37 @@ Le port source est le port 10277 et le port destination est le port 80. Le
 routeur, qui est une box, a l'adresse IP  82.240.25.50.
 
 L'interface A envoie le paquet:
-\includegraphics{./pics/PaquetAR.eps}
+\begin{figure}[h]
+\centering
+\includegraphics[width=12cm]{./pics/PaquetAR.eps}
+\caption{Paquet envoyé par A}
+\label{fig:paquetAR}
+\end{figure}
 
 La box effectue un changement de l'adresse et envoie le paquet:
-\includegraphics{./pics/PaquetRB.eps}
+\begin{figure}[h]
+\centering
+\includegraphics[width=12cm]{./pics/PaquetRB.eps}
+\caption{Paquet envoyé par la box}
+\label{fig:paquetRB}
+\end{figure}
+
 L'interface B répondra en envoyant le paquet:
-\includegraphics{./pics/PaquetBR.eps}
+\begin{figure}[h]
+\centering
+\includegraphics[width=12cm]{./pics/PaquetBR.eps}
+\caption{Paquet envoyé par B}
+\label{fig:paquetBR}
+\end{figure}
 \smallbreak
 Finalement, la table NAT ressemblera à ceci:
 
-\includegraphics{./pics/TableNAT1.eps}
+\begin{figure}[h]
+\centering
+\includegraphics[width=12cm]{./pics/TableNAT1.eps}
+\caption{Table NAT de la box}
+\label{fig:NAT1}
+\end{figure}
 
 Lorsque la box reçoit ce paquet, elle voit que le port de destination est le
 port 10277. Elle cherche ensuite le port correspondant dans sa table NAT.
@@ -162,7 +184,13 @@ On y ajoute une interface C, sur le même réseau que A et qui veut également
 envoyer un paquet TCP à la même adresse avec le même port source. L'IP de C
 sera 192.168.1.2.
 On obtient la table:
-\includegraphics{./pics/TableNAT2.eps}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=10cm]{./pics/TableNAT2.eps}
+\caption{Table NAT de la box}
+\label{fig:NAT2}
+\end{figure}
 
 Enfin, pour éviter de saturer les ports utilisés il est nécessaire de recycler
  ceux qui ne sont plus utilisés. Lorsqu'on utilise un protocole comme UDP le
