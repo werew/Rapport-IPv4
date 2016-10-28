@@ -34,12 +34,12 @@ Pour faire cela l'hôte A va tout d'abord regarder dans sa table ARP si il n'a
 pas une entrée pour l'adresse IP à laquelle il souhaite envoyer son paquet. Si
 il trouve une correspondance, il va utiliser l'adresse MAC stockée en
 correspondance avec l'adresse IP recherchée.  Si il ne trouve pas de
-correspondance il va émmetre un paquet ARPREQUEST pour tenter de contacter le
-possesseur de l'adresse IP qu'il souhaite contacter. Il va mettre dans ce
-paquet (en plus de l'entête de niveau 3) un entête ARP. Celui-ci contient entre
+correspondance il va émmetre une trame ARPREQUEST pour tenter de contacter le
+possesseur de l'adresse IP qu'il souhaite contacter. Il va mettre dans cette
+trame (en plus de l'entête de niveau 2) un entête ARP. Celui-ci contient entre
 autre les adresses de niveau 2 et 3 de la source et du destinataire qui sont
 essentiels pour faire la résolution d'adresse, ainsi qu'un champ qui spécifie
-si le paquet est un ARPREQUEST ou un ARPREPLY. 
+si la trame est un ARPREQUEST ou un ARPREPLY. 
 
 \smallbreak
 L'hôte A va donc mettre son
@@ -58,14 +58,14 @@ l'adresse IP de l'hôte A et l'adresse physique de A contenu dans l'entête ARP.
 Cela permet de créer une correspondance entre l'adresse IP et l'adresse de
 niveau 2 de A, pour non seulement pouvoir répondre à sa requête ARP, mais en
 plus pouvoir contacter A dans le futur sans avoir besoin de refaire de requête
-ARP. Ensuite l'hôte B va répondre avec un paquet ARPREPLY. L'entête est
-similaire aux ARPREQUEST, seul le champ indiquant s'il s'agit d'un paquet
-ARPREQUEST ou ARPREPLY change. Dans ce paquet, l'hôte B va placer son adresse
+ARP. Ensuite l'hôte B va répondre avec une trame ARPREPLY. L'entête est
+similaire aux ARPREQUEST, seul le champ indiquant s'il s'agit d'une trame
+ARPREQUEST ou ARPREPLY change. Dans cette trame, l'hôte B va placer son adresse
 IP dans le champ adresse IP source et son adresse physique dans le champ
 d'adresse physique source de l'entête ARP. Il va aussi mettre l'adresse IP de A
 dans le champ adresse IP destination et l'adresse MAC de A dans le champ
-d'adresse physique destination (entête ARP).  Il va ensuite envoyer ce paquet
-en unicast à A.  Lorsque A reçoit le paquet ARPREPLY, il va à son tour mettre
+d'adresse physique destination (entête ARP).  Il va ensuite envoyer cette trame
+en unicast à A.  Lorsque A reçoit la trame ARPREPLY, il va à son tour mettre
 dans sa table ARP, la correspondance entre l'adresse IP source et l'adresse de
 niveau 2 source de l'entête ARP (soit les adresses de B).  Une fois cette
 association mise en place, le paquet IP que voulait envoyer A au début et qui a
@@ -99,7 +99,7 @@ destinataire.
 Après avoir attendu un temps pouvant aller jusqu'à 1 seconde, l'hôte va envoyer
 un nombre d'ARP probe compris entre 1 et 3, et tous espacé d'un intervalle
 compris entre 1 et 2 secondes.  Si dans un délai de 2 secondes après l'émission
-de l'ARP probe l'hôte reçoit un paquet ARP request ou reply avec comme adresse
+de l'ARP probe l'hôte reçoit une trame ARP request ou reply avec comme adresse
 IP source (entête ARP) l'adresse qu'il souhaite acquérir, alors cela veut dire
 qu'un autre hôte est déjà entrain d'utiliser cette adresse. L'ARP reply peut
 être la réponse à un des ARP probe émis et l'ARP request peux simplement être
@@ -138,8 +138,8 @@ dans le passé.
 \smallbreak
 
 Dans un deuxième temps, ACD va être utilisé en permanence durant l'utilisation
-d'une adresse IP dans la mesure où lorsque que la l'interface va recevoir un
-paquet ARP, elle va analyser si l'adresse IP source de l'entête ARP correspond
+d'une adresse IP dans la mesure où lorsque l'interface va recevoir une
+trame ARP, elle va analyser si l'adresse IP source de l'entête ARP correspond
 à une de ces adresses, et si cela est la cas et que l'adresse de niveau 2
 source de l'entête ne correspond à son adresse de niveau 2, alors cela veut
 dire qu'un autre hôte utilise la même adresse IP. Il y a donc un conflit
@@ -149,7 +149,7 @@ manière:
 \item Il cesse d'utiliser l'adresse IP en question.
 \item Si l'hôte doit pour quelque raison que ce soit garder son adresse IP, par
 exemple si il utilise une connection TCP, alors il peut "défendre" sa
-possession de l'adresse IP, seulement si il n'a pas reçu d'autre paquet ARP
+possession de l'adresse IP, seulement si il n'a pas reçu d'autres trames ARP
 portant à conflit dans les 10 dernières secondes.  Il va pour cela noter le
 temps auquel il a reçu le paquet posant un conflit d'adresse et émettre un ARP
 Announcement en donnant son adresse de niveau 2 en association avec l'adresse
@@ -157,9 +157,9 @@ IP dans l'entête ARP. Il va envoyer ce paquet à destination de son adresse IP,
 pour signaler à l'hôte qui utilise aussi cette adresse qu'il y a un conflit
 d'adresse. Cependant il peut y avoir une boucle sans fin si les deux hôtes
 utilisant la même adresse se renvoient alternativement des ARP Announcement
-pour défendre leur adresse. Pour éviter ce scénario, si plusieurs paquet ARP
+pour défendre leur adresse. Pour éviter ce scénario, si plusieurs trames ARP
 posant un conflit d'adresse sont détecté dans les 10 dernières secondes (d'où
-l'importance de noter le temps où l'hôte à reçu les paquets posant problème),
+l'importance de noter le temps où l'hôte à reçu les trames posant problème),
 alors l'hôte cesse d'utiliser son adresse pour éviter de rentrer dans une
 boucle sans fin d'échange d'ARP Announcement.
 \item Si l'hôte à été configuré pour garder son adresse IP (par exemple si
