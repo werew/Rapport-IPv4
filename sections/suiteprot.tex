@@ -1,5 +1,5 @@
 %Victor
-\section{Suite de protocole}
+\section{Suite de protocoles}
 \label{sec:suiteprot}
 
 \subsection{ARP} ARP (Address resolution protocol) est un protocole à cheval
@@ -39,7 +39,10 @@ possesseur de l'adresse IP qu'il souhaite contacter. Il va mettre dans ce
 paquet (en plus de l'entête de niveau 3) un entête ARP. Celui-ci contient entre
 autre les adresses de niveau 2 et 3 de la source et du destinataire qui sont
 essentiels pour faire la résolution d'adresse, ainsi qu'un champ qui spécifie
-si le paquet est un ARPREQUEST ou un ARPREPLY.  L'hôte A va donc mettre son
+si le paquet est un ARPREQUEST ou un ARPREPLY. 
+
+\smallbreak
+L'hôte A va donc mettre son
 adresse IP en IP source (entête ARP) et son adresse MAC dans l'adresse physique
 source (entête ARP). Dans le champ d'adresse IP destination (entête ARP) l'hôte
 A va mettre l'adresse IP de l'hôte qu'il veut contacter. Etant donné qu'il
@@ -47,7 +50,9 @@ cherche à avoir l'adresse physique de l'hôte B, il ne peut pas indiquer
 d'adresse de niveau 2 dans le champ d'adresse physique destinataire. Ce champ
 est donc rempli avec la valeur 0 (entête ARP).  Sachant que l'hôte A n'a pas
 l'adresse physique du destinataire, il va envoyer sa trame en broadcast pour
-espérer atteindre l'hôte B sans connaître son adresse MAC.  Si l'hôte B reçoit
+espérer atteindre l'hôte B sans connaître son adresse MAC. 
+\smallbreak
+Si l'hôte B reçoit
 la requête ARP, il va analyser son entête et remplir sa table ARP avec
 l'adresse IP de l'hôte A et l'adresse physique de A contenu dans l'entête ARP.
 Cela permet de créer une correspondance entre l'adresse IP et l'adresse de
@@ -74,7 +79,7 @@ de la même adresse IP par deux ou plusieurs hôtes en même temps. Pour ce fair
 il utilise le protocole ARP avec une succession d'étape permettant de garantir
 l'utilisation de manière unique d'une adresse IP. Il fut décrit dans le RFC
 5227\cite{url-RFC-ACD}.
-
+\smallbreak
 Pour commencer, ACD intervient au moment où une interface reçoit une adresse IP
 (soit par DHCP, soit par une configuration manuelle,...). Il faut à ce moment
 vérifier si l'adresse proposée n'est pas déjà utilisée par un autre hôte sur le
@@ -90,6 +95,7 @@ adresse IP source est appelée ARP probe car elle sert à "sonder" si un autre
 hôte utilise déjà l'adresse que l'on passe dans le champ adresse IP
 destinataire.
 
+\smallbreak
 Après avoir attendu un temps pouvant aller jusqu'à 1 seconde, l'hôte va envoyer
 un nombre d'ARP probe compris entre 1 et 3, et tous espacé d'un intervalle
 compris entre 1 et 2 secondes.  Si dans un délai de 2 secondes après l'émission
@@ -112,6 +118,7 @@ différente de la sienne, cela veux qu'un autre hôte souhaite utiliser la même
 adresse que lui. Dans ce cas l'adresse IP ne peut pas être utilisée de manière
 sûr.
 
+\smallbreak
 Si après les 2 secondes d'attente du dernier ARP probe, l'hôte n'a pas reçu
 d'ARP probe, ou d'ARP request/reply indiquant un conflit d'adresse, alors
 l'hôte peut considérer que l'adresse qu'il souhaite utiliser est unique dans le
@@ -128,6 +135,7 @@ d'assurer que les autres hôtes auront bien la nouvelle adresse de niveau 2
 associer à l'adresse IP au cas où celle-ci était attribué à une autre interface
 dans le passé.
 
+\smallbreak
 
 Dans un deuxième temps, ACD va être utilisé en permanence durant l'utilisation
 d'une adresse IP dans la mesure où lorsque que la l'interface va recevoir un
@@ -179,7 +187,7 @@ toujours les mêmes.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=15cm]{./pics/header.eps}
+\includegraphics[width=12cm]{./pics/header.eps}
 \caption{Champs de l'entête communs à tous les types de message ICMP}
 \label{fig:headicmp}
 \end{figure}
@@ -194,7 +202,7 @@ Commençons avec les messages qui possèdent l'ensemble de champs le plus simple
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=15cm]{./pics/header1.eps}
+\includegraphics[width=12cm]{./pics/header1.eps}
 \caption{Entête des messages de type 3 et 11}
 \label{fig:head1icmp}
 \end{figure}
@@ -242,7 +250,7 @@ Ce message est envoyé lorsque le TTL d'un paquet à atteint 0. Une autre
 utilisation des ces messages est lorsque que le temps de ré-assemblage des
 fragments d'un paquet est dépassé. Ces deux cas sont distingué par le code. Ces
 messages ont pour destinataire l'hôte qui à envoyé le paquet qui à provoqué
-l'erreur.//TODO(vérifier).
+l'erreur.%TODO(vérifier).
 
 \paragraph{Code 0:}
 Le code 0 est utilisé pour indiquer que le TTL du paquet posant problème est
@@ -271,7 +279,7 @@ routeur à reçu, il va le transmettre vers sa destination.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=15cm]{./pics/header2.eps}
+\includegraphics[width=13cm]{./pics/header2.eps}
 \caption{Entête des messages de type 5}
 \label{fig:head2icmp}
 \end{figure}
@@ -300,7 +308,7 @@ Les messages de code 2 et 3 vont agir sur les services, notamment sur le ToS.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=15cm]{./pics/header3.eps}
+\includegraphics[width=13cm]{./pics/header3.eps}
 \caption{Entête des messages de type 0 et 8}
 \label{fig:head3icmp}
 \end{figure}
@@ -343,6 +351,7 @@ faire une demande aux hôtes des groupes auxquels ils sont abonnés.
 Tout ces messages sont envoyés avec un TTL de 1, pour éviter que ceci ne
 passent d'un réseau à un autre.
 
+\smallbreak
 IGMP va donc permettre aux routeurs d'apprendre les groupes d'abonnements des
 hôtes qui sont sur le ou les réseaux du routeur. Le routeur dispose d'une liste
 des groupes multicast auxquels les hôtes d'un réseau sont connectés, et ceci
@@ -350,6 +359,7 @@ pour tout les réseaux auxquels il est connecté.  Pour commencer, le routeur va
 envoyer à l'adresse 224.0.0.1, deux (par défaut) Membership Query général à 30
 secondes d'intervalles (par défaut).
 
+\smallbreak
 Lorsqu'un hôte reçoit un Membership Query, il va initialiser un timer pour
 chaque groupe multicast auxquels il appartient. Ces timers sont initialisés
 avec un temps aléatoire dont la borne supérieur est spécifié dans le Membership
@@ -361,6 +371,7 @@ Report et que le timer du groupe concerné par le message reçus n'a pas encore
 atteint 0, alors l'hôte va arrêter le timer. En effet le routeur sera aux
 courant de l'existence du groupe car il aura reçu le même rapport que l'hôte.
 
+\smallbreak
 Le protocole IGMP est conçu pour que le routeur sache à quels groupe multicast
 sont abonnés les hôte sur les réseaux auxquels il est relié. Cependant le
 protocole n'a pas du tout été conçu dans l'optique de fournir la liste des
@@ -368,6 +379,7 @@ hôtes avec leurs abonnements.  C'est pour cela qu'une fois que le routeur est
 au courant de l'existence d'un groupe, les autre hôtes faisant partie de ce
 groupe n'envoie pas de rapport pour ce groupe.
 
+\smallbreak
 Lorsque le routeur reçoit un Membership Report il va ajouter le groupe à sa
 liste de groupe présent sur le réseau auquel il est connecté. Il va à ce moment
 initialiser un timer à 135 secondes (valeur par défaut).  Si il reçoit d'autre
@@ -377,6 +389,7 @@ initiale (de 135 secondes).  Lorsqu'un hôte rejoint un nouveau groupe, il va
 ainsi informer le routeur de l'existence de ce groupe ou de la remise à la
 valeur initiale du timer.
 
+\smallbreak
 Le dernier cas de figure est lorsqu' un hôte veut se désabonner d'un groupe: il
 va donc arrêter de traiter les messages à destination du groupe multicast. Si
 l'hôte est le dernier de son groupe alors il va envoyer un Leave Group à
@@ -398,6 +411,7 @@ qu'il n'y avait plus d'hôte faisant partit du groupe, alors le groupe serait
 considéré sans membre et oublié lorsque le timer du routeur arriverait à 0 pour
 le groupe en question.
 
+\smallbreak
 Le dernier point pour que tout cela fonctionnent, est qu'il faut que le routeur
 envoie régulièrement des Membership Query général pour qu'il maintiennent à
 jour sa table des groupe présent sur le réseau, sinon ceux-ci serait oublier
@@ -429,6 +443,7 @@ ce message DHCP sur un autre réseau si le serveur DHCP (qui distribue les
 adresses) ne se trouve pas sur le même réseau que l'hôte qui fait la demande.
 L'hôte va utiliser comme adresse IP 0.0.0.0.
 
+\smallbreak
 Etant donné que le message est envoyé en broadcast, tout les hôtes sur le
 réseau vont recevoir le message, et en particulier le ou les serveurs DHCP qui
 pourraient s'y trouver. Si cela est le cas, ceux-ci vont répondre avec un
@@ -458,10 +473,12 @@ DHCPNAK pour avertir l'hôte que l'adresse n'est plus disponible. L'hôte devra
 alors recommencer la procédure pour obtenir une configuration.
 \end{itemize}
 
+\smallbreak
 Enfin si le serveur ne reçoit pas de message DHCPREQUEST, la procédure
 s'arrêtera à ce moment et l'adresse n'étant pas encore attribuée à l'hôte elle
 reste disponible pour être attribuée à d'autre hôte. 
 
+\smallbreak
 Arrive la dernière étape.
 Si l'hôte reçois un message DHCPACK, il peux prendre en compte la
 configuration (adresse IP, masque du réseau, DNS, passerelle par défaut et
@@ -474,12 +491,14 @@ pour lui indiquer qu'il n'utilisera pas la configuration proposée par celui-ci,
 et il va recommencer la procédure pour pouvoir obtenir une nouvelle
 configuration.
 
+\smallbreak
 Si jamais l'adresse proposé par le serveur est unique sur le réseau, la
 configuration est terminé et l'hôte peut utiliser l'adresse (durant la durée du
 bail de celle-ci).  Dernier cas possible, si jamais le l'hôte ne reçoit pas de
 DHCPACK ou de DHCPNAK, il va réémettre le message DHCPREQUEST pour espérer
 recevoir une réponse du serveur.
 
+\smallbreak
 Tout au fil des différents messages échangés, le client est identifié grâce au
 champ client identifier, et le serveur grâce au champ server identifier.
 
@@ -510,6 +529,7 @@ posséderait plus de configuration réseau et ne pourrait plus communiquer avec
 d'autre hôtes. Il rentre alors en état INIT; il doit alors recommencer la
 procédure pour obtenir une configuration.
 
+\smallbreak
 Cependant,dans ce cas comme dans d'autre, l'hôte peut ré-utiliser une
 configuration précédemment utilisée. Cela permet de raccourcir la négociation
 entre l'hôte et le serveur DHCP. L'hôte va directement commencer la négociation

@@ -1,84 +1,78 @@
-
 \section{Conclusion}
 
-Pour conclure, l'iPv4 est un protocole réseau (couche 3 du modèle OSI) qui
- a été développé dans les années 70. Les objectifs lors de son développement 
-étaient d'obtenir un protocole réseau qui permet une communication efficace sur, et entre 
-plusieurs réseaux informatiques. C'est un protocole basé sur la commutation de paquets, ce 
-qui permet d'établir de nombreuses connexions simultanément alors qu'avant, notamment dans les réseaux téléphoniques, une connexion utilisait le lien à elle seule. 
-\\
-Même si des protocoles réseau existaient déjà auparavant, IPv4 a apporté une standardisation ainsi
-que la commutation par paquet qui ont permit la diffusion d'internet à grande échelle.
-\\
-L'un des objets centraux de l'IPv4 est l'adresse IP. Elle est composée de 4 nombres allant de 0 à 255 
-grâce auxquels on obtient une adresse IP écrite de cette façon : 255.0.24.35 .
-C'est avec cette adresse que les interfaces/routeurs s'identifient sur internet de façon unique 
-lorsqu'elle sont publiques ou de façon unique sur le réseau dans lequel elle se trouve lorsqu'elles sont locales. 
-C'est donc également elle qu'on manipule pour trouver/identifier des interfaces sur le réseau/internet.
- Sa forme est restée la même au cours du temps mais la façon dont elle est allouée a été modifiée.
-Il existe plusieurs types d'adresses qui sont les adresses unicast, multicast, anycast et broadcast.
- Chacune d'entre elle permet d'atteindre une ou plusieurs interfaces en fonction de certains
-critères. Certaines adresses/ plages d'adresses sont également réservées pour des usages spéciaux. 
-Un avantage important d'IPv4 est également la configuration automatique qui permet la mise 
-en place d'un réseau sans connaissances techniques.
-\\
-Le second objet central d'IPv4 est le paquet IP. Un paquet est l'unité d'information réseau, donc 
-de niveau 3, dans lequel sont mises les informations à transmettre. Un paquet est divisé en 2 
-parties : l'en-tête et une partie donnée dans laquelle sont mises les informations à envoyer.
- L'en-tête d'un paquet IP est mis au début de ce dernier. Il donne des informations aux 
-routeurs et interfaces par lesquels il transite afin d'arriver à la bonne destination. Les
- informations qui y sont contenues sont nombreuses: le protocole réseau utilisé (4 dans le
- cas d'IPv4), la taille de l'en-tête, la taille totale du paquet, un identificateur de 
-fragments de même paquet, un fragment offset pour retrouver la place d'un fragment dans 
-un paquet reconstitué, la durée de vie qui indique en pratique le nombre de sauts que 
-peut faire un paquet IPv4, l'adresse source, l'adresse de destination et d'autres encore.
-\\
-Enfin, de nombreux protocoles ont été définis afin de garantir le bon fonctionnement des
- adresses IPv4. Certains protocoles servent à contrôler l'intégrité des adresses IPv4. L'ACD permet par exemple de garantir l'intégrité d'une adresse en détectant l'utilisation
-de la même adresse IP par deux ou plusieurs hôtes en même temps. 
-L'ICMP quant à elle permet de faire des contrôles d'erreurs et des vérifications.
-D'autres permettent d'utiliser des fonctionnalités comme le protocole IGMP qui permet aux 
-interfaces de s'abonner a des groupes multicast ou encore le protocole DHCP qui permet 
-l'auto-configuration des interfaces. D'autres protocoles permettent finalement de simplifier
- ou de rendre plus efficace  l'utilisation d'internet comme les serveurs DNS qui font la
- traduction entre nom de domaine, comme Google.fr, et son adresse IP ou encore le PMTU 
-discovery qui permet d'éviter la fragmentation de paquets.
-\\
-Cependant, même si au début IPv4 a été conforme aux attentes, internet a grandit de façon
- exponentielle et des problèmes auxquels ne s'attendaient pas ses concepteurs sont apparus.
-Le problème le plus important d'entre eux a été l'épuisement d'adresse. En effet, internet n'était 
-initialement pas destiné a un usage si répandu mais uniquement à un usage militaire et scientifique. 
-Ainsi, à force de se répandre les plages d'adresses disponible s'amenuisèrent rapidement
- et c'est en février 2011 que la réserve de bloc d'adresses publiques libres IPv4 de
- l'IANA (Internet Assigned 
-Numbers Authority) est arrivée à épuisement. Des techniques de contournement ont donc été
- inventées.  La plus simple a été la récupération de plages d'adresses. Une autre a été une
- modification dans l'adressage d'IPv4 en passant de la méthode classfull network à la
- méthode classless network. Ceci a permit d'éviter de gaspiller de nombreuses adresses
- IP. Enfin, à travers la traduction d'adresse (NAT : Network Adress Translation), de
- nombreuses interfaces ont pu être rassemblées sous une même adresse IP. Ainsi, on a pu
- retarder l'épuisement des adresses IP mais on n'a pas réglé le problème.
-\\
-Ensuite, il y a également eu d'autres problèmes plus petit concernant la sécurité et la performance qui n'étaient pas directement intégrés dans IPv4. 
-\\
-C'est pour cela que l'IETF a décidé dans les années 90 de travailler sur un nouveau protocole 
-réseau qui répondra mieux aux besoins de l'Internet d'aujourd'hui. Ce nouveau protocole qui se nomme
-IPv6 ainsi que son environnement ont été développé dans les années 90 et publié en 1998
- dans le RFC2460. Il apporte un espace d'adressage sur 128 bits, ce qui régla tous les soucis
- concernant l'épuisement de ce dernier. 
-En plus de cela il amène une amélioration au niveau de la sécurité avec l'intégration de protocole
- tel que IPsec qui en devient partie intégrante alors qu'il n'était qu'optionnel dans IPv4. Enfin,
- IPv6 amène des améliorations au niveau des performances avec l'élimination du NAT qui enlève une
- couche supplémentaire, une simplification de l'en-tête du paquet ainsi qu'une diminution des
- traitements effectués par les routeur grâce à la fragmentation au niveau de l'émetteur et le déplacement des
- checksums dans les protocoles de niveau 4.
+Pour conclure, l'iPv4 est un protocole réseau (couche 3 du modèle OSI) qui a
+été développé dans les années 70. Les objectifs lors de son développement
+étaient d'obtenir un protocole réseau qui permet une communication efficace
+sur, et entre plusieurs réseaux informatiques. C'est un protocole basé sur la
+commutation de paquets, ce qui permet d'établir de nombreuses connexions
+simultanément alors qu'avant, notamment dans les réseaux téléphoniques, une
+connexion utilisait le lien à elle seule. 
 
-C'est à cause de tous ces avantages que l'IPv6 a été développé afin de remplacer l'IPv4. 
-Cependant, la migration qui se déroule actuellement est lente et difficile. En effet, il 
-faut faire cohabiter ces deux technologies, ce qui peut mener à des soucis de sécurité. Enfin, au 
-début de 2016, le déploiement IPv6 est encore très limité car la proportion d'utilisateurs Internet en
- IPv6 est estimée à 10\%. Il faudra donc encore longtemps avant que tous les utilisateurs d'internet 
-sont passés à IPv6.
+\smallbreak
+Même si des protocoles réseau existaient déjà auparavant, IPv4 a eu le mérite
+de reussir a s'imposer comme standard dans la commutation par paquet, ce qui a
+permit la diffusion d'internet à grande échelle.
+
+\smallbreak
+L'un des objets centraux de l'IPv4 est l'adresse IP.  La forme des adresses
+IPv4 est restée la même au cours du temps mais la façon dont elle est allouée a
+été modifiée selon les exigences.  La taille d'un adresse IPv4 a permi
+l'utilise d'une representation simple comme l'enchainement de 4 nombres
+decimaux allant de 0 à 255.  Cela ensemble a des autres facilites, comme les
+mechanisme de configuration automatique qui permet la mise en place d'un réseau
+sans connaissances techniques tels que APIPA, ont contribue a la diffusion de
+IPv4 dans le grand public.
+\smallbreak
+
+Comme on a vu dans la section \ref{sec:suiteproc}, une suite de protocoles a
+ete definie autour de IPv4 afin d'en garantir le bon fonctionnement et etablir
+le lien avec autres protocoles.
+
+La suite de protocole IPv4 a permis de servir de base pour les futur
+implémentation standard de IPv6 A ce titre plusieurs de ces protocoles ont
+fourni les principes suivant lequels des taches comme les contrôles d'erreurs,
+la verification de l'intégrité des adresses, la gestion des groupes multicast,
+etc.. sont realisee.
+\smallbreak
+
+
+Cependant, même si au début IPv4 a été conforme aux attentes, internet a
+grandit de façon exponentielle et des problèmes auxquels ne s'attendaient pas
+ses concepteurs sont apparus.
+Le problème le plus important d'entre eux a été l'épuisement d'adresse. En
+effet, internet n'était initialement pas destiné a un usage si répandu mais
+uniquement à un usage militaire et scientifique.  Ainsi, à force de se répandre
+les plages d'adresses disponible s'amenuisèrent rapidement et c'est en février
+2011 que la réserve de bloc d'adresses publiques libres IPv4 de l'IANA est
+arrivée à épuisement. Des techniques de contournement ont donc été inventées.
+Ainsi, on a pu retarder l'épuisement des adresses IP mais on n'a pas réglé le
+problème.
+
+\smallbreak
+C'est pour cela que l'IETF a décidé dans les années 90 de travailler sur un
+nouveau protocole réseau qui répondra mieux aux besoins de l'Internet
+d'aujourd'hui. Ce nouveau protocole qui se nomme IPv6 ainsi que son
+environnement ont été développé dans les années 90 et publié en 1998 dans le
+RFC2460. 
+
+\smallbreak
+IPv6 simplifie l'en-tête du paquet et apporte un espace d'adressage sur 128
+bits, ce qui régla tous les soucis concernant l'épuisement d'adresses.  Il
+amène une amélioration au niveau de la sécurité avec l'intégration de protocole
+tel que IPsec et perment l'élimination de la couche supplementaire du NAT ainsi
+qu'une diminution des traitements effectués par les routeur grâce à la
+fragmentation au niveau de l'émetteur et l'elimination des checksums.
+
+
+Cependant le deploiment de IPv6 qui se déroule actuellement est lente et
+difficile. Aujourd'hui l'utilise de IPv6 est encore tres faible par rapport a
+ceux de IPv4: au début de 2016, la proportion d'utilisateurs Internet en IPv6
+etait estimée à 10\%. 
+
+\smallbreak
+
+Il faudra donc encore longtemps avant que tous les utilisateurs d'internet
+oublient IPv4.
 
 
 
