@@ -410,7 +410,7 @@ une fois le timer arrivé à expiration.
 Le protocole DHCP (Dynamic Host Configuration Protocol) sert à l'auto-configuration
 des interfaces. Plus précisément, il  permet d'attribuer une adresse IP à une
 interface et de lui faire parvenir d'autres information essentielle pour le
-fonctionnement de l'interface sur le réseau. La version initiale de DHCP fut décrit
+fonctionnement de l'interface sur le réseau. La version initiale de DHCP fut décrite
 dans le RFC 1531\cite{url-RFC-DHCP1}, mais cette version fut rendue obsolète par un autre
 RFC, lui même rendue obsolète par le RFC 2131\cite{url-RFC-DHCP2} qui est la dernière version non
 obsolète. Voyons comment une interface peut ce configurer auprès d'un serveur DHCP.
@@ -423,52 +423,54 @@ obsolète. Voyons comment une interface peut ce configurer auprès d'un serveur 
 \end{figure}
 
 Lorsqu'une interface, qui n'a pas d'adresse IP, souhaite en recevoir une, elle
-va émettre un message DHCPDISCOVER en broadcast sur son réseau. Des agents DHCP
+va émettre un message DHCPDISCOVERY en broadcast sur son réseau. Des agents DHCP
 peuvent faire passer
 ce message DHCP sur un autre réseau si le serveur DHCP (qui distribue les
 adresses) ne se trouve pas sur le même réseau que l'hôte qui fait la demande.
 L'hôte va utiliser comme adresse IP 0.0.0.0.
 
-Etant donnée que le message est envoyé en broadcast, tout les hôtes sur le
+Etant donné que le message est envoyé en broadcast, tout les hôtes sur le
 réseau vont recevoir le message, et en particulier le ou les serveurs DHCP qui
 pourraient s'y trouver. Si cela est le cas, ceux-ci vont répondre avec un
 DHCPOFFER. Ce message contient entre autre l'adresse IP proposé pour le client
-souhaitant se configurer, ainsi que le masque de sous-réseau de l'adresse. A ce
-moment là l'adresse n'est pas encore attribuer et réservé pour l'hôte étant
-donnée qu'il peux refuser l'offre et accepter l'offre d'un autre serveur. Si
+souhaitant se configurer, ainsi que le masque du réseau. A ce
+moment là l'adresse n'est pas encore attribuée et réservée pour l'hôte étant
+donnée qu'il peut refuser l'offre et accepter l'offre d'un autre serveur. Si
 jamais l'hôte ne reçoit aucun DHCPOFFER, il va ré-émettre un DHCPDISCOVERY. Si
 il reçoit un ou plusieurs DHCPOFFER, l'hôte va devoir choisir une configuration
-qui lui est proposé. Une fois ce choix fait, il va informé les serveurs DHCP de
+parmis celles qui lui sont proposées. Une fois ce choix fait, il va informer les serveurs DHCP de
 son choix à l'aide d'un message DHCPREQUEST émis en broadcast. Ce message va
 contenir l'identifiant du serveur DHCP retenu ainsi que la configuration
-souhaité par l'hôte (adresse IP et masque de sous-réseau). Ce message peut être
+souhaité par l'hôte (adresse IP et masque du réseau). Ce message peut être
 interprété de deux manières différentes selon le serveur:
 \begin{itemize}
-\item si ce n'est pas le serveur retenu, il considère le message comme une
+\item Si ce n'est pas le serveur retenu, il considère le message comme une
 déclinaison de l'offre.
 
-\item si c'est le serveur retenu, il va sortir l'adresse attribué l'hôte de la
+\item Si c'est le serveur retenu, il va sortir l'adresse attribuée à l'hôte de la
 plage d'adresse libre pour ne plus l'attribuer à un autre hôte. Il va ensuite
 émmettre un message DHCPACK contenant la configuration effective de l'hôte avec
-notamment: l'adresse IP, le masque de sous-réseau, la durée du bail, l'adresse
+notamment: l'adresse IP, le masque du réseau, la durée du bail, l'adresse
 de la passerelle par défaut et l'adresse du serveur DNS.  Si pour quelque
-raisons le serveur n'est pas capable d'attribuer l'adresse proposé dans l'offre
-(par exemple si l'adresse à été attribuer entre temps), le serveur émet un
+raisons que ce soit le serveur n'est pas capable d'attribuer l'adresse proposée dans l'offre
+(par exemple si l'adresse à été attribuée entre temps), le serveur émet un
 DHCPNAK pour avertir l'hôte que l'adresse n'est plus disponible. L'hôte devra
-alors recommencer la procédure pour obtenir une adresse IP.
+alors recommencer la procédure pour obtenir une configuration.
 \end{itemize}
 
 Enfin si le serveur ne reçoit pas de message DHCPREQUEST, la procédure
-s'arrêtera à ce moment et l'adresse n'étant pas encore attribuer à l'hôte elle
-reste disponible pour être attribuer à d'autre hôte.  Arrive la dernière étape.
-Si le client reçois un message DHCPACK, il peux prendre en compte la
-configuration (adresse IP, masque de sous-réseau, DNS, passerelle par défaut et
+s'arrêtera à ce moment et l'adresse n'étant pas encore attribuée à l'hôte elle
+reste disponible pour être attribuée à d'autre hôte. 
+
+Arrive la dernière étape.
+Si l'hôte reçois un message DHCPACK, il peux prendre en compte la
+configuration (adresse IP, masque du réseau, DNS, passerelle par défaut et
 durée de bail). Il va effectuer une dernière vérification pour s'assurer que
 l'adresse qui lui à été attribué est bien unique sur le réseau pour éviter
 d'avoir deux hôte avec la même adresse. Il va pour cela utilisé le protocole
 ARP et la méthode de vérification vu plus haut. Si jamais l'adresse est déjà
 utilisé par un autre hôte, il va envoyer un message DHCPDECLINE au serveur DHCP
-pour lui indiquer qu'il n'utilisera pas la configuration proposé par celui-ci,
+pour lui indiquer qu'il n'utilisera pas la configuration proposée par celui-ci,
 et il va recommencer la procédure pour pouvoir obtenir une nouvelle
 configuration.
 
@@ -478,16 +480,15 @@ bail de celle-ci).  Dernier cas possible, si jamais le l'hôte ne reçoit pas de
 DHCPACK ou de DHCPNAK, il va réémettre le message DHCPREQUEST pour espérer
 recevoir une réponse du serveur.
 
-//TODO algo de retransmission TODO fonctionnement agent relais dhcp client peut
-//renoncer à son bail identification des message faisant partit d'un même
-//échange avec client identifier, server identifier TODO fonctionnement bail
+Tout au fil des différents messages échangés, le client est identifié grâce au
+champ client identifier, et le serveur grâce au champ server identifier.
 
 L'hôte est donc configuré et peut utiliser son adresse. Cependant, il ne peut
 l'utiliser que durant la durée de son bail. Une fois le bail expiré, l'hôte ne
-peux plus utiliser son adresse. Lorsque l'hôte à reçu le message DHCPACK du
+peux plus utiliser son adresse. Lorsque l'hôte a reçu le message DHCPACK du
 serveur, celui-ci lui a transmis la durée du bail. De cette durée, l'hôte va
 en extraire deux temps noté T1 et T2. T1 correspond à la moitié de la durée du
-bail et T2 à 0.875 la durée du bail. Ces temps sont exprimé de manière relatif
+bail et T2 à 0.875 fois la durée du bail. Ces temps sont exprimés de manière relatif
 étant donnée que les horloges du serveur et de l'hôte ne sont pas
 synchronisées.  Une fois que l'hôte à atteint le temps T1, il va chercher à
 contacter le serveur qui lui à attribué sa configuration avec un message
@@ -495,30 +496,30 @@ DHCPREQUEST pour étendre la durée de son bail. Ce message est émis de manièr
 unicast. A ce moment l'hôte est entré en état RENEWING. Si l'hôte reçoit un
 message DHCPACK du serveur lui accordant un prolongement de la durée de son
 bail, alors il va sommer le temps qu'il avait insérer dans le DHCPREQUEST avec
-la durée accordé par le serveur et qui se trouve dans le message DHCPACK.
+la durée accordée par le serveur et qui se trouve dans le message DHCPACK.
 L'hôte retourne dans l'état BOUND. Cependant l'hôte n'est pas obligé d'attendre
 T1 pour pouvoir étendre son bail.  Si jamais l'hôte ne reçoit pas de réponse
 DHCPACK avant l'arrivé de T2, il passe en état REBINDING. A ce moment il va
-émettre un DHCPREQUEST en broadcast pour espérer pourvoir étendre son bail
+émettre un DHCPREQUEST en broadcast pour espérer pouvoir étendre son bail
 auprès de n'importe quel serveur DHCP. Pour parer aux éventuels cas de perte de
 DHCPREQUEST, l'hôte va renvoyer un message une fois la moitié de la durée entre
 T1 et T2 passé, en état RENEWING; et une fois la moitié de la durée entre T2 et
-la fin du baille , en état REBINDING(et avec un minimum de temps de 60
+la fin du baille , en état REBINDING (et avec un minimum de temps de 60
 secondes).  Si malgré tout, la durée du bail venait à expirer, alors l'hôte ne
 posséderait plus de configuration réseau et ne pourrait plus communiquer avec
 d'autre hôtes. Il rentre alors en état INIT; il doit alors recommencer la
-procédure pour obtenir une adresse configuration.
+procédure pour obtenir une configuration.
 
 Cependant,dans ce cas comme dans d'autre, l'hôte peut ré-utiliser une
 configuration précédemment utilisée. Cela permet de raccourcir la négociation
-entre l'hôte et le serveur DHCP. L'hôte va directement commencé la négociation
+entre l'hôte et le serveur DHCP. L'hôte va directement commencer la négociation
 en faisant un DHCPREQUEST en broadcast et contenant la configuration qu'il
 souhaite ré-utiliser. Le serveur concerné par l'attribution antérieur de la
 configuration va donc accepter la demande de l'hôte à l'aide d'un DHCPACK ou la
 refuser, si la demande n'est pas correct ou si l'adresse est utilisé par un
 autre hôte, à l'aide d'un DHCPNAK.  Cette négociation se fait de manière
-similaire qu'un négociation complète, elle a juste été raccourci en enlevant
-quelque étape non indispensable.
+similaire à une négociation complète, elle a juste été raccourci en enlevant
+quelques étapes non indispensables.
 
 \begin{figure}[h]
 \centering
@@ -526,6 +527,8 @@ quelque étape non indispensable.
 \caption{Déroulement de la négociation DHCP pour la réutilisation d'une adresse}
 \label{fig:timelinedhcpreuseadd}
 \end{figure}
+
+%---------------------------------------------------------------------------------
 
 \subsection{PMTU discovery}
 Le protocole PMTU discovery (Path MTU discovery) décrit dans le RFC 1191\cite{url-RFC-PMTU}, permet de trouver le plus petit MTU d'un chemin entre l'émetteur et le récepteur. Cela permet d'éviter la fragmentation des paquet IP ce qui permet entre autre de soulagé la charge des routeurs.
