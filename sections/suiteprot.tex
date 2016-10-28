@@ -424,10 +424,14 @@ une fois le timer arrivé à expiration.
 Le protocole DHCP (Dynamic Host Configuration Protocol) sert à l'auto-configuration
 des interfaces. Plus précisément, il  permet d'attribuer une adresse IP à une
 interface et de lui faire parvenir d'autres information essentielle pour le
-fonctionnement de l'interface sur le réseau. La version initiale de DHCP fut décrite
-dans le RFC 1531\cite{url-RFC-DHCP1}, mais cette version fut rendue obsolète par un autre
-RFC, lui même rendue obsolète par le RFC 2131\cite{url-RFC-DHCP2} qui est la dernière version non
-obsolète. Voyons comment une interface peut ce configurer auprès d'un serveur DHCP.
+fonctionnement de l'interface sur le réseau. 
+
+\newpage
+La version initiale de DHCP fut décrite dans le RFC 1531\cite{url-RFC-DHCP1},
+mais cette version fut rendue obsolète par un autre RFC, lui même rendue
+obsolète par le RFC 2131\cite{url-RFC-DHCP2} qui est la dernière version non
+obsolète. Voyons comment une interface peut ce configurer auprès d'un serveur
+DHCP.
 
 \begin{figure}[h]
 \centering
@@ -437,11 +441,10 @@ obsolète. Voyons comment une interface peut ce configurer auprès d'un serveur 
 \end{figure}
 
 Lorsqu'une interface, qui n'a pas d'adresse IP, souhaite en recevoir une, elle
-va émettre un message DHCPDISCOVERY en broadcast sur son réseau. Des agents DHCP
-peuvent faire passer
-ce message DHCP sur un autre réseau si le serveur DHCP (qui distribue les
-adresses) ne se trouve pas sur le même réseau que l'hôte qui fait la demande.
-L'hôte va utiliser comme adresse IP 0.0.0.0.
+va émettre un message DHCPDISCOVERY en broadcast sur son réseau. Des agents
+DHCP peuvent faire passer ce message DHCP sur un autre réseau si le serveur
+DHCP (qui distribue les adresses) ne se trouve pas sur le même réseau que
+l'hôte qui fait la demande.  L'hôte va utiliser comme adresse IP 0.0.0.0.
 
 \smallbreak
 Etant donné que le message est envoyé en broadcast, tout les hôtes sur le
