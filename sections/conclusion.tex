@@ -1,78 +1,74 @@
 \section{Conclusion}
 
-Pour conclure, l'iPv4 est un protocole réseau (couche 3 du modèle OSI) qui a
+Pour conclure, IPv4 est un protocole réseau (couche 3 du modèle OSI) qui a
 été développé dans les années 70. Les objectifs lors de son développement
 étaient d'obtenir un protocole réseau qui permet une communication efficace
-sur, et entre plusieurs réseaux informatiques. C'est un protocole basé sur la
+entre plusieurs réseaux informatiques. C'est un protocole basé sur la
 commutation de paquets, ce qui permet d'établir de nombreuses connexions
-simultanément alors qu'avant, notamment dans les réseaux téléphoniques, une
-connexion utilisait le lien à elle seule. 
+simultanément. 
 
 \smallbreak
 Même si des protocoles réseau existaient déjà auparavant, IPv4 a eu le mérite
-de reussir a s'imposer comme standard dans la commutation par paquet, ce qui a
-permit la diffusion d'internet à grande échelle.
+de réussir à s'imposer comme standard dans la commutation par paquet, ce qui a
+permit la diffusion d'Internet à grande échelle.
 
 \smallbreak
 L'un des objets centraux de l'IPv4 est l'adresse IP.  La forme des adresses
 IPv4 est restée la même au cours du temps mais la façon dont elle est allouée a
-été modifiée selon les exigences.  La taille d'un adresse IPv4 a permi
-l'utilise d'une representation simple comme l'enchainement de 4 nombres
-decimaux allant de 0 à 255.  Cela ensemble a des autres facilites, comme les
-mechanisme de configuration automatique qui permet la mise en place d'un réseau
-sans connaissances techniques tels que APIPA, ont contribue a la diffusion de
-IPv4 dans le grand public.
+été modifiée selon les exigences.  La taille d'un adresse IPv4 a permit
+l'utilisation d'une représentation simple d'un enchainement de 4 nombres
+decimaux allant de 0 à 255.  Cette représentation simple à, comme les
+mécanismes de configuration automatique qui permet la mise en place d'un réseau
+sans connaissances techniques: tels que APIPA, contribué à la diffusion
+d'IPv4 chez le grand public.
 \smallbreak
 
 Comme on a vu dans la section \ref{sec:suiteproc}, une suite de protocoles a
-ete definie autour de IPv4 afin d'en garantir le bon fonctionnement et etablir
-le lien avec autres protocoles.
+été définie autour de IPv4 afin d'en garantir le bon fonctionnement et d'établir
+des lien avec d'autres protocoles.
 
-La suite de protocole IPv4 a permis de servir de base pour les futur
-implémentation standard de IPv6 A ce titre plusieurs de ces protocoles ont
-fourni les principes suivant lequels des taches comme les contrôles d'erreurs,
-la verification de l'intégrité des adresses, la gestion des groupes multicast,
-etc.. sont realisee.
+La suite de protocole IPv4 a permit de servir de base pour les futurs
+implémentations standard de IPv6. A ce titre plusieurs de ces protocoles ont
+fourni les principes de réalisation, pour des tâches comme les contrôles d'erreurs,
+la vérification de l'intégrité des adresses, la gestion des groupes multicast,
+etc..., pour IPv6.
 \smallbreak
 
 
-Cependant, même si au début IPv4 a été conforme aux attentes, internet a
+Cependant, même si au début IPv4 était conforme aux attentes, Internet a
 grandit de façon exponentielle et des problèmes auxquels ne s'attendaient pas
 ses concepteurs sont apparus.
-Le problème le plus important d'entre eux a été l'épuisement d'adresse. En
-effet, internet n'était initialement pas destiné a un usage si répandu mais
+Le problème le plus important d'entre eux à été l'épuisement des adresses. En
+effet, Internet n'était initialement pas destiné à un usage si répandu mais
 uniquement à un usage militaire et scientifique.  Ainsi, à force de se répandre
 les plages d'adresses disponible s'amenuisèrent rapidement et c'est en février
-2011 que la réserve de bloc d'adresses publiques libres IPv4 de l'IANA est
+2011 que la réserve d'adresses libres IPv4 est
 arrivée à épuisement. Des techniques de contournement ont donc été inventées.
 Ainsi, on a pu retarder l'épuisement des adresses IP mais on n'a pas réglé le
-problème.
+problème pour autant.
 
 \smallbreak
 C'est pour cela que l'IETF a décidé dans les années 90 de travailler sur un
-nouveau protocole réseau qui répondra mieux aux besoins de l'Internet
-d'aujourd'hui. Ce nouveau protocole qui se nomme IPv6 ainsi que son
-environnement ont été développé dans les années 90 et publié en 1998 dans le
-RFC2460. 
+nouveau protocole réseau qui répondrait mieux aux besoins de l'Internet
+d'aujourd'hui. Ce nouveau protocole, qui se nomme IPv6, ainsi que son
+environnement ont été développés dans les années 90 et publié en 1998 dans le
+RFC2460\cite{url-RFC-IPV6}. 
 
 \smallbreak
 IPv6 simplifie l'en-tête du paquet et apporte un espace d'adressage sur 128
-bits, ce qui régla tous les soucis concernant l'épuisement d'adresses.  Il
-amène une amélioration au niveau de la sécurité avec l'intégration de protocole
-tel que IPsec et perment l'élimination de la couche supplementaire du NAT ainsi
-qu'une diminution des traitements effectués par les routeur grâce à la
-fragmentation au niveau de l'émetteur et l'elimination des checksums.
+bits, ce qui régle tous les soucis concernant l'épuisement d'adresses.  Il
+amène aussi une amélioration au niveau de la sécurité avec l'intégration de protocole
+tel que IPsec et permet l'élimination d'un NAT intermédiaire. Il permet aussi
+une diminution des traitements effectués par les routeur grâce à la
+fragmentation des paquet qui est faite par l'émetteur, et l'élimination des checksums.
 
 
-Cependant le deploiment de IPv6 qui se déroule actuellement est lente et
-difficile. Aujourd'hui l'utilise de IPv6 est encore tres faible par rapport a
-ceux de IPv4: au début de 2016, la proportion d'utilisateurs Internet en IPv6
-etait estimée à 10\%. 
+Cependant le déploiment d'IPv6 est actuellement lent et
+difficile. Aujourd'hui l'utilisation d'IPv6 est encore très faible par rapport à
+celle d'IPv4: début 2016, la proportion d'utilisateurs Internet utilisant IPv6
+était éstimée à 10\%. 
 
 \smallbreak
 
-Il faudra donc encore longtemps avant que tous les utilisateurs d'internet
-oublient IPv4.
-
-
-
+Il faudra donc encore du temps avant qu'IPv4 devienne obsolète et que les usagés d'Internet
+arrêtent de l'utiliser.
