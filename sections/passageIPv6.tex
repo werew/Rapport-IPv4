@@ -147,9 +147,9 @@ client. Les ports 0 à 1023 étant réservés pour les serveurs qui "écoutent" 
 des connexions entrantes.
 \newline
 Pour illustrer le fonctionnement du NAT imaginons qu'une interface A dont l'IP
-est 192.168.0.1 veut envoyer un paquet TCP à l'interface B d'IP 217.70.184.38.
+est 192.168.0.1/16 veut envoyer un paquet TCP à l'interface B d'IP 217.70.184.38.
 Le port source est le port 10277 et le port destination est le port 80. Le
-routeur, qui est une box, a l'adresse IP  82.240.25.50.
+routeur, qui est une box, a l'adresse IP  82.240.25.50 du coté Internet.
 
 L'interface A envoie le paquet:
 \begin{figure}[h]
@@ -192,19 +192,21 @@ Lorsqu'elle le trouve elle effectue les changements nécessaire sur le paquet et
 transmet le paquet à l'interface A.
 \newline
 Mais même si cette solution fonctionne la plupart du temps, la probabilité est
-faible, mais existe, que 2 interfaces envoient des paquets sur les même port. Par exemple,
-lorsque 2 interfaces envoient des paquets à un serveur HTTP, elles utilisent le port 80. 
-C'est pour éviter cela que la box change le port source lorsqu'elle reçoit un paquet de
-l'interface A. Ainsi on s'assure que aucun port n'est utilisé plusieurs fois.
-On obtient donc des tables de NAT comme dans l'exemple ci dessous.
+faible mais existe, que 2 interfaces envoient des paquets avec le même port
+source. Par exemple, lorsque 2 interfaces envoient des paquets à un serveur
+HTTP (port 80) et qu'elles utilisent toutes les deux comme port source 10277.
+Pour différencier les deux interfaces, qui vont utiliser la même adresse
+publique, le NAT change le port source dans un ou plusieurs paquets pour qu'il
+n'ai pas le même numéro de port une fois à l'extrérieur du réseau.  On obtient
+donc des tables de NAT comme dans l'exemple ci dessous.
 \newline
-On reprend les mêmes informations qu'avant. On a donc une interface A dont l'IP
-est 192.168.0.1 veut envoyer un paquet TCP à l'interface B d'IP 217.70.184.38.
+On reprend le même exemple que précédemment. On a donc une interface A dont l'IP
+est 192.168.0.1/16 veut envoyer un paquet TCP à l'interface B d'IP 217.70.184.38.
 Le port source est le port 10277 et le port destination est le port 80. Le
-routeur à l'adresse IP  82.240.25.50.
+routeur à l'adresse IP  82.240.25.50 du coté Internet.
 On y ajoute une interface C, sur le même réseau que A et qui veut également
-envoyer un paquet TCP à la même adresse avec le même port source. L'IP de C
-sera 192.168.1.2.
+envoyer un paquet TCP à la même adresse et le même port source que A. L'IP de C
+sera 192.168.1.2/16 .
 On obtient la table:
 
 \begin{figure}[h]
@@ -222,21 +224,20 @@ envoyés par A et B lors de la fin du transfert. Lorsque la transmission est
 finit, A envoie un message FIN à B qui lui répond par un message ACK et vice
 versa. Mais ces messages ne sont pas utilisables pour reconnaître la fin de
 connexion car lors de la réception de ce message il est toujours possible qu'un
-paquet ai du être retransmit. Ainsi, on utilise un compteur de temps qui est
+paquet doit être retransmit. Ainsi, on utilise un compteur de temps qui est
 associé à chaque paire adresse publique/adresse privée. Lorsqu'il n'y a pas de
-trafic entre une adresse privée et l'extérieur durant une durée fixée, le port
+trafique entre une adresse privée et l'extérieur durant une durée fixée, le port
 qui lui est associée peut être réutilisé pour une autre adresse privée.
 
-\paragraph{Différents types de NAT}
+\paragraph{Différents types de NAT dynamique}
 
 Il existe différents types de NAT:
 \begin{itemize}
 \item Le NAT dynamique PAT (Port Address Translation du port source). Ici les
-adresses externes sont indifférentes. C'est le mécanisme qui utilise le port forwarding.
-\item Masquerading où il n'y a qu'une adresse IP, celle du routeur, qui est
-utilisée comme adresse IP externe.
+adresses publiques sont indifférentes. C'est le mécanisme de port forwarding qui est utilisé.
+\item Masquerading qui est un cas particulier de NAT dynamique PAT. Dans ce cas il n'y a que l'adresse IP du routeur, qui est utilisée comme adresse IP publique.
 \item NAT pool de source. Ici la première connexion privée prend la première
-adresse ip externe, la deuxième prend la deuxième ip externe, etc.
+adresse IP externe, la deuxième prend la deuxième ip externe, etc.
 \item NAT pool de destination. Elle permet de répartir la charge entre plusieurs
 serveurs.
 \end{itemize}
@@ -244,26 +245,17 @@ serveurs.
 
 \paragraph{Redirection de port(Port forwarding)}
 
-Le NAT dynamique apporte cependant un grand problème. Lorsqu'une interface
-extérieur veut se connecter à une interface dans le réseau, elle ne dispose
-d'aucune autre information que l'adresse IP publique. Si elle envoie alors un
+Le fonctionnement du NAT dynamique pose cependant un gros problème. Lorsqu'un hôte
+extérieur veut envoyer un paquet à un hôte derrière un NAT pour initialiser une conversation, il ne dispose
+d'aucune autre information que l'adresse IP publique. Si il envoie alors un
 paquet à cette adresse, le routeur qui le réceptionnera ne saura pas quoi en
-faire car il ne sait pas à quelle interface le paquet est destiné et le paquet sera
-donc perdu. Il n'est donc pas possible, pour une machine externe au réseau local, d'établir 
-une connexion avec une interface connectée au réseau local.
+faire car l'hôte se trouvant sur le réseau derrière le NAT n'a pas envoyé de paquet vers l'hôte extérieur, et donc le NAT ne sait pas à quel hôte le paquet est destiné et le paquet sera
+donc perdu. Il n'est donc pas possible, pour une machine externe au réseau local, d'initialiser
+une communication avec un hôte qui est sur un réseau qui se trouve derrière un NAT.
 
-On a réussi à pallier à ce problème grâce à la redirection de port (port 
-forwarding). 
-
-Le principe du port forwarding est de rediriger tout paquet qui arrive sur un
-port du routeur vers le port d'une interface locale.
-Par exemple, prenons un routeur qui a comme IP externe 82.240.25.50.
-Nous le réglons de façon qu'il redirige tout paquet arrivant sur son port 80
-vers une interface locale A d'adresse locale 192.168.1.1.
-Imaginons qu'une interface sur le réseau essaie de se connecter à cette adresse
- IP au port 80.
-Lorsque le routeur reçoit le paquet il va le transmettre à l'interface A comme
-dans le schéma ci-dessous:
+On a réussi à pallier à ce problème grâce à la redirection de port (port
+forwarding).  Le principe du port forwarding est de rediriger tout paquet qui
+arrive sur un port du routeur vers le port d'une interface locale.
 
 \begin{figure}[h]
 \centering
@@ -272,33 +264,51 @@ dans le schéma ci-dessous:
 \label{fig:portfow}
 \end{figure}
 
+Dans le cas de notre problème on utilise le port forwarding lorsqu'il n'y a
+aucune entré de la table NAT qui n'a pu nous dire vers quelle hôte envoyer le
+paquet réçu de l'exterieur.  Le port forwarding permet donc d'avoir un choix
+"par défaut".
+
+Par exemple, prenons un routeur qui a comme IP externe 82.240.25.50 , et un
+serveur web A (écoutant sur le port 80) sur un réseau privé et utilisant une
+adresse privé: 192.168.1.1 . Comme c'est un serveur il y a de forte chance que
+les communication soit initialisé depuis l'extérieur: par les clients.  Pour
+qu'il soit joignable depuis l'extérieur il faut paramétrer le NAT de façon à ce
+qu'il redirige les paquets arrivant sur son port 80 vers le serveur A, si il
+n'a trouvé aucune entré dans la table NAT susceptible de nous indiquer vers
+quel hôte transférer le paquet.
+
 
 Il est possible de faire du port forwarding sur plusieurs port et vers des
 interfaces différentes simultanément.
 
 \paragraph{NAT statique}
-Le NAT statique est l'attribution d'une adresse IP externe à une adresse IP 
+Le NAT statique est l'attribution d'une adresse IP externe à une adresse IP
 privée. Grâce à cette méthode une interface sur un réseau privé peut avoir une
-IP publique à elle seule. Pour faire une traduction d'adresse de manière statique il faut la configurer
-manuellement dans la table du NAT. Cette traduction restera dans
-la table jusqu'à ce qu'elle soit supprimée. La traduction d'adresse de manière statique
-est le plus souvent utilisée pour interconnecter deux réseaux avec des
-adressages différents.
+IP publique à elle seule. Pour faire une traduction d'adresse de manière
+statique il faut la configurer manuellement dans la table du NAT. Cette
+traduction restera dans la table jusqu'à ce qu'elle soit supprimée. La
+traduction d'adresse de manière statique est le plus souvent utilisée pour
+interconnecter deux réseaux avec des adressages différents.
 
 \paragraph{NAT et sécurité}
 
 Même si ça n'a pas été le but de la traduction d'adresses, un des effets
-secondaires du NAT a été d'apporter de la sécurité. En effet, auparavant, une
-interface pouvait se connecter à n'importe quel port sur une machine du réseau,
-à condition que ce port soit ouvert. Certains systèmes comme Windows ouvrent des ports
-par défaut pour "écouter" le réseau. Avec la traduction d'adresse, il n'est pas
-possible d'atteindre n'importe quel port d'une interface. Il est uniquement
-possible d'atteindre un port lorsqu'une connexion a été établit avec ce port
-spécifique ou si le routeur cible a configuré l'interface cible comme interface
-par défaut pour ce port.
+secondaires du NAT a été d'apporter une certaine forme de sécurité.  Avec un
+NAT il est uniquement possible d'atteindre les hôtes depuis l'extérieur
+seulement lorsqu'une connexion a été initialisé avec ce port spécifique ou si
+le NAT est configuré pour faire du port forwarding sur cette hôte.  Cependant
+le NAT n'a pas du tout été conçu pour apporter de la sécurité, il est donc
+inadapaté d'utiliser un NAT comme moyen de protection. La meilleur solution est
+d'utiliser un firewall qui à été conçu pour faire cela et qui ne le fera pas
+moins bien qu'un NAT.
 
-
-Cependant même toutes ces solutions n'ont pas suffit pour +++
+Cependant même avec toutes ces solutions, la pénuris d'adresse reste un vrai
+problème. Il a donc fallu trouver une solution plus radicale pour résoudre ces
+difficulté, ces problème venant des choix et de la conception même d'IPv4.  La
+solution imaginé fut l'abandon de l'utilisation d'IPv4 qui était mal adapté à
+l'utilisation d'Internet aujourd'hui, et la création de son succésseur, IPv6,
+qui dans sa définition de base résolvait le problème de pénurie.
 
 \subsection{Améliorations apportées par IPv6}
 
